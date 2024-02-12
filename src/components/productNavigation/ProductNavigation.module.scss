@@ -1,0 +1,56 @@
+.navigation {
+  color: #5a5a5a;
+  height: 62px;
+  width: 1405px;
+  margin-top: 50px;
+
+  ul {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+
+    li {
+      position: relative;
+      width: 168px;
+      height: 100%;
+      padding: 17px 0;
+      font-weight: 500;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #5a5a5a;
+    }
+  
+    li:not(.active) + li:not(.active) {
+      border-left: none; /* Remove left border for the list items adjacent to non-active ones */
+    }
+
+    li.active {
+      font-weight: 700;
+      color: #252525;
+      border: none; /* Remove border for active li */
+    }
+
+    li.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: -1px;
+      width: 100%;
+      height: 4px;
+      background: #b5d8f7;
+    }
+
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+

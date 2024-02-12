@@ -1,0 +1,131 @@
+.signInModal {
+  width: 600px;
+  height: 580px;
+  border-radius: 7px;
+  position: absolute;
+  background-color: white;
+  top: 0px;
+  // right: -8px;
+  right: 0;
+  left: 0;
+  // /* left: -15px;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  z-index: 99;
+
+  h1 {
+      margin-top: 15px;
+      padding-top: 35px;
+      font-size: 21px;
+      font-weight: bold;
+  }
+
+  &Form {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      width: 80%;
+      height: 450px;
+      padding-top: 30px;
+
+      &HalfInput {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-left: 5px;
+
+        &Name,
+        &Surname,
+        &Password,
+        &RepeatPassword {
+            height: 50px;
+            width: 49%;
+            border: 1px solid gainsboro;
+            border-radius: 7px;
+            padding-left: 15px;
+            margin-bottom: 5px;
+        }
+    }
+
+      &Phone,
+      &Email {
+          height: 50px;
+          width: 100%;
+          border: 1px solid gainsboro;
+          border-radius: 7px;
+          padding-left: 15px;
+          margin-bottom: 5px;
+      }
+
+      &Checkbox {
+          margin-right: 5px;
+          height: 30px;
+          // width: 15px;
+          width: 98%;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+
+          &Input{
+            width: 15px;
+            height: 15px;
+            margin-right: 10px
+          }
+      }
+
+      button {
+          width: 100%;
+          height: 50px;
+          background-color: #b5d8f7;
+          border: none;
+          border-radius: 7px;
+          font-weight: bold;
+          
+
+          &:hover {
+            background-color: #fff;
+            border: 2px solid #b5d8f7;
+        }
+      }
+      p {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        // font-weight: bold;
+        align-items: center;
+
+        span:hover {
+            color: #b5d8f7;
+        }
+
+        span:nth-child(2){
+          font-weight: bold;
+          margin-left: 3px;
+          position: relative;
+
+          &:nth-child(2)::before {
+            content: '';
+            position: absolute;
+            bottom: -2px; /* Регулируйте положение подчеркивания */
+            left: 0;
+            width: 0; /* Начальная ширина подчеркивания */
+            height: 2px; /* Толщина подчеркивания */
+            background-color: #b5d8f7; /* Цвет подчеркивания */
+            transition: width 0.3s ease; /* Анимация изменения ширины */
+          }
+  
+          &:hover::before {
+            width: 100%; /* Увеличиваем ширину подчеркивания при наведении */
+          }
+        }
+    }
+  }
+}

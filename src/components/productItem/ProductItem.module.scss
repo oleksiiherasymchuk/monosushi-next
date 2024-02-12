@@ -1,0 +1,131 @@
+.product {
+  // margin-top: 45px;
+  margin-bottom: 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  
+
+  &Wrapper {
+    width: 100%;
+    min-height: 450px;
+    // border: 1px solid red;
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+
+    &Item {
+      padding: 10px;
+      height: 448px;
+      width: 338px;
+      margin: 14px 10px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+
+      img {
+        width: 240px;
+        height: 240px;
+
+        // &:hover{
+        //   transform: scale(0.9);
+        // }
+      }
+
+      p {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &Name {
+        font-weight: 600;
+        line-height: 1.5em;
+        font-size: 20px;
+        margin: 10px;
+        margin-top: 22px;
+        &:hover {
+          color: #b5d8f7;
+        }
+      }
+
+      &Description {
+        color: #5a5a5a;
+        // max-width: 300px;
+        // display: inline-block;
+        // vertical-align: middle;
+        font-size: 16px;
+        line-height: 1.5em;
+        margin-top: 10px;
+      }
+
+      &Weight {
+        justify-content: flex-end !important;
+        padding-right: 15px;
+        color: #5a5a5a;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 1.6em;
+      }
+
+      &:hover::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        border-radius: 7px;
+        box-sizing: border-box;
+        animation: rotateBorder .7s linear forwards;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1; // Ensure the pseudo-element is above other content
+        pointer-events: none; // Allow pointer events to pass through
+      }
+    
+      // Ensure links are clickable when the parent is not being hovered
+      &:not(:hover) a {
+        pointer-events: auto; // Enable pointer events on links
+      }
+    }
+  }
+}
+
+@keyframes rotateBorder {
+  25% {
+    border-top: 2px solid #b5d8f7;
+  }
+  50% {
+    border-top: 2px solid #b5d8f7;
+    border-right: 2px solid #b5d8f7;
+  }
+  75% {
+    border-top: 2px solid #b5d8f7;
+    border-right: 2px solid #b5d8f7;
+    border-bottom: 2px solid #b5d8f7;
+  }
+  100% {
+    border-top: 2px solid #b5d8f7;
+    border-right: 2px solid #b5d8f7;
+    border-bottom: 2px solid #b5d8f7;
+    border-left: 2px solid #b5d8f7;
+  }
+}

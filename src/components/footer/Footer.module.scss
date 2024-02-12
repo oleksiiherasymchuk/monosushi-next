@@ -1,0 +1,226 @@
+.footer {
+  width: 100%;
+  border-top: 4px solid #b5d8f7;
+//   margin-top: 333px;
+
+  &Top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 110px;
+      padding: 20px 36px;
+      // margin: 0 35px;
+
+      &Logo {
+        margin-top: 20px;
+          img {
+              width: 136px;
+              height: 50px;
+          }
+
+      }
+
+      &Items {
+        width: 390px;
+        margin-top: 21px;
+        padding-left: 79px;
+        height: 27px;
+        display: flex;
+        justify-content: space-between;
+
+          ul {
+              display: contents;
+          }
+
+          li {
+              list-style: none;
+
+              a {
+                  text-decoration: none;
+                  font-size: 16px;
+                  line-height: 1em;
+                  color: #252525;
+
+                  &:hover{
+                    color: #b5d8f7;
+                    transition: .35s;
+                  }
+              }
+
+          }
+      }
+
+      &Info {
+          width: 600px;
+          height: 70px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          text-align: center;
+
+          &Delivery {
+              width: 215px;
+              height: 100%;
+
+              &Title {
+                  font-weight: bold;
+                  color: #252525;
+                  font-size: 14px;
+              }
+
+              &Description {
+                  font-size: 13px;
+                  color: #5a5a5a;
+                  text-align: center;
+              }
+          }
+
+          &Phone {
+              height: 100%;
+              width: 170px;
+
+              &Title {
+                  font-weight: bold;
+                  color: #252525;
+                  font-size: 14px;
+              }
+
+              &Description {
+                  font-size: 13px;
+                  color: #5a5a5a;
+                  text-align: center;
+
+                  &:hover{
+                    color: #b5d8f7;
+                    transition: .35s;
+                  }
+              }
+
+
+
+          }
+
+          &Work {
+              height: 100%;
+              width: 190px;
+
+              &Title {
+                  font-weight: bold;
+                  color: #252525;
+                  font-size: 14px;
+              }
+
+              &Description {
+                  font-size: 13px;
+                  color: #5a5a5a;
+                  text-align: center;
+              }
+          }
+
+      }
+
+  }
+
+  &Bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 87px;
+      padding: 20px 0;
+      // margin: 0 35px;
+
+      &Copyright {
+        width: 160px;
+        padding-left: 34px;
+          p {
+              font-size: 14px;
+              color: #5a5a5a;
+              text-align: center;
+          }
+      }
+
+      &Paycards {
+          width: 600px;
+          height: 40px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-left: 107px;
+
+          &CardsItem {
+              width: 70px;
+              height: 40px;
+              border-radius: 7px;
+              border: 1px solid #5A5A5A;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin-right: 5px;
+
+              img {
+                  width: 34px;
+                  height: 22px;
+              }
+          }
+
+          &Owner{
+            width: 377px;
+            padding-left: 67px;
+            // margin-left: 113px;
+            p{
+              font-size: 18px;
+              color: #5A5A5A;
+            }
+          }
+      }
+
+      &Social {
+          width: 250px;
+          height: 50px;
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+          text-align: center;
+
+          p {
+              font-size: 13px;
+              color: #5a5a5a;
+              text-align: center;
+              align-self: center;
+          }
+
+          &Item {
+              width: 50px;
+              height: 50px;
+              border: none;
+              border-radius: 7px;
+              background-color: #b5d8f7;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              // &:nth-child(1){
+              //   margin-left: 21px;
+              // }
+          
+
+              img {
+                  width: 18px;
+                  height: 18px;
+              }
+          }
+
+      }
+
+      &Developer {
+        width: 275px;
+          p {
+              font-size: 13px;
+              color: #5a5a5a;
+              text-align: center;
+          }
+      }
+  }
+}

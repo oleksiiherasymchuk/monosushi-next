@@ -1,0 +1,232 @@
+.basket{
+  width: 664px;
+  min-height: 335px;
+  // height: auto;
+  border-top: 1px solid gainsboro;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  position: absolute;
+  top: 96px;
+  right: 5px;
+  // left: 100%;
+  bottom: 0;
+  // margin: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  background-color: #fff;
+
+  // width: 50%;
+  // height: auto;
+  // background-color: white;
+  // border-top: 1px solid gainsboro;
+  // border-bottom-left-radius: 7px;
+  // border-bottom-right-radius: 7px;
+  // position: absolute;
+  // top: 95px;
+  // right: 0;
+  // margin: auto;
+  // display: flex;
+  // justify-content: space-between;
+  // align-items: center;
+  // flex-direction: column;
+  // text-align: center;
+  // z-index: 99;
+
+  &Order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    // min-height: 238px;
+    min-height: auto;
+
+    &Empty {
+        height: 235px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        p {
+            color: #252525;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 1.75em;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 220px;
+            height: 57px;
+            margin-top: 7px;
+            background-color: #b5d8f7;
+            vertical-align: bottom;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: .35s;
+            text-transform: uppercase;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: bold;
+            padding: 16px 22px;
+            border-radius: 10px;
+            color: #252525;
+
+            &:hover{
+              background-color: #fff;
+              border: 2px solid #b5d8f7;
+            }
+        }
+    }
+
+    &Products {
+        height: 109px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 9px 20px 9px 20px;
+        border-bottom: 1px solid gainsboro;
+
+
+        &Item {
+            width: 100%;
+            
+            height: 95px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            img {
+                width: 122px;
+                height: 92px;
+            }
+
+            &Description {
+                height: 45px;
+                width: 500px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-left: 19px;
+                text-align: center;
+
+                p{
+                  font-weight: bold;
+                }
+
+                &Controls {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 300px;
+
+                    &Quantity {
+                        width: 112px;
+                        height: 45px;
+                        display: inline-flex;
+                        align-items: center;
+                        border: 1px solid #dcdcdc;
+                        border-radius: 10px;
+                        color: #252525;
+                        font-size: 16px;
+                        line-height: 16px;
+                        margin-right: auto;
+                        margin-left: 64px;
+
+                        button {
+                            width: 31px;
+                            height: 36px;
+                            cursor: pointer;
+                            background: none;
+                            transition: 0.35s;
+                            font-size: 24px;
+                            line-height: 24px;
+                            color: #5a5a5a;
+                            background-color: #fff;
+                            border-radius: 10px;
+                            padding-bottom: 2px;
+                            margin: 4px;
+                            border: none;
+                        }
+
+                        input {
+                            width: 30px;
+                            height: 40px;
+                            text-align: center;
+                        }
+
+                        input::-webkit-outer-spin-button,
+                        input::-webkit-inner-spin-button {
+                            -webkit-appearance: none;
+                            margin: 0;
+                        }
+
+                        input[type=number] {
+                            --moz-appearance: textfield;
+                        }
+                    }
+
+                    &Price {
+                        color: #252525;
+                        font-weight: 400;
+                        font-size: 16px;
+                        width: 84px;
+                        height: 27px;
+                        margin-left: 15px;
+                        margin-right: 15px;
+                    }
+
+                    button {
+                        border: none;
+                        margin-right: 15px;
+
+                        img {
+                            width: 15px;
+                            height: 15px;
+                        }
+
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+&Bottom {
+  width: 100%;
+  height: 95px;
+  background-color: #b5d8f7;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 15px;
+  padding-left: 20px;
+  align-items: center;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+
+  p {
+      color: #252525;
+      font-weight: bold;
+      font-size: 18x;
+  }
+
+  button {
+      height: 55px;
+      width: 250px;
+      border: none;
+      border-radius: 7px;
+      color: #252525;
+      font-weight: bold;
+      background-color: #DCDCDC;
+  }
+}
+}

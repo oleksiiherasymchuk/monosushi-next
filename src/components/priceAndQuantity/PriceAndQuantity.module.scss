@@ -1,0 +1,82 @@
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 320px;
+  margin-top: 18px;
+
+  &Quantity {
+      width: 97px;
+      height: 45px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #dcdcdc;
+      border-radius: 10px;
+      color: #252525;
+      font-size: 16px;
+      line-height: 16px;
+      margin-right: auto;
+      margin-left: 21px;
+
+      button {
+          width: 31px;
+          height: 36px;
+          cursor: pointer;
+          background: none;
+          transition: 0.35s;
+          font-size: 24px;
+          line-height: 24px;
+          color: #5a5a5a;
+          background-color: #fff;
+          border-radius: 10px;
+          padding-bottom: 2px;
+          margin: 4px;
+          border: none;
+      }
+
+      input {
+          width: 30px;
+          height: 40px;
+          text-align: center;
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+      }
+
+      input[type=number] {
+          --moz-appearance: textfield;
+      }
+  }
+
+  &Price {
+      color: #252525;
+      font-weight: 400;
+      font-size: 18px;
+      width: 84px;
+      height: 30px;
+
+      span{
+        font-weight: 700;
+      }
+  }
+
+  &Button {
+    border: none;
+    border-radius: 7px;
+    background-color: #b5d8f7;
+    height: 45px;
+    width: 87px;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-right: 3px;
+    font-weight: 700;
+
+    &:hover{
+      background-color: #fff;
+      border: 2px solid #b5d8f7;
+    }
+  }
+}

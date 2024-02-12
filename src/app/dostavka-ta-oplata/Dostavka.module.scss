@@ -1,0 +1,207 @@
+.delivery {
+  margin-top: 45px;
+  margin-bottom: 100px;
+  &Title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      text-align: center;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      border-top: 5px solid #b5d8f7;
+      border-top-right-radius: 3px;
+      border-top-left-radius: 3px;
+      color: #252525;
+      font-weight: bold;
+      font-size: 42px;
+      line-height: 1.2em;
+    }
+  }
+
+  &Zones {
+    width: 80%;
+    height: 190px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 45px auto;
+    // margin-bottom: 15px;
+
+    &GreenZone {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      // flex-direction: column;
+
+      img {
+        width: 280px;
+        height: 180px;
+      }
+
+      &Right {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 280px;
+
+        &Text {
+          color: #27ae60;
+          font-size: 26px;
+          line-height: 1.2em;
+          text-align: center;
+        }
+
+        &Description {
+          text-align: center;
+          font-size: 16px;
+          line-height: 1.6em;
+          color: #5a5a5a;
+        }
+      }
+    }
+
+    &YellowZone {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      img {
+        width: 280px;
+        height: 180px;
+      }
+
+      &Right {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 280px;
+
+        &Text {
+          color: #f2c94c;
+          font-size: 26px;
+          line-height: 1.2em;
+          text-align: center;
+        }
+
+        &Description {
+          text-align: center;
+          font-size: 16px;
+          line-height: 1.6em;
+          color: #5a5a5a;
+        }
+      }
+    }
+  }
+
+  &Map {
+    width: 80%;
+    height: 650px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: 15px;
+
+    img {
+      width: 83%;
+      height: 83%;
+    }
+  }
+
+  &Payment {
+    width: 900px;
+    height: 350px;
+    padding-top: 100px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: 45px;
+
+    h2 {
+      color: #252525;
+      font-weight: bold;
+      font-size: 42px;
+      line-height: 1.2em;
+    }
+
+    &Items {
+      display: flex;
+      // flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 800px;
+      height: 120px;
+
+      &Item {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        height: 100%;
+
+        &Img {
+          max-width: 63px;
+          width: 100%;
+          height: 60px;
+          border-radius: 10px;
+          background: #b5d8f7;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          img {
+            width: 43px;
+            height: 25px;
+          }
+        }
+
+        &Description {
+          display: flex;
+          justify-content: space-evenly;
+          flex-direction: column;
+          align-items: flex-start;
+          padding-left: 15px;
+          height: 100%;
+          // text-align: center;
+
+          &Title {
+            color: #252525;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 1.1em;
+          }
+
+          &Description {
+            font-size: 16px;
+            line-height: 1.6em;
+            color: #5a5a5a;
+          }
+        }
+      }
+    }
+  }
+
+  &TextPage {
+    width: 900px;
+    height: 230px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+    // margin-bottom: 15px;
+
+    font-size: 18px;
+    line-height: 1.5em;
+    color: #5a5a5a;
+
+    p {
+      margin-bottom: 10px;
+    }
+  }
+}

@@ -1,0 +1,47 @@
+.button {
+  display: inline-block;
+  position: relative;
+  font-weight: 700;
+  font-size: 16px;
+  color: #b5d8f7;
+  cursor: pointer;
+  padding-right: 24px;
+  font-size: 15px;
+  margin-bottom: 20px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: transparent;
+    transition: width 0.3s ease, background-color 0.3s ease;
+  }
+
+  &:hover::before {
+    width: 85%;
+    background-color: #b5d8f7;
+  }
+
+  span{
+    margin-left: 11px;
+    font-size: 23px;
+    position: relative;
+  }
+}
+
+.content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease; /* Smooth transition */
+}
+
+.showMoreContent .content {
+  max-height: 1000px;
+}
+
+.hideContent .content {
+  max-height: 0;
+}
