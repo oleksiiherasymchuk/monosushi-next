@@ -2,11 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 320px;
+  width: 100%;
   margin-top: 18px;
 
   &Quantity {
-      width: 97px;
+      width: 96px;
       height: 45px;
       display: inline-flex;
       align-items: center;
@@ -16,7 +16,7 @@
       font-size: 16px;
       line-height: 16px;
       margin-right: auto;
-      margin-left: 21px;
+      margin-left: 0px;
 
       button {
           width: 31px;
@@ -79,4 +79,11 @@
       border: 2px solid #b5d8f7;
     }
   }
+}
+
+@media (min-width: 991px) and (max-width: 1200px){
+  .controls{ 
+    &Quantity{
+      margin-left: 21px;
+  }}
 }

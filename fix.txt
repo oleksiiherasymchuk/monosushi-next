@@ -2,3 +2,6 @@
 2. on hover product-item make scale 0.9
 3. add animation to showMore 
 4. .swiper-pagination-bullet styles
+5. home page burger menu under swiper
+6. page for product
+7. does not work links in header burger menu for 1200px

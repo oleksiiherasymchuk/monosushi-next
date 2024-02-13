@@ -57,6 +57,28 @@ const HomePage = (props: Props) => {
         </div>
       </div>
 
+      <div className={styles.homeInfoTablet}>
+      <div className={styles.homeInfoTabletBlock}>
+          <Image src={Delivery} alt="delivery" style={{ width: '135px' }}/>
+          <Link href="/dostavka-ta-oplata">Зони доставки</Link>
+        </div>
+        <div className={styles.homeInfoTabletBlock}>
+          <Image src={Logo} alt="logo" />
+          <p>
+            Середній час доставки в зеленій зоні <span>00:43:00</span>
+          </p>
+        </div>
+        <div className={styles.homeInfoTabletBlock}>
+          <Image src={Bonus} alt="bonus" />
+          <div>
+          <p>Наш графік роботи</p>
+          <p>
+            Працюємо з <span>11:00</span> до <span>22:30</span>
+          </p>
+          </div>       
+        </div>
+      </div>
+
       <ProductNavigation />
       <ProductItem products={rolls} />
       <div className={styles.homeText}>

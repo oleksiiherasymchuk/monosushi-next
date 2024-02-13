@@ -13,7 +13,8 @@ type Props = {};
 
 const Footer = (props: Props) => {
   return (
-    <footer className={styles.footer}>
+    <>
+     <footer className={styles.footer}>
       <div className={styles.footerTop}>
         <div className={styles.footerTopLogo}>
           <Image src={HeaderLogo} height={50} width={50} alt="headerLogo" />
@@ -88,6 +89,83 @@ const Footer = (props: Props) => {
         </div>
       </div>
     </footer>
+
+    <footer className={styles.footerTablet}>
+    <div className={styles.footerTabletTop}>
+        <div className={styles.footerTabletTopLogo}>
+          <Image src={HeaderLogo} height={50} width={50} alt="headerLogo" />
+        </div>
+
+        <div className={styles.footerTabletTopItems}>
+          <ul>
+            <li>
+              <Link href="/actions">Акції на суші</Link>
+            </li>
+            <li>
+              <Link href="/about-us">Про нас</Link>
+            </li>
+            <li>
+              <Link href="/dogovir-oferta">Оферта</Link>
+            </li>
+          </ul>
+        </div>
+
+        <div className={styles.footerTabletTopInfo}>
+          <div className={styles.footerTabletTopInfoDelivery}>
+            <p className={styles.footerTabletTopInfoDeliveryTitle}>Точки самовивозу</p>
+            <p className={styles.footerTabletTopInfoDeliveryDescription}>вул. Володимира Зеленського, 95</p>
+            <p className={styles.footerTabletTopInfoDeliveryDescription}>вул. Валерія Залужного, 24</p>
+            <p className={styles.footerTabletTopInfoDeliveryDescription}>вул. Кирила Буданова, 33</p>
+          </div>
+
+          <div className={styles.footerTabletTopInfoPhone}>
+            <p className={styles.footerTabletTopInfoPhoneTitle}>Оформити замовлення</p>
+            <p className={styles.footerTabletTopInfoPhoneDescription}>(093) 847 51 52</p>
+          </div>
+
+          <div className={styles.footerTabletTopInfoWork}>
+            <p className={styles.footerTabletTopInfoWorkTitle}>Графік роботи</p>
+            <p className={styles.footerTabletTopInfoWorkDescription}>працюємо з 10:00 до 22:00</p>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.footerTabletBottom}>
+        <div className={styles.footerTabletBottomCopyright}>
+          <p>© 2024 Monosushi</p>
+        </div>
+
+        <div className={styles.footerTabletBottomPaycards}>
+          <div className={styles.footerTabletBottomPaycardsCardsItem}>
+            <Image src={MasterCard} alt="mastercard" height={50} width={50} />
+          </div>
+          <div className={styles.footerTabletBottomPaycardsCardsItem}>
+            <Image src={Visa} alt="visa" height={50} width={50} />
+          </div>
+          <div className={styles.footerTabletBottomPaycardsCardsItem}>
+            <Image src={Liqpay} alt="liqpay" height={50} width={50} />
+          </div>
+          <div className={styles.footerTabletBottomPaycardsOwner}>
+            <p>ФОП Малюк Василь Васильович</p>
+          </div>
+        </div>
+
+        <div className={styles.footerTabletBottomSocial}>
+          <p>Слідкуйте за нами</p>
+          <div className={styles.footerTabletBottomSocialItem}>
+            <Image src={Facebook} alt="facebookIcon" height={50} width={50} />
+          </div>
+          <div className={styles.footerTabletBottomSocialItem}>
+            <Image src={Instagram} alt="instagramIcon" height={50} width={50} />
+          </div>
+        </div>
+
+        <div className={styles.footerTabletBottomDeveloper}>
+          <p>Oleksii Herasymchuk</p>
+        </div>
+      </div>
+    </footer>
+    </>
   );
 };
 

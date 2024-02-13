@@ -49,8 +49,8 @@ const Header = () => {
   };
 
   const onCloseBasketModal = () => {
-    setIsBasketOpen(false)
-  }
+    setIsBasketOpen(false);
+  };
 
   const onCloseModal = () => {
     setIsAuthModalOpen(false);
@@ -99,6 +99,7 @@ const Header = () => {
   return (
     <>
       <header>
+         {/* START HEADER FOR 1200px+ */}
         <nav className={styles.header}>
           <Modal isOpen={isPhoneModalOpen} onClose={onCloseModal}>
             <PhoneModal onClose={onClosePhoneModal} />
@@ -123,6 +124,7 @@ const Header = () => {
               />
             )}
           </Modal>
+
           <div className={styles.headerLogo}>
             <Link href="/">
               <Image
@@ -210,28 +212,31 @@ const Header = () => {
             onClick={toggleMenu}
             ref={burgerMenuRef}
           >
-            <Image src={Menu} height={50} width={50} alt="burgerMenu"/>
+            <Image src={Menu} height={50} width={50} alt="burgerMenu" />
             {isBurgerMenuOpen && (
-               <div className={styles.headerMenuBurger} onClick={preventPropagation}>
-               <Image
-                 src={BurgerMenuIcon}
-                 height={50}
-                 width={50}
-                 alt="burgerMenuOpenIcon"
-                 className={styles.headerMenuBurgerIcon}
-               />
-         
-               <div className={styles.headerMenuBurgerItem}>
-                 <Link href="/dostavka-ta-oplata"> Доставка та оплата </Link>
-               </div>
-         
-               <div className={styles.headerMenuBurgerItem}>
-                 <Link href="/about-us">Про нас</Link>
-               </div>
-               <div className={styles.headerMenuBurgerItem}>
-                 <Link href="/actions">Акції на суші</Link>
-               </div>
-             </div>
+              <div
+                className={styles.headerMenuBurger}
+                onClick={preventPropagation}
+              >
+                <Image
+                  src={BurgerMenuIcon}
+                  height={50}
+                  width={50}
+                  alt="burgerMenuOpenIcon"
+                  className={styles.headerMenuBurgerIcon}
+                />
+
+                <div className={styles.headerMenuBurgerItem}>
+                  <Link href="/dostavka-ta-oplata"> Доставка та оплата </Link>
+                </div>
+
+                <div className={styles.headerMenuBurgerItem}>
+                  <Link href="/about-us">Про нас</Link>
+                </div>
+                <div className={styles.headerMenuBurgerItem}>
+                  <Link href="/actions">Акції на суші</Link>
+                </div>
+              </div>
             )}
           </div>
 
@@ -249,13 +254,9 @@ const Header = () => {
             </div>
           </div>
 
-          {isAuth ? <AdminHeaderBurger /> : <div className={styles.headerUser} onClick={onOpenAuthModal}>
+          <div className={styles.headerUser} onClick={onOpenAuthModal}>
             <Image src={User} alt="user" height={25} width={25} />
-          </div>}
-    
-          {/* <div className={styles.headerUser} onClick={onOpenAuthModal}>
-            <Image src={User} alt="user" height={25} width={25} />
-          </div> */}
+          </div>
 
           <div className={styles.headerBasket} onClick={toogleBasket}>
             <Image src={Basket} alt="basket" height={25} width={25} />
@@ -263,8 +264,186 @@ const Header = () => {
             <span>0 грн</span>
           </div>
         </nav>
+        {/* END HEADER FOR 1200px+ */}
+
+
+        {/* START HEADER FOR TABLET 990px-1200px */}
+        <nav className={styles.headerTablet}>
+          <Modal isOpen={isPhoneModalOpen} onClose={onCloseModal}>
+            <PhoneModal onClose={onClosePhoneModal} />
+          </Modal>
+          <Modal isOpen={isAuthModalOpen} onClose={onCloseModal}>
+            {currentModalContent === "auth" && (
+              <AuthModal
+                onClose={onCloseModal}
+                changeContent={changeModalContent}
+              />
+            )}
+            {currentModalContent === "signIn" && (
+              <SignInModal
+                onClose={onCloseModal}
+                changeContent={changeModalContent}
+              />
+            )}
+            {currentModalContent === "forget" && (
+              <ForgetModal
+                onClose={onCloseModal}
+                changeContent={changeModalContent}
+              />
+            )}
+          </Modal>
+
+          <div className={styles.headerTabletLogo}>
+            <Link href="/">
+              <Image
+                src={HeaderLogo}
+                className={styles.headerTabletLogoLink}
+                alt="logo"
+                width={136}
+                height={51}
+              />
+            </Link>
+          </div>
+
+          <div className={styles.headerTabletPhone}>
+            <a href="tel:+380938475152">
+              <Image src={Phone} alt="phone" height={15} width={15} />
+            </a>
+          </div>
+
+          <div className={styles.headerTabletUser} onClick={onOpenAuthModal}>
+            <Image src={User} alt="user" height={25} width={25} />
+          </div>
+
+          <div
+            className={styles.headerTabletMenu}
+            onClick={toggleMenu}
+            ref={burgerMenuRef}
+          >
+            <Image src={isBurgerMenuOpen ? BurgerMenuIcon : Menu} height={50} width={50} alt="burgerMenu" />
+            {isBurgerMenuOpen && (
+              <div
+                className={styles.headerTabletMenuBurger}
+                onClick={preventPropagation}
+              >
+                {/* <Image
+                 src={BurgerMenuIcon}
+                 height={50}
+                 width={50}
+                 alt="burgerMenuOpenIcon"
+                 className={styles.headerTabletMenuBurgerIcon}
+               /> */}
+
+                <div className={styles.headerTabletMenuBurgerItemSouce}>
+                  <Link href="/product-category/souces">
+                    <Image
+                      src={Souces}
+                      width={30}
+                      height={30}
+                      className={styles.headerTabletMenuBurgerItemIcon}
+                      alt="navbarIcons"
+                    />
+                    <span>Соуси</span>
+                  </Link>
+                </div>
+
+                <div className={styles.headerTabletMenuBurgerItemLink}>
+                  <div className={styles.headerTabletMenuBurgerItemLinkItem}>
+                    <Link href="/dostavka-ta-oplata"> Доставка та оплата </Link>
+                  </div>
+
+                  <div className={styles.headerTabletMenuBurgerItemLinkItem}>
+                    <Link href="/about-us">Про нас</Link>
+                  </div>
+                  <div className={styles.headerTabletMenuBurgerItemLinkItem}>
+                    <Link href="/actions">Акції на суші</Link>
+                  </div>
+                </div>
+
+                <div className={styles.headerTabletMenuBurgerItemPhone}>
+                  <a href="tel:+380938475152">+380938475152</a>
+                  <div className={styles.headerTabletMenuBurgerItemPhoneDetails}>
+                    Працюємо з <b>11:00</b> до <b>22:30</b>
+                  </div>
+                </div>
+
+                <div className={styles.headerTabletMenuBurgerItemCall}>
+                    <button onClick={onOpenPhoneModal}>
+                      <Image src={Phone} alt="phone" height={15} width={15} />
+                      <span>Ми зателефонуємо</span>
+                    </button>
+                  </div>
+              </div>
+            )}
+          </div>
+
+          <div className={styles.headerTabletBasket} onClick={toogleBasket}>
+            <Image src={Basket} alt="basket" height={25} width={25} />
+            <span className={styles.headerBasketProductQuantity}>0</span>
+            <span>0 грн</span>
+          </div>
+        </nav>
+        {/* END HEADER FORMTABLET 990px-1200px */}
+        
+
+        {/* START PRODUCTS NAVBAR */}
+        <nav className={styles.productsNavbar}>
+          <div className={styles.productsNavbarItem}>
+            <Link href="/actions">
+              <Image
+                src={Discount}
+                width={30}
+                height={30}
+                className={styles.productsNavbarItemIcon}
+                alt="navbarIcons"
+              />
+              <span>Акції на суші</span>
+            </Link>
+          </div>
+
+          <div className={styles.productsNavbarItem}>
+              <Link href="/product-category/rolls">
+                <Image
+                  src={Rolls}
+                  width={30}
+                  height={30}
+                  className={styles.productsNavbarItemIcon}
+                  alt="navbarIcons"
+                />
+                <span>Роли</span>
+              </Link>
+            </div>
+
+            <div className={styles.productsNavbarItem}>
+              <Link href="/product-category/sets">
+                <Image
+                  src={Sets}
+                  width={30}
+                  height={30}
+                  className={styles.productsNavbarItemIcon}
+                  alt="navbarIcons"
+                />
+                <span>Сети</span>
+              </Link>
+            </div>
+
+            <div className={styles.productsNavbarItem}>
+              <Link href="/product-category/drinks">
+                <Image
+                  src={Drinks}
+                  width={30}
+                  height={30}
+                  className={styles.productsNavbarItemIcon}
+                  alt="navbarIcons"
+                />
+                <span>Безалкогольні напої</span>
+              </Link>
+            </div>
+        </nav>
+        {/* END PRODUCTS NAVBAR */}
+        
       </header>
-      {isBasketOpen && <BasketModal onClose={onCloseBasketModal}/>}
+      {isBasketOpen && <BasketModal onClose={onCloseBasketModal} />}
     </>
   );
 };

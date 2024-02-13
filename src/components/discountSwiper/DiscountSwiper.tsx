@@ -28,6 +28,7 @@ const DiscountSwiper = (props: Props) => {
     {id: 6, name: 'HP', imagePath: Discount5.src},
   ]
   return (
+    <>
     <div className={styles.wrapper}>
        <Swiper
         // navigation
@@ -53,6 +54,26 @@ const DiscountSwiper = (props: Props) => {
         ))}
       </Swiper>
     </div>
+
+    <div className={styles.wrapperTablet}>
+       <Swiper
+        spaceBetween={10}
+        slidesPerView={2}
+        pagination={{ clickable: true }}
+        modules={[Pagination]}
+        scrollbar={{ draggable: true }}
+        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log('slide change')}
+        style={{ height: '100%' }}
+      >
+        {discounts.map((discount) => (
+          <SwiperSlide key={discount.id} style={{ width: '695px' }}>
+            <Link href={`/action/${discount.name}`}><img src={discount.imagePath} alt={`Discount ${discount.id}`} /></Link>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+    </>
   )
 }
 

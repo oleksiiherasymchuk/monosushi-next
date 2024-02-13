@@ -14,8 +14,8 @@ type Props = {
 const BasketModal = ({ onClose }: Props) => {
   const isBasketEmpty = false;
   const basket: any[] = [
-    { imagePath: California, name: "California", count: 1, price: 300 },
-    { imagePath: California, name: "California", count: 1, price: 300 },
+    // { imagePath: California, name: "California", count: 1, price: 300 },
+    // { imagePath: California, name: "California", count: 1, price: 300 },
   ];
   const productCount = (product: any, value: boolean) => {};
   const deleteBasketProduct = (productID: number) => {};
