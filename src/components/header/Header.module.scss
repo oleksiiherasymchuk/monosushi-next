@@ -331,7 +331,7 @@
 }
 
 //  telephone user burgerMenu
-@media (min-width: 991px) and (max-width: 1200px) {
+@media (min-width: 769px) and (max-width: 1200px) {
   .header {
     display: none;
   }
@@ -397,9 +397,11 @@
         align-items: flex-start;
         flex-direction: column;
 
-        width: 250%;
+        // width: 250%;
+        // width: calc(50vh - 142px);
+        width: 50vw;
         height: 100vh;
-        left: -142px;
+        left: 0;
         border-top: 1px solid gainsboro;
         top: 47px;
         // padding: 28px 25px 0 25px;
@@ -584,7 +586,6 @@
     display: flex;
   }
 }
-
 
 
 @keyframes rotateBorder {

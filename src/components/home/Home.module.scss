@@ -171,7 +171,7 @@
   }
 }
 
-@media (min-width: 991px) and (max-width: 1200px) {
+@media (min-width: 769px) and (max-width: 1200px) {
   .homeInfo {
     display: none;
   }
@@ -191,6 +191,7 @@
       padding-right: 15px;
       text-align: center;
       position: relative;
+      flex-direction: column;
 
       ::before{
         content: "";

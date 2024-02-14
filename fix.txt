@@ -5,3 +5,7 @@
 5. home page burger menu under swiper
 6. page for product
 7. does not work links in header burger menu for 1200px
+
+
+769-990
+576-768

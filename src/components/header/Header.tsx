@@ -267,7 +267,7 @@ const Header = () => {
         {/* END HEADER FOR 1200px+ */}
 
 
-        {/* START HEADER FOR TABLET 990px-1200px */}
+        {/* START HEADER FOR TABLET 769px-1200px */}
         <nav className={styles.headerTablet}>
           <Modal isOpen={isPhoneModalOpen} onClose={onCloseModal}>
             <PhoneModal onClose={onClosePhoneModal} />
@@ -383,7 +383,7 @@ const Header = () => {
             <span>0 грн</span>
           </div>
         </nav>
-        {/* END HEADER FORMTABLET 990px-1200px */}
+        {/* END HEADER FORMTABLET 769px-1200px */}
         
 
         {/* START PRODUCTS NAVBAR */}

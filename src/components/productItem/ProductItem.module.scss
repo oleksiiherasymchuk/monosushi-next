@@ -110,13 +110,20 @@
   }
 }
 
-@media (min-width: 991px) and (max-width: 1200px){
+@media (min-width: 769px) and (max-width: 1200px){
   .product {
     &Wrapper {
       &Item {
         height: 448px;
-        width: 340px;
+        // width: 340px;
+        width: 310px;
         margin: 14px 10px;
+
+        &Name{
+          &:hover{
+            color: black;
+          }
+        }
   
         img {
           width: 300px;

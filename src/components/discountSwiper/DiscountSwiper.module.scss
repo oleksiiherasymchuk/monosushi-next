@@ -33,22 +33,23 @@
     // }
   }
 
-  &Tablet{
+  &Tablet, &Mobile{
     display: none;
   }
 }
 
-@media (min-width: 991px) and (max-width: 1200px) {
+@media (min-width: 769px) and (max-width: 1200px) {
   .wrapper {
     display: none;
   }
 
   .wrapperTablet {
-    width: 930px;
+    // width: 730px;
+    width: 80vw;
     height: 260px;
     // padding: 40px 13px;
     display: flex;
-    // justify-content: center;
+    justify-content: center;
     align-items: center;
     margin: 40px 0;
   
@@ -60,6 +61,16 @@
   }
   
 }
+
+// @media (max-width: 1200px){
+//   .wrapperTablet{
+//     display: none;
+//   }
+
+//   .wrapperMobile{
+//     display: block;
+//   }
+// }
 
 .bullet {
   display: inline-block;

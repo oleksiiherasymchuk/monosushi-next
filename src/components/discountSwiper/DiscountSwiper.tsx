@@ -67,12 +67,32 @@ const DiscountSwiper = (props: Props) => {
         style={{ height: '100%' }}
       >
         {discounts.map((discount) => (
-          <SwiperSlide key={discount.id} style={{ width: '695px' }}>
+          <SwiperSlide key={discount.id} style={{ width: '80vw', display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
             <Link href={`/action/${discount.name}`}><img src={discount.imagePath} alt={`Discount ${discount.id}`} /></Link>
           </SwiperSlide>
         ))}
       </Swiper>
     </div>
+
+
+    {/* <div className={styles.wrapperMobile}>
+       <Swiper
+        spaceBetween={10}
+        slidesPerView={1}
+        pagination={{ clickable: true }}
+        modules={[Pagination]}
+        scrollbar={{ draggable: true }}
+        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log('slide change')}
+        style={{ height: '100%' }}
+      >
+        {discounts.map((discount) => (
+          <SwiperSlide key={discount.id} style={{ width: '80vw', display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
+            <Link href={`/action/${discount.name}`}><img src={discount.imagePath} alt={`Discount ${discount.id}`} /></Link>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div> */}
     </>
   )
 }

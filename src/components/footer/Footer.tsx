@@ -109,7 +109,9 @@ const Footer = (props: Props) => {
             </li>
           </ul>
         </div>
-
+    </div>
+        
+     
         <div className={styles.footerTabletTopInfo}>
           <div className={styles.footerTabletTopInfoDelivery}>
             <p className={styles.footerTabletTopInfoDeliveryTitle}>Точки самовивозу</p>
@@ -128,7 +130,7 @@ const Footer = (props: Props) => {
             <p className={styles.footerTabletTopInfoWorkDescription}>працюємо з 10:00 до 22:00</p>
           </div>
         </div>
-      </div>
+      
 
       <div className={styles.footerTabletBottom}>
         <div className={styles.footerTabletBottomCopyright}>
@@ -145,13 +147,13 @@ const Footer = (props: Props) => {
           <div className={styles.footerTabletBottomPaycardsCardsItem}>
             <Image src={Liqpay} alt="liqpay" height={50} width={50} />
           </div>
-          <div className={styles.footerTabletBottomPaycardsOwner}>
+          {/* <div className={styles.footerTabletBottomPaycardsOwner}>
             <p>ФОП Малюк Василь Васильович</p>
-          </div>
+          </div> */}
         </div>
 
         <div className={styles.footerTabletBottomSocial}>
-          <p>Слідкуйте за нами</p>
+          {/* <p>Слідкуйте за нами</p> */}
           <div className={styles.footerTabletBottomSocialItem}>
             <Image src={Facebook} alt="facebookIcon" height={50} width={50} />
           </div>
@@ -165,6 +167,8 @@ const Footer = (props: Props) => {
         </div>
       </div>
     </footer>
+
+
     </>
   );
 };
