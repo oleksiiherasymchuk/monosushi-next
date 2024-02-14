@@ -9,22 +9,21 @@
   background: #fff;
   border: 2px solid #b5d8f7;
   border-radius: 3px;
+  animation: burgerMenu 0.35s linear forwards,
+    burgerMenuItem 0.35s linear forwards;
 
-  // display: none;
-  animation: burgerMenu 0.35s linear forwards, burgerMenuItem 0.35s linear forwards;
-
-  &:hover{
+  &:hover {
     display: block;
   }
 
-  &Icon{
+  &Icon {
     height: 25px;
     width: 44px;
     position: relative;
     top: -13px;
   }
 
-  &Item{
+  &Item {
     width: 181px;
     height: 44px;
     display: flex;
@@ -33,14 +32,12 @@
     margin-top: 12px;
     align-items: center;
     font-weight: bold;
-    // opacity: 0;
     transition: opacity 0.3s ease-in-out;
     animation: burgerMenuItem 0.35s linear forwards;
 
-    &:hover{
+    &:hover {
       border: 2px solid #b5d8f7;
-      border-radius: 10px; 
+      border-radius: 10px;
     }
   }
-
 }

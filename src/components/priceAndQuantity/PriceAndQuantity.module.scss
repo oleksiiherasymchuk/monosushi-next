@@ -6,61 +6,61 @@
   margin-top: 18px;
 
   &Quantity {
-      width: 96px;
-      height: 45px;
-      display: inline-flex;
-      align-items: center;
-      border: 1px solid #dcdcdc;
+    width: 96px;
+    height: 45px;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    color: #252525;
+    font-size: 16px;
+    line-height: 16px;
+    margin-right: auto;
+    margin-left: 0px;
+
+    button {
+      width: 31px;
+      height: 36px;
+      cursor: pointer;
+      background: none;
+      transition: 0.35s;
+      font-size: 24px;
+      line-height: 24px;
+      color: #5a5a5a;
+      background-color: #fff;
       border-radius: 10px;
-      color: #252525;
-      font-size: 16px;
-      line-height: 16px;
-      margin-right: auto;
-      margin-left: 0px;
+      padding-bottom: 2px;
+      margin: 4px;
+      border: none;
+    }
 
-      button {
-          width: 31px;
-          height: 36px;
-          cursor: pointer;
-          background: none;
-          transition: 0.35s;
-          font-size: 24px;
-          line-height: 24px;
-          color: #5a5a5a;
-          background-color: #fff;
-          border-radius: 10px;
-          padding-bottom: 2px;
-          margin: 4px;
-          border: none;
-      }
+    input {
+      width: 30px;
+      height: 40px;
+      text-align: center;
+    }
 
-      input {
-          width: 30px;
-          height: 40px;
-          text-align: center;
-      }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
 
-      input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-      }
-
-      input[type=number] {
-          --moz-appearance: textfield;
-      }
+    input[type="number"] {
+      --moz-appearance: textfield;
+    }
   }
 
   &Price {
-      color: #252525;
-      font-weight: 400;
-      font-size: 18px;
-      width: 84px;
-      height: 30px;
+    color: #252525;
+    font-weight: 400;
+    font-size: 18px;
+    width: 84px;
+    height: 30px;
 
-      span{
-        font-weight: 700;
-      }
+    span {
+      font-weight: 700;
+    }
   }
 
   &Button {
@@ -74,16 +74,17 @@
     margin-right: 3px;
     font-weight: 700;
 
-    &:hover{
+    &:hover {
       background-color: #fff;
       border: 2px solid #b5d8f7;
     }
   }
 }
 
-@media (min-width: 769px) and (max-width: 1200px){
-  .controls{ 
-    &Quantity{
+@media (min-width: 769px) and (max-width: 1200px) {
+  .controls {
+    &Quantity {
       margin-left: 21px;
-  }}
+    }
+  }
 }

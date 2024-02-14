@@ -7,9 +7,8 @@
   justify-content: flex-start;
   align-items: center;
 
-  &Text{
+  &Text {
     width: 73%;
-    // margin-top: 125px;
     margin-top: 40px;
     margin-bottom: 10px;
     display: flex;
@@ -18,29 +17,27 @@
     align-items: flex-start;
     font-size: 17px;
     color: #5a5a5a;
-    p{
+    p {
       margin-bottom: 20px;
       line-height: 1.6em;
     }
-    ul{ 
+    ul {
       margin: 6px 28px;
       list-style: none;
-      
-      li{
+
+      li {
         line-height: 1.47em;
-        // padding-left: 24px;
         position: relative;
         margin-bottom: 7px;
 
-      &::before {
-        content: '•'; /* Unicode bullet character */
-        color: #b5d8f7; /* Change bullet color here */
-        display: inline-block;
-        width: 15px;
-        margin-left: -1em;
-        // padding-right: 20px;
-        font-size: 20px;
-      }
+        &::before {
+          content: "•";
+          color: #b5d8f7;
+          display: inline-block;
+          width: 15px;
+          margin-left: -1em;
+          font-size: 20px;
+        }
       }
     }
   }

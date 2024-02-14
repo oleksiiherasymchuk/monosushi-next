@@ -10,7 +10,6 @@ type Props = {
   onClose?: () => void;
 };
 
-// isBasketOpen, isBasketEmpty, basket, total, goToCatalogue, productCount, deleteBasketProduct
 const BasketModal = ({ onClose }: Props) => {
   const isBasketEmpty = false;
   const basket: any[] = [
@@ -42,12 +41,12 @@ const BasketModal = ({ onClose }: Props) => {
             <div className={styles.basketOrderProducts} key={i}>
               <div className={styles.basketOrderProductsItem}>
                 {/* <a href=""> */}
-                  <Image
-                    src={b.imagePath}
-                    alt="productImage"
-                    height={92}
-                    width={122}
-                  />
+                <Image
+                  src={b.imagePath}
+                  alt="productImage"
+                  height={92}
+                  width={122}
+                />
                 {/* </a> */}
                 <div className={styles.basketOrderProductsItemDescription}>
                   <p>{b.name}</p>

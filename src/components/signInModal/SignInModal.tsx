@@ -33,7 +33,6 @@ const SignInModal = ({ onClose, changeContent }: Props) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    // Perform form submission logic here
   };
 
   const switchToAuth = () => {
@@ -103,28 +102,24 @@ const SignInModal = ({ onClose, changeContent }: Props) => {
         </div>
         {matchError && <p>Confirmed password is required</p>}
         <div className={styles.signInModalFormCheckbox}>
-        <label htmlFor="checkbox" >
-          <input
-            type="checkbox"
-            className={styles.signInModalFormCheckboxInput}
-          />
-          <span>
-            Я погоджуюсь з <b>Правилами користування</b>
-          </span>
-        </label>
+          <label htmlFor="checkbox">
+            <input
+              type="checkbox"
+              className={styles.signInModalFormCheckboxInput}
+            />
+            <span>
+              Я погоджуюсь з <b>Правилами користування</b>
+            </span>
+          </label>
         </div>
-       
+
         {/* <button disabled={registerForm.invalid} type="submit"> */}
         <button type="submit">ЗАРЕЄСТРУВАТИСЯ</button>
-      
-           <p>
-           <span>
-             Вже зареєстровані?
-           </span>
-           <span onClick={switchToAuth}>
-             Увійти
-           </span>
-         </p>
+
+        <p>
+          <span>Вже зареєстровані?</span>
+          <span onClick={switchToAuth}>Увійти</span>
+        </p>
       </form>
     </div>
   );

@@ -9,10 +9,6 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-/* .modal-open {
-  background-color: #333333;
-} */
-
 .modal-open {
   overflow: hidden;
   pointer-events: none;

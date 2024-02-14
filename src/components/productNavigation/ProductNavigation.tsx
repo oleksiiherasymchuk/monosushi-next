@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import styles from "./ProductNavigation.module.scss";
 
@@ -20,21 +20,27 @@ const ProductNavigation = (props: Props) => {
     { label: "Преміум суші", active: false },
   ]);
 
-  const handleActiveItem = (index: number, e: React.MouseEvent<HTMLLIElement>) => {
-    e.preventDefault()
+  const handleActiveItem = (
+    index: number,
+    e: React.MouseEvent<HTMLLIElement>
+  ) => {
+    e.preventDefault();
     const changeActiveItem = navigationItems.map((item, i) => ({
       ...item,
       active: i === index,
     }));
     setNavigationItems(changeActiveItem);
-  }
+  };
 
   return (
     <div className={styles.navigation}>
       <ul>
         {navigationItems.map((nav, index) => (
-          <li key={index} className={nav.active ? styles.active : ""} onClick={(e) => handleActiveItem(index, e)}>
-            {/* <Link href="#">{nav.label}</Link> */}
+          <li
+            key={index}
+            className={nav.active ? styles.active : ""}
+            onClick={(e) => handleActiveItem(index, e)}
+          >
             {nav.label}
           </li>
         ))}

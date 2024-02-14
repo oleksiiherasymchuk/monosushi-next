@@ -31,12 +31,11 @@ const HomePage = (props: Props) => {
 
   return (
     <div className={styles.home}>
-
       <DiscountPaginator />
 
       <div className={styles.homeInfo}>
         <div className={styles.homeInfoBlock}>
-          <Image src={Delivery} alt="delivery" style={{ width: '135px' }}/>
+          <Image src={Delivery} alt="delivery" style={{ width: "135px" }} />
           <Link href="/dostavka-ta-oplata">Зони доставки</Link>
         </div>
         <div className={styles.homeInfoBlock}>
@@ -48,18 +47,17 @@ const HomePage = (props: Props) => {
         <div className={styles.homeInfoBlock}>
           <Image src={Bonus} alt="bonus" />
           <div>
-          <p>Наш графік роботи</p>
-          <p>
-            Працюємо з <span>11:00</span> до <span>22:30</span>
-          </p>
+            <p>Наш графік роботи</p>
+            <p>
+              Працюємо з <span>11:00</span> до <span>22:30</span>
+            </p>
           </div>
-          
         </div>
       </div>
 
       <div className={styles.homeInfoTablet}>
-      <div className={styles.homeInfoTabletBlock}>
-          <Image src={Delivery} alt="delivery" style={{ width: '135px' }}/>
+        <div className={styles.homeInfoTabletBlock}>
+          <Image src={Delivery} alt="delivery" style={{ width: "135px" }} />
           <Link href="/dostavka-ta-oplata">Зони доставки</Link>
         </div>
         <div className={styles.homeInfoTabletBlock}>
@@ -71,11 +69,11 @@ const HomePage = (props: Props) => {
         <div className={styles.homeInfoTabletBlock}>
           <Image src={Bonus} alt="bonus" />
           <div>
-          <p>Наш графік роботи</p>
-          <p>
-            Працюємо з <span>11:00</span> до <span>22:30</span>
-          </p>
-          </div>       
+            <p>Наш графік роботи</p>
+            <p>
+              Працюємо з <span>11:00</span> до <span>22:30</span>
+            </p>
+          </div>
         </div>
       </div>
 

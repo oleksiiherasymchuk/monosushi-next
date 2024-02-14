@@ -1,5 +1,5 @@
 .forgetModal {
-  width: 600px;
+  width: 80vw;
   height: 385px;
   border-radius: 7px;
   position: absolute;
@@ -26,7 +26,6 @@
     color: gray;
     font-size: 14px;
     font-style: oblique;
-    // font-weight: bold;
   }
 
   form {
@@ -67,7 +66,6 @@
       align-items: center;
       margin-top: 20px;
 
-  
       span:hover {
         color: #b5d8f7;
       }
@@ -78,18 +76,18 @@
         position: relative;
 
         &:nth-child(2)::before {
-          content: '';
+          content: "";
           position: absolute;
-          bottom: -2px; /* Регулируйте положение подчеркивания */
+          bottom: -2px;
           left: 0;
-          width: 0; /* Начальная ширина подчеркивания */
-          height: 2px; /* Толщина подчеркивания */
-          background-color: #b5d8f7; /* Цвет подчеркивания */
-          transition: width 0.3s ease; /* Анимация изменения ширины */
+          width: 0;
+          height: 2px;
+          background-color: #b5d8f7;
+          transition: width 0.3s ease;
         }
 
         &:hover::before {
-          width: 100%; /* Увеличиваем ширину подчеркивания при наведении */
+          width: 100%;
         }
       }
     }

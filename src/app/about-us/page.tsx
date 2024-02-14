@@ -19,7 +19,6 @@ export default function Page(props: Props) {
 
   const toggleDropdown = (dropdownName: string) => {
     setIsDropdownOpen((prevState) => ({
-      // ...prevState,
       [dropdownName]: !prevState[dropdownName],
     }));
   };
@@ -128,17 +127,22 @@ export default function Page(props: Props) {
                 Як можна замовити, якщо наша адреса не входить у вашу зону
                 доставки?
               </p>
-              <button onClick={() => toggleDropdown("address")}> 
-               <span
-          dangerouslySetInnerHTML={{
-            __html: !isDropdownOpen.address ? '&#8964;' : '&#8963;',
-          }}
-        /> 
-         </button>
+              <button onClick={() => toggleDropdown("address")}>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: !isDropdownOpen.address ? "&#8964;" : "&#8963;",
+                  }}
+                />
+              </button>
             </div>
             {isDropdownOpen.address && (
-              // <div className={styles.aboutQuestionsDropdownsDropdownFull}>
-                <div className={`${styles.aboutQuestionsDropdownsDropdownFull} ${isDropdownOpen.address ? styles.aboutQuestionsDropdownsDropdownFullOpen : ''}`}>
+              <div
+                className={`${styles.aboutQuestionsDropdownsDropdownFull} ${
+                  isDropdownOpen.address
+                    ? styles.aboutQuestionsDropdownsDropdownFullOpen
+                    : ""
+                }`}
+              >
                 <p>
                   Якщо ваша адреса знаходиться поза межами нашої зони доставки,
                   ви можете:
@@ -162,16 +166,24 @@ export default function Page(props: Props) {
             <div className={styles.aboutQuestionsDropdownsDropdownTitle}>
               <p>Скільки часу очікувати на замовлення?</p>
               <button onClick={() => toggleDropdown("deliveryTime")}>
-              <span
-          dangerouslySetInnerHTML={{
-            __html: !isDropdownOpen.deliveryTime ? '&#8964;' : '&#8963;',
-          }}
-        /> 
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: !isDropdownOpen.deliveryTime
+                      ? "&#8964;"
+                      : "&#8963;",
+                  }}
+                />
               </button>
             </div>
             {isDropdownOpen.deliveryTime && (
               // <div className={styles.aboutQuestionsDropdownsDropdownFull}>
-              <div className={`${styles.aboutQuestionsDropdownsDropdownFull} ${isDropdownOpen.deliveryTime ? styles.aboutQuestionsDropdownsDropdownFullOpen : ''}`}>
+              <div
+                className={`${styles.aboutQuestionsDropdownsDropdownFull} ${
+                  isDropdownOpen.deliveryTime
+                    ? styles.aboutQuestionsDropdownsDropdownFullOpen
+                    : ""
+                }`}
+              >
                 <p>
                   Час доставки залежить від адреси замовлення.
                   <br />
@@ -186,15 +198,25 @@ export default function Page(props: Props) {
           <div className={styles.aboutQuestionsDropdownsDropdown}>
             <div className={styles.aboutQuestionsDropdownsDropdownTitle}>
               <p>Доставка безкоштовна?</p>
-              <button onClick={() => toggleDropdown("deliveryPrice")}>    <span
-          dangerouslySetInnerHTML={{
-            __html: !isDropdownOpen.deliveryPrice ? '&#8964;' : '&#8963;',
-          }}
-        /> </button>
+              <button onClick={() => toggleDropdown("deliveryPrice")}>
+                {" "}
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: !isDropdownOpen.deliveryPrice
+                      ? "&#8964;"
+                      : "&#8963;",
+                  }}
+                />{" "}
+              </button>
             </div>
             {isDropdownOpen.deliveryPrice && (
-              // <div className={styles.aboutQuestionsDropdownsDropdownFull}>
-              <div className={`${styles.aboutQuestionsDropdownsDropdownFull} ${isDropdownOpen.deliveryPrice ? styles.aboutQuestionsDropdownsDropdownFullOpen : ''}`}>
+              <div
+                className={`${styles.aboutQuestionsDropdownsDropdownFull} ${
+                  isDropdownOpen.deliveryPrice
+                    ? styles.aboutQuestionsDropdownsDropdownFullOpen
+                    : ""
+                }`}
+              >
                 <p>
                   Так, доставка безкоштовна при мінімальній сумі замовлення 200
                   грн в зелену зону доставки та 300 грн в жовту зону.
@@ -207,16 +229,21 @@ export default function Page(props: Props) {
             <div className={styles.aboutQuestionsDropdownsDropdownTitle}>
               <p>До якої години ви приймаєте замовлення?</p>
               <button onClick={() => toggleDropdown("orderTime")}>
-              <span
-          dangerouslySetInnerHTML={{
-            __html: !isDropdownOpen.orderTime ? '&#8964;' : '&#8963;',
-          }}
-        /> 
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: !isDropdownOpen.orderTime ? "&#8964;" : "&#8963;",
+                  }}
+                />
               </button>
             </div>
             {isDropdownOpen.orderTime && (
-              // <div className={styles.aboutQuestionsDropdownsDropdownFull}>
-              <div className={`${styles.aboutQuestionsDropdownsDropdownFull} ${isDropdownOpen.orderTime ? styles.aboutQuestionsDropdownsDropdownFullOpen : ''}`}>
+              <div
+                className={`${styles.aboutQuestionsDropdownsDropdownFull} ${
+                  isDropdownOpen.orderTime
+                    ? styles.aboutQuestionsDropdownsDropdownFullOpen
+                    : ""
+                }`}
+              >
                 <p>
                   Ми приймаємо замовлення кожного дня з 10:00 по 21:00 (у
                   зв’язку з комендантською годиною)
@@ -229,143 +256,3 @@ export default function Page(props: Props) {
     </div>
   );
 }
-// export default function Page(props: Props){
-//   const [isDropdownOpen, setIsDropdownOpen] = useState<DropdownState>({});
-
-//   const toggleDropdown = (dropdownName: string) => {
-//     setIsDropdownOpen((prevState) => ({
-//       ...prevState,
-//       [dropdownName]: !prevState[dropdownName],
-//     }));
-//   };
-
-//   return (
-//     <div className={styles.about}>
-//     <div className={styles.title}>
-//       <h1>Про нас</h1>
-//     </div>
-
-//     <div className={styles.text}>
-//       <h1>Monosushi – доставка неймовірно смачних суші у Львові.</h1>
-//       <p>Головний пріоритет – висока якість їжі та сервісу. Ми – команда професіоналів, яка щодня працює для
-//         Вас.
-//         <br />
-//         Якість та Швидкість! – це два основних пріоритети в роботі команди. В першу чергу звичайно ж
-//         Якість. Суші готуються без затримок, одразу ж після Вашого замовлення.
-//         <br />
-//         А завдяки сучасним технологіям та
-//         відповідальному навчанню працівників, свіжі страви можливо доставляти до 59 хв в 75% замовлень.
-//       </p>
-//       <ul>
-//         <li>висока якість їжі та сервісу</li>
-//         <li>команда професіоналів</li>
-//         <li>сучасні технології приготування</li>
-//       </ul>
-//     </div>
-
-//     <div className={styles.pictures}>
-//       <div className={styles.items}>
-//         <div className={styles.img}>
-//           <Image src={AboutUs1} alt="AboutUs" />
-//         </div>
-//         <div className={styles.text}>
-//           <h2>Привіт! Познайомимось?</h2>
-//           <p>Monosushi – це доставка найсмачніших суші у Львові, яка була створена командою перфекціоністів. Двоє
-//             друзів, які обожнюють роли вирішили створити продукт, якого їм не вистачало на ринку Львова. Продукт, в
-//             якому ідеальним буде все: смак, упакування, сервіс і все це за лояльною ціною!</p>
-//         </div>
-//       </div>
-//       <div className={styles.items}>
-//         <div className={styles.text}>
-//           <h2>Наш пріоритет - ваша посмішка від задоволення</h2>
-//           <p><b>Monosushi</b> – це доставка одного (mono) продукту. Роли вже давно стали рядовою стравою, проте процес
-//             їх приготування всеодно залишається цілим мистецтвом. Суші потрібно готувати за чіткою технологією
-//             суворо дотримуючись традицій. І в цьому ми справжні експерти! Сумніваєтесь? Тоді замовляйте безкоштовну
-//             доставку Monosushi і насолоджуйтесь.</p>
-//         </div>
-//         <div className={styles.img}>
-//           <Image src={AboutUs2} alt="AboutUs" />
-//         </div>
-//       </div>
-//     </div>
-
-//     <div className={styles.advantages}>
-//       <h1>Наші переваги</h1>
-//       <div className={styles.advantage}>
-//         <div className={styles.item}>
-//           <div className={styles.imgAdv}>
-//             <Image src={Advantage1} alt="advantage" />
-//           </div>
-//           <h3>Свіжі продукти</h3>
-//           <p>Наші інгредієнти ще вчора плавали у морі, а сьогодні вже у Ваших сушиках</p>
-//         </div>
-//         <div className={styles.item}>
-//           <div className={styles.imgAdv}>
-//             <Image src={Advantage2} alt="advantage" />
-//           </div>
-//           <h3>Неймовірний смак</h3>
-//           <p>Ми створили сушики, які змусять Ваші рецептори вибухнути від насолоди</p>
-//         </div>
-//         <div className={styles.item}>
-//           <div className={styles.imgAdv}>
-//             <Image src={Advantage3} alt="advantage" />
-//           </div>
-//           <h3>Великі порції</h3>
-//           <p>Ми віднайшли ідеальні порції ролів та завжди дотримуємось грамажу вказаного на сайті</p>
-//         </div>
-//       </div>
-//     </div>
-
-//     <div className={styles.questions}>
-//       <h1>Популярні запитання</h1>
-//       <div className={styles.dropdowns}>
-//         <div className={styles.dropdown}>
-//           <p>Як можна замовити, якщо наша адреса не входить у вашу зону доставки?</p>
-//           <button onClick={() => toggleDropdown('address')}>+</button>
-//           {isDropdownOpen.address && (
-//             // <div className={styles.dropdownFull}>
-//             <div className={`${styles.dropdownFull} ${isDropdownOpen.address ? styles.open : ''}`}>
-//               <p>Якщо ваша адреса знаходиться поза межами нашої зони доставки, ви можете:</p>
-//               <ul>
-//                 <li>Забрати замовлення самовивозом за однією з наших адрес. (В такому випадку ви отримаєте “Запечені моно макі з лососем у подарунок).</li>
-//                 <li>Дізнатись в оператора чи є можливість зробити виключення для доставки поза межі зони в даний момент часу.</li>
-//               </ul>
-//             </div>
-//           )}
-//         </div>
-
-//         <div className={styles.dropdown}>
-//           <p>Скільки часу очікувати на замовлення?</p>
-//           <button onClick={() => toggleDropdown('deliveryTime')}>+</button>
-//          {
-//           isDropdownOpen.deliveryTime &&  <div className={styles.dropdownFull}>
-//           <p>Час доставки залежить від адреси замовлення.
-//               <br />
-//               Доставка в зелену зону – до 1 год.
-//               <br />
-//               Доставка в жовту зону – до 1,5 год.
-//           </p>
-//         </div>
-//          }
-//         </div>
-
-//         <div className={styles.dropdown}>
-//           <p>Доставка безкоштовна?</p>
-//           <button onClick={() => toggleDropdown('deliveryPrice')}>+</button>
-//           {isDropdownOpen. deliveryPrice && <div className={styles.dropdownFull}>
-//             <p>Так, доставка безкоштовна при мінімальній сумі замовлення 200 грн в зелену зону доставки та 300 грн в жовту зону.</p>
-//           </div>}
-//         </div>
-
-//         <div className={styles.dropdown}>
-//           <p>До якої години ви приймаєте замовлення?</p>
-//           <button onClick={() => toggleDropdown('orderTime')}>+</button>
-//         {isDropdownOpen.orderTime &&   <div className={styles.dropdownFull}>
-//             <p>Ми приймаємо замовлення кожного дня з 10:00 по 21:00 (у зв’язку з комендантською годиною)</p>
-//           </div>}
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-//   )
-// }

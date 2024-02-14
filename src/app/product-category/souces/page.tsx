@@ -23,7 +23,7 @@ const Souces = (props: Props) => {
 
   return (
     <div className={styles.souces}>
-      <ProductItem products={souces} title='Соуси' />
+      <ProductItem products={souces} title="Соуси" />
       <div className={styles.soucesText}>
         <p>
           Кожне замовлення включає в себе безкоштовні прибори, кількість яких

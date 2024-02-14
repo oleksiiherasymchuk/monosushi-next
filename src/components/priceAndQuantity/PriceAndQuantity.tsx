@@ -3,16 +3,14 @@ import React, { useState } from "react";
 import styles from "./PriceAndQuantity.module.scss";
 
 type Props = {
-  // price: number,
-  // quantity: number,
   product: any;
 };
 
 const PriceAndQuantity = ({ product }: Props) => {
   const productCount = (product: any, value: boolean) => {};
-  const addToBasket = (product: any) => {}
+  const addToBasket = (product: any) => {};
 
-  const [productQuantity, setProductQuantity] = useState<number>(1)
+  const [productQuantity, setProductQuantity] = useState<number>(1);
 
   return (
     <div className={styles.controls}>
@@ -21,9 +19,8 @@ const PriceAndQuantity = ({ product }: Props) => {
       </div>
       <div className={styles.controlsQuantity}>
         <button
-          // onClick={() => productCount(product, false)}
           onClick={() => {
-            if(productQuantity > 1) setProductQuantity(productQuantity - 1)
+            if (productQuantity > 1) setProductQuantity(productQuantity - 1);
           }}
           type="button"
           className="decrease"
@@ -33,12 +30,10 @@ const PriceAndQuantity = ({ product }: Props) => {
         <input
           className="form-control"
           type="text"
-          // value={product.quantity}
           value={productQuantity}
           readOnly
         />
         <button
-          // onClick={() => productCount(product, true)}
           onClick={() => setProductQuantity(productQuantity + 1)}
           type="button"
           className="increase"

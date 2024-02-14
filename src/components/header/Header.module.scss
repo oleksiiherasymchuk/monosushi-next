@@ -1,16 +1,12 @@
 .header {
   width: 100%;
   display: flex;
-  // justify-content: space-between;
   justify-content: flex-start;
   align-items: center;
   height: 95px;
   margin: 0 auto;
   padding: 0;
   background-color: #fff;
-  // position: fixed;
-  // z-index: 1000;
-  // background-color: #b5d8f7;
 
   &Logo {
     height: 100%;
@@ -68,35 +64,6 @@
     }
   }
 
-  //     height: 95px;
-  //     width: 135px;
-  //     align-self: center;
-  //     text-align: center;
-  //     background-color: #b5d8f7;
-  //     margin-left: 63px;
-  //     display: flex;
-  //     justify-content: center;
-  //     align-items: center;
-
-  //     img {
-  //         height: 40px;
-  //         width: 40px;
-  //     }
-
-  //     .productQuantityInBasket {
-  //         position: relative;
-  //         display: inline-block;
-  //         background-color: #fff;
-  //         border-radius: 100%;
-  //         top: -10px;
-  //         right: 15px;
-  //         width: 25px;
-  //         height: 25px;
-  //         text-align: center;
-  //     }
-
-  // }
-
   &Menu {
     margin-left: 15px;
     height: 50px;
@@ -131,7 +98,6 @@
       background: #fff;
       border: 2px solid #b5d8f7;
       border-radius: 10px;
-      // display: none;
       animation: burgerMenu 0.35s linear forwards,
         burgerMenuItem 0.35s linear forwards;
 
@@ -258,7 +224,6 @@
   }
 
   &Basket {
-    // height: 95px;
     height: 100%;
     width: 135px;
     align-self: center;
@@ -306,31 +271,30 @@
   align-items: center;
   justify-content: space-evenly;
   display: none;
-    &Item {
-      a {
-        font-size: 14px;
-        margin: 5px 0 0;
-        line-height: 1em;
-        font-weight: bold;
-        color: #252525;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+  &Item {
+    a {
+      font-size: 14px;
+      margin: 5px 0 0;
+      line-height: 1em;
+      font-weight: bold;
+      color: #252525;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
 
-        img{
-          height: 30px;
-          width: 30px;
-        }
+      img {
+        height: 30px;
+        width: 30px;
+      }
 
-        span{
-          margin-top: 4px;
-        }
-      } 
+      span {
+        margin-top: 4px;
+      }
+    }
   }
 }
 
-//  telephone user burgerMenu
 @media (min-width: 769px) and (max-width: 1200px) {
   .header {
     display: none;
@@ -342,7 +306,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // border: 1px solid red;
 
     &Logo {
       height: 100%;
@@ -353,7 +316,8 @@
       justify-content: space-between;
       padding: 0 15px;
 
-      &Big {
+      &Big,
+      &Mobile {
         display: none;
       }
     }
@@ -385,26 +349,20 @@
         height: 100%;
         border-radius: 7px;
         box-sizing: border-box;
-        // animation: rotateBorder 0.35s linear forwards;
       }
 
       &Burger {
         position: absolute;
         z-index: 50;
-
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
         flex-direction: column;
-
-        // width: 250%;
-        // width: calc(50vh - 142px);
         width: 50vw;
         height: 100vh;
         left: 0;
         border-top: 1px solid gainsboro;
         top: 47px;
-        // padding: 28px 25px 0 25px;
         background: #fff;
         animation: burgerMenu 0.35s linear forwards,
           burgerMenuItem 0.35s linear forwards;
@@ -492,28 +450,6 @@
             }
           }
 
-          // &Call{
-          //   display: flex;
-          //   width: 194px;
-          //   height: 48px;
-          //   justify-content: center;
-          //   align-items: center;
-          //   padding: 5px 10px 6px;
-          //   border-radius: 7px;
-          //   border: 2px solid #b5d8f7;
-          //   background-color: #b5d8f7;
-          //   // margin-left: 40px;
-
-          //   span {
-          //     font-size: 11px;
-          //     margin-top: 4px;
-          //     line-height: 1em;
-          //     font-weight: bold;
-          //     color: #252525;
-          //     margin-left: 8px;
-          //     text-transform: uppercase;
-          //   }
-          // }
           &Call {
             width: 100%;
             height: 60px;
@@ -552,7 +488,6 @@
     }
 
     &Basket {
-      // height: 95px;
       height: 100%;
       width: 135px;
       align-self: center;
@@ -582,11 +517,237 @@
     }
   }
 
-  .productsNavbar{
+  .productsNavbar {
     display: flex;
   }
 }
 
+@media (max-width: 768px) {
+  .header {
+    display: none;
+  }
+
+  .headerTablet {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &Logo {
+      display: none;
+    }
+
+    &LogoMobile {
+      height: 100%;
+      width: 70px;
+      background-color: #b5d8f7;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      display: block;
+    }
+
+    &Phone,
+    &User,
+    &Menu {
+      width: 20%;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        cursor: pointer;
+        border: none;
+      }
+    }
+
+    &Menu {
+      position: relative;
+
+      &:hover::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 7px;
+        box-sizing: border-box;
+      }
+
+      &Burger {
+        position: absolute;
+        z-index: 50;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+        width: 50vw;
+        height: 100vh;
+        left: 0;
+        border-top: 1px solid gainsboro;
+        top: 47px;
+        background: #fff;
+        animation: burgerMenu 0.35s linear forwards,
+          burgerMenuItem 0.35s linear forwards;
+
+        &:hover {
+          display: block;
+        }
+
+        &Item {
+          width: 100%;
+          height: 50px;
+          display: flex;
+          justify-content: flex-start;
+          padding-left: 16px;
+          margin-top: 5px;
+          align-items: center;
+          font-weight: bold;
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out;
+          animation: burgerMenuItem 0.35s linear forwards;
+
+          &Souce {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-weight: bold;
+            padding: 15px 20px 6px;
+            margin-bottom: 10px;
+
+            img {
+              height: 30px;
+              width: 30px;
+            }
+            a {
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+            }
+            span {
+              font-size: 14px;
+              margin-left: 15px;
+              line-height: 1em;
+            }
+          }
+
+          &Link {
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            height: 120px;
+
+            &Item {
+              font-size: 14px;
+              font-weight: bold;
+              display: block;
+              width: 100%;
+              color: #252525;
+              padding: 8px 10px 8px 20px;
+            }
+          }
+
+          &Phone {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 20px;
+            padding: 0 20px;
+
+            a {
+              font-size: 16px;
+              color: black;
+              text-decoration: none;
+              font-weight: bold;
+              margin-bottom: 8px;
+            }
+
+            &Details {
+              font-size: 11px;
+            }
+          }
+
+          &Call {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 10px 6px;
+            margin-top: 40px;
+
+            span {
+              font-size: 12px;
+              margin-top: 4px;
+              line-height: 1em;
+              font-weight: bold;
+              color: #252525;
+              margin-left: 8px;
+              text-transform: uppercase;
+            }
+
+            button {
+              border: none;
+              background-color: #b5d8f7;
+              width: 194px;
+              height: 100%;
+              border-radius: 7px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding: 14px 16px;
+              font-size: 14px;
+              line-height: 14px;
+            }
+          }
+        }
+      }
+    }
+
+    &Basket {
+      height: 100%;
+      width: 135px;
+      align-self: center;
+      text-align: center;
+      background-color: #b5d8f7;
+      margin-left: 41px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        height: 40px;
+        width: 40px;
+      }
+
+      &ProductQuantity {
+        position: relative;
+        display: inline-block;
+        background-color: #fff;
+        border-radius: 100%;
+        top: -10px;
+        right: 15px;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+      }
+    }
+  }
+
+  .productsNavbar {
+    display: flex;
+  }
+}
 
 @keyframes rotateBorder {
   25% {
@@ -608,6 +769,7 @@
     border-left: 2px solid #b5d8f7;
   }
 }
+
 @keyframes burgerMenu {
   from {
     opacity: 0;
@@ -621,12 +783,10 @@
   from {
     opacity: 0;
     transform: translateY(-20px);
-    // height: 0px;
   }
   to {
     opacity: 1;
     transform: translateY(0);
-    // height: 266px;
   }
 }
 

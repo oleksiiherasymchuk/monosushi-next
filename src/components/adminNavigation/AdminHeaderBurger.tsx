@@ -8,36 +8,32 @@ type Props = {};
 
 const AdminHeaderBurger = (props: Props) => {
   const preventPropagation = (e: React.MouseEvent) => {
-    // setIsBurgerMenuOpen(false);
     e.stopPropagation();
   };
   return (
-    <div
-    className={styles.modal}
-    onClick={preventPropagation}
-  >
-    <Image
-      src={User}
-      height={50}
-      width={50}
-      alt="burgerMenuOpenIcon"
-      className={styles.modalIcon}
-    />
+    <div className={styles.modal} onClick={preventPropagation}>
+      <Image
+        src={User}
+        height={50}
+        width={50}
+        alt="burgerMenuOpenIcon"
+        className={styles.modalIcon}
+      />
 
-    <div className={styles.modalItem}>
-      <Link href="/dostavka-ta-oplata"> Особисті дані </Link>
-    </div>
+      <div className={styles.modalItem}>
+        <Link href="/dostavka-ta-oplata"> Особисті дані </Link>
+      </div>
 
-    <div className={styles.modalItem}>
-      <Link href="/about-us">Історія замовлень</Link>
+      <div className={styles.modalItem}>
+        <Link href="/about-us">Історія замовлень</Link>
+      </div>
+      <div className={styles.modalItem}>
+        <Link href="/actions">Зміна паролю</Link>
+      </div>
+      <div className={styles.modalItem}>
+        <Link href="/">Вихід</Link>
+      </div>
     </div>
-    <div className={styles.modalItem}>
-      <Link href="/actions">Зміна паролю</Link>
-    </div>
-    <div className={styles.modalItem}>
-      <Link href="/">Вихід</Link>
-    </div>
-  </div>
   );
 };
 

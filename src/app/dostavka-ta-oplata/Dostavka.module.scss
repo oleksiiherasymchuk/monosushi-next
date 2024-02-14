@@ -27,13 +27,11 @@
     justify-content: space-between;
     align-items: center;
     margin: 45px auto;
-    // margin-bottom: 15px;
 
     &GreenZone {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      // flex-direction: column;
 
       img {
         width: 280px;
@@ -132,7 +130,6 @@
 
     &Items {
       display: flex;
-      // flex-direction: row;
       justify-content: center;
       align-items: center;
       width: 800px;
@@ -167,7 +164,6 @@
           align-items: flex-start;
           padding-left: 15px;
           height: 100%;
-          // text-align: center;
 
           &Title {
             color: #252525;
@@ -194,7 +190,6 @@
     align-items: center;
     flex-direction: column;
     margin: 0 auto;
-    // margin-bottom: 15px;
 
     font-size: 18px;
     line-height: 1.5em;

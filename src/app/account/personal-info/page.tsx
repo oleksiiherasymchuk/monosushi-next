@@ -1,7 +1,7 @@
-import React from 'react'
-import styles from './PersonalInfo.module.scss'
+import React from "react";
+import styles from "./PersonalInfo.module.scss";
 
-type Props = {}
+type Props = {};
 
 const PersonalInfo = (props: Props) => {
   return (
@@ -31,12 +31,16 @@ const PersonalInfo = (props: Props) => {
         </div>
 
         <div className={styles.buttons}>
-          <button className={styles.addAddress} type="submit">Додати адресу</button>
-          <button className={styles.save} type="submit">Зберегти зміни</button>
+          <button className={styles.addAddress} type="submit">
+            Додати адресу
+          </button>
+          <button className={styles.save} type="submit">
+            Зберегти зміни
+          </button>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default PersonalInfo
+export default PersonalInfo;

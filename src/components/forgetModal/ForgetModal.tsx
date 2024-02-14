@@ -7,11 +7,10 @@ type Props = {
 };
 
 const ForgetModal = ({ onClose, changeContent }: Props) => {
-
   const switchToSignIn = () => {
     changeContent("signIn");
   };
-  
+
   return (
     <div className={styles.forgetModal}>
       <button className="absolute top-4 right-4" onClick={onClose}>

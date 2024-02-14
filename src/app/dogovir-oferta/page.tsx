@@ -199,17 +199,19 @@ const DogovirOferta = (props: Props) => {
         </div>
 
         <div className={styles.ofertaTermsItems}>
-            {terms.map((section) => (
-              <div key={section.id} className={styles.ofertaTermsItemsItem}>
-                <h3>{section.id}. {section.title}</h3>
-                <ul>
-                  {section.content.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          {terms.map((section) => (
+            <div key={section.id} className={styles.ofertaTermsItemsItem}>
+              <h3>
+                {section.id}. {section.title}
+              </h3>
+              <ul>
+                {section.content.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-"use client"
-import React, { createContext, useContext, useState } from 'react';
+"use client";
+import React, { createContext, useContext, useState } from "react";
 
 const ModalContext = createContext({
   isModalOpen: false,
@@ -7,7 +7,7 @@ const ModalContext = createContext({
   closeModal: () => {},
 });
 
-export const ModalProvider = ({ children } : any) => {
+export const ModalProvider = ({ children }: any) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -28,7 +28,7 @@ export const ModalProvider = ({ children } : any) => {
 export const useModal = () => {
   const context = useContext(ModalContext);
   if (!context) {
-    throw new Error('useModal must be used within a ModalProvider');
+    throw new Error("useModal must be used within a ModalProvider");
   }
   return context;
 };

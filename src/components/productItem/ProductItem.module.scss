@@ -1,17 +1,14 @@
 .product {
-  // margin-top: 45px;
   margin-bottom: 100px;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  
 
   &Wrapper {
     width: 100%;
     min-height: 450px;
-    // border: 1px solid red;
     margin-top: 30px;
     display: flex;
     justify-content: center;
@@ -34,10 +31,6 @@
       img {
         width: 240px;
         height: 240px;
-
-        // &:hover{
-        //   transform: scale(0.9);
-        // }
       }
 
       p {
@@ -61,9 +54,6 @@
 
       &Description {
         color: #5a5a5a;
-        // max-width: 300px;
-        // display: inline-block;
-        // vertical-align: middle;
         font-size: 16px;
         line-height: 1.5em;
         margin-top: 10px;
@@ -88,7 +78,7 @@
         cursor: pointer;
         border-radius: 7px;
         box-sizing: border-box;
-        animation: rotateBorder .7s linear forwards;
+        animation: rotateBorder 0.7s linear forwards;
       }
 
       &::before {
@@ -98,33 +88,31 @@
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 1; // Ensure the pseudo-element is above other content
-        pointer-events: none; // Allow pointer events to pass through
+        z-index: 1;
+        pointer-events: none;
       }
-    
-      // Ensure links are clickable when the parent is not being hovered
+
       &:not(:hover) a {
-        pointer-events: auto; // Enable pointer events on links
+        pointer-events: auto;
       }
     }
   }
 }
 
-@media (min-width: 769px) and (max-width: 1200px){
+@media (max-width: 1200px) {
   .product {
     &Wrapper {
       &Item {
         height: 448px;
-        // width: 340px;
         width: 310px;
         margin: 14px 10px;
 
-        &Name{
-          &:hover{
+        &Name {
+          &:hover {
             color: black;
           }
         }
-  
+
         img {
           width: 300px;
           height: 240px;

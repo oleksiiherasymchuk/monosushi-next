@@ -1,5 +1,5 @@
 .phoneModal {
-  width: 575px;
+  width: 80vw;
   height: 385px;
   padding-top: 27px;
   border-radius: 7px;
@@ -16,7 +16,7 @@
   text-align: center;
   background-color: #ffffff;
 
-  h1{
+  h1 {
     text-transform: uppercase;
     font-size: 35px;
   }
@@ -26,7 +26,6 @@
     color: gray;
     font-size: 17px;
     font-style: oblique;
-   
   }
 
   .closePhoneModal {

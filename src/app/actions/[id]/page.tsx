@@ -1,8 +1,6 @@
 "use client";
-import { NextPage } from "next";
 import styles from "./discount.module.scss";
 import { useRouter } from "next/navigation";
-import { DiscountType } from "@/shared/types/discount/discount";
 import Link from "next/link";
 
 type Props = {
@@ -20,21 +18,6 @@ const Discount = (props: Props) => {
 
   return (
     <>
-      {/* <div className={styles.breadcrumbNav}>
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
-            <Link className={router.pathname === '/' ? styles.routeActive : ''} href="/">Головна</Link>
-            <Link className={styles.routeActive} href="/">Головна</Link>
-          </li>
-          <li className="breadcrumb-item">
-            <Link className={router.pathname === '/discounts' ? styles.routeActive : ''} href="/discounts">Акції</Link>
-            <Link className={styles.routeActive} href="/discounts">Акції</Link>
-          </li>
-          <li className="breadcrumb-item active">{currentDiscount.name}</li>
-        </ol>
-      </nav>
-    </div> */}
       <div className={styles.breadcrumb}>
         <nav className="w-full rounded-md">
           <ol className="list-reset flex">
@@ -47,9 +30,7 @@ const Discount = (props: Props) => {
               </Link>
             </li>
             <li>
-              <span className="mx-2 text-neutral-500 dark:text-neutral-400">
-                
-              </span>
+              <span className="mx-2 text-neutral-500 dark:text-neutral-400"></span>
             </li>
             <li>
               <Link
@@ -60,11 +41,11 @@ const Discount = (props: Props) => {
               </Link>
             </li>
             <li>
-              <span className="mx-2 text-neutral-500 dark:text-neutral-400">
-                
-              </span>
+              <span className="mx-2 text-neutral-500 dark:text-neutral-400"></span>
             </li>
-            <li className="text-neutral-500 dark:text-neutral-400">{currentDiscount.name}</li>
+            <li className="text-neutral-500 dark:text-neutral-400">
+              {currentDiscount.name}
+            </li>
           </ol>
         </nav>
       </div>

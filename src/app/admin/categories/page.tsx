@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import styles from "./Categories.module.scss"; // Adjust path to your SCSS file
+import styles from "./Categories.module.scss";
 import logo from "../../../../public/images/logo.svg";
 import Image from "next/image";
 
@@ -8,40 +8,27 @@ const AdminCategories = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
 
-  // Function to add category item
   const addCategoryItem = () => {
-    // setIsOpen(true);
-    setIsOpen(!isOpen)
+    setIsOpen(!isOpen);
   };
 
-  // Function to handle form submission
   const addCategory = (e: any) => {
     e.preventDefault();
-    // Logic to add category
   };
 
-  // Function to handle file upload
   const upload = (e: any) => {
-    // Logic to handle file upload
     setIsUploaded(true);
   };
 
-  // Function to delete image
   const deleteImage = () => {
-    // Logic to delete image
     setIsUploaded(false);
   };
 
-  // Function to render image source
-  const valueByControl = (controlName: any) => {
-    // Logic to return image source based on controlName
-  };
+  const valueByControl = (controlName: any) => {};
 
-  // Dummy data for demonstration
   const adminCategories = [
     { name: "Category 1", path: "/path1", imagePath: "image1.jpg" },
     { name: "Category 2", path: "/path2", imagePath: "image2.jpg" },
-    // Add more dummy data as needed
   ];
 
   const editCategory = (category: any) => {};
@@ -72,12 +59,7 @@ const AdminCategories = () => {
 
             {isUploaded && (
               <div>
-                <Image
-                  src={logo}
-                  // src={valueByControl('imagePath')}
-                  alt="logo"
-                  className={styles.loadedImg}
-                />
+                <Image src={logo} alt="logo" className={styles.loadedImg} />
                 <button
                   type="button"
                   className={styles.deleteImage}

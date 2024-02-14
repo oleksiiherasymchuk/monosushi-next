@@ -1,7 +1,6 @@
 .navigation {
   color: #5a5a5a;
   height: 62px;
-  // width: 1405px;
   width: 95vw;
   margin-top: 50px;
 
@@ -26,15 +25,15 @@
       justify-content: center;
       border: 1px solid #5a5a5a;
     }
-  
+
     li:not(.active) + li:not(.active) {
-      border-left: none; /* Remove left border for the list items adjacent to non-active ones */
+      border-left: none;
     }
 
     li.active {
       font-weight: 700;
       color: #252525;
-      border: none; /* Remove border for active li */
+      border: none;
     }
 
     li.active::before {
@@ -55,9 +54,8 @@
   }
 }
 
-@media (max-width: 990px){
+@media (max-width: 990px) {
   .navigation {
     display: none;
   }
 }
-

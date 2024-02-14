@@ -1,10 +1,9 @@
-.modal{
+.modal {
   @apply fixed inset-0 flex items-center justify-center;
   position: absolute;
   z-index: 1000;
 
-
-  &Overlay{
+  &Overlay {
     @apply fixed inset-0 bg-black opacity-50;
   }
 }
