@@ -1,5 +1,5 @@
 .signInModal {
-  width: 80vw;
+  width: 50vw;
   height: 580px;
   border-radius: 7px;
   position: absolute;
@@ -76,6 +76,32 @@
         height: 15px;
         margin-right: 10px;
       }
+
+      span{
+        a{
+          font-weight: bold;
+          position: relative;
+
+        &::before {
+          content: "";
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background-color: #b5d8f7;
+          transition: width 0.3s ease;
+        }
+
+        &:hover::before {
+          width: 100%;
+        }
+
+        &:hover{
+          color: #b5d8f7;
+        }
+        }
+      }
     }
 
     button {
@@ -123,4 +149,12 @@
       }
     }
   }
+}
+
+.error{
+  border: 1px solid red
+}
+
+.errorColor{
+  color: red;
 }

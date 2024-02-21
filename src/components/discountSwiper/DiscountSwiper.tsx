@@ -35,8 +35,8 @@ const DiscountSwiper = (props: Props) => {
           pagination={{ clickable: true }}
           modules={[Pagination]}
           scrollbar={{ draggable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
+          // onSwiper={(swiper) => console.log(swiper)}
+          // onSlideChange={() => console.log("slide change")}
           style={{ height: "100%" }}
           // pagination={{
           //   clickable: true,
@@ -62,8 +62,8 @@ const DiscountSwiper = (props: Props) => {
           pagination={{ clickable: true }}
           modules={[Pagination]}
           scrollbar={{ draggable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
+          // onSwiper={(swiper) => console.log(swiper)}
+          // onSlideChange={() => console.log("slide change")}
           style={{ height: "100%" }}
         >
           {discounts.map((discount) => (
@@ -91,8 +91,8 @@ const DiscountSwiper = (props: Props) => {
           pagination={{ clickable: true }}
           modules={[Pagination]}
           scrollbar={{ draggable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
+          // onSwiper={(swiper) => console.log(swiper)}
+          // onSlideChange={() => console.log("slide change")}
           style={{ height: "100%" }}
         >
           {discounts.map((discount) => (

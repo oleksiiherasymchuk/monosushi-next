@@ -1,0 +1,117 @@
+.menu {
+  margin-left: 15px;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 99;
+
+  &:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border-radius: 7px;
+    box-sizing: border-box;
+    animation: rotateBorder 0.35s linear forwards;
+  }
+
+  &Burger {
+    position: absolute;
+    z-index: 1;
+    width: 220px;
+    height: 317px;
+    left: -62px;
+    top: -20px;
+    padding: 28px 25px 0 25px;
+    background: #fff;
+    border: 2px solid #b5d8f7;
+    border-radius: 4px;
+    animation: burgerMenu 0.35s linear forwards,
+      burgerMenuItem 0.35s linear forwards;
+
+    &:hover {
+      display: block;
+    }
+
+    &Icon {
+      position: relative;
+      top: 3px;
+      left: 11px;
+      margin-bottom: 34px;
+    }
+
+    &Item {
+      width: 181px;
+      height: 44px;
+      display: flex;
+      justify-content: flex-start;
+      padding-left: 16px;
+      margin-top: 10px;
+      align-items: center;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      animation: burgerMenuItem 0.35s linear forwards;
+
+      &:hover {
+        border: 2px solid #b5d8f7;
+        border-radius: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px){
+  .menu{
+    &Burger{
+      top: 0px;
+    }
+  }
+}
+
+@keyframes rotateBorder {
+  25% {
+    border-top: 2px solid #b5d8f7;
+  }
+  50% {
+    border-top: 2px solid #b5d8f7;
+    border-right: 2px solid #b5d8f7;
+  }
+  75% {
+    border-top: 2px solid #b5d8f7;
+    border-right: 2px solid #b5d8f7;
+    border-bottom: 2px solid #b5d8f7;
+  }
+  100% {
+    border-top: 2px solid #b5d8f7;
+    border-right: 2px solid #b5d8f7;
+    border-bottom: 2px solid #b5d8f7;
+    border-left: 2px solid #b5d8f7;
+  }
+}
+
+@keyframes burgerMenu {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes burgerMenuItem {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

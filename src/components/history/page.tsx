@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import styles from "./PersonalHistory.module.scss";
 import Link from "next/link";
@@ -5,6 +6,8 @@ import Link from "next/link";
 type Props = {};
 
 const PersonalHistory = (props: Props) => {
+
+
   const clientOrders = [
     {
       id: 1,
@@ -17,8 +20,8 @@ const PersonalHistory = (props: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      {/* <p>Поки що ви не зробили жодного замовлення <Link href='/'>перейти в каталог</Link></p> */}
-      <table className={styles.table}>
+      <p>Поки що ви не зробили жодного замовлення <Link href='/'>перейти в каталог</Link></p>
+      {/* <table className={styles.table}>
         <thead>
           <tr>
             <td>№ замовлення</td>
@@ -70,7 +73,7 @@ const PersonalHistory = (props: Props) => {
             <td>1</td>
           </tr>
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 };

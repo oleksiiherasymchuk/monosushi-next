@@ -15,7 +15,7 @@ const Modal = ({ isOpen, onClose, children }: Props) => {
   if (!isOpen) return null;
   return (
     <div className={styles.modal} onClick={handleClick}>
-      <div className={styles.modalOverlay}></div>
+      <div className={styles.modalOverlay} onClick={onClose}></div>
       <div className="bg-white p-4 rounded-lg z-10">{children}</div>
     </div>
   );

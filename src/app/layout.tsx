@@ -6,6 +6,7 @@ import Footer from "@/components/footer/Footer";
 import Head from "next/head";
 import HeaderLogo from "../../public/images/headerLogo.svg";
 import styles from "./Home.module.scss";
+import { AuthContextProvider } from "@/contexts/authContext/AuthContext";
 
 const inter = Roboto({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
@@ -25,11 +26,13 @@ export default function RootLayout({
         <link rel="icon" href={HeaderLogo} />
       </Head>
       <body className={inter.className}>
-        <div className={styles.container}>
-          <Header />
-          <main className={styles.content}>{children}</main>
+        <AuthContextProvider>
+          <div className={styles.container}>
+            <Header />
+            <main className={styles.content}>{children}</main>
           <Footer />
-        </div>
+          </div>
+        </AuthContextProvider>
       </body>
     </html>
   );

@@ -1,36 +1,27 @@
 "use client";
-import React, { useState } from "react";
-import styles from "./Account.module.scss";
-import AccountNavigation from "@/components/accountNavigation/AccountNavigation";
-import PersonalInfo from "./personal-info/page";
-import PasswordPage from "./password/page";
-import PersonalHistory from "./history/page";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/contexts/authContext/AuthContext";
 
-type Props = {};
 
-export default function Page() {
-  const [activePage, setActivePage] = useState("PersonalInfo");
+type Props = {
+};
 
-  const handleNavigationClick = (page: string) => {
-    setActivePage(page);
-  };
+export default function Page({}: Props) {
 
-  const renderActivePage = () => {
-    switch (activePage) {
-      case "PersonalInfo":
-        return <PersonalInfo />;
-      case "History":
-        return <PersonalHistory />;
-      case "Password":
-        return <PasswordPage />;
-      default:
-        return null;
+  const { user } = useAuthContext()
+  const router = useRouter()
+
+  useEffect(() => {
+    console.log(user)
+    if (user == null){
+      router.push("/")
+      // alert('Account page only for authored users')
     }
-  };
+  }, [user])
+
   return (
-    <div className={styles.account}>
-      <AccountNavigation onNavigationClick={handleNavigationClick} />
-      {renderActivePage()}
-    </div>
+    <></>
+  
   );
 }

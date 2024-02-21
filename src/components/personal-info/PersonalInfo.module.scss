@@ -156,3 +156,130 @@
     }
   }
 }
+
+.modal {
+  width: 42vw;
+  height: 780px;
+  border-radius: 7px;
+  position: absolute;
+  background-color: white;
+  top: 150px;
+  right: 5px;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  z-index: 99;
+  // padding: 50px 60px 45px 60px;
+
+  h1 {
+    margin-top: 15px;
+    padding-top: 35px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  &Form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 80%;
+    height: 650px;
+    padding-top: 30px;
+
+    &HalfInput {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-left: 5px;
+
+     
+      &Address {
+        height: 55px;
+        width: 49%;
+        border: 1px solid gainsboro;
+        border-radius: 7px;
+        padding-left: 30px;
+        margin-bottom: 5px;
+      }
+    }
+
+    &AddressType,
+    &Delivery {
+      height: 55px;
+      width: 100%;
+      border: 1px solid gainsboro;
+      border-radius: 7px;
+      padding-left: 30px;
+      margin-bottom: 5px;
+    }
+
+    &Buttons {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  
+      &FindAddress,
+      &Save {
+        width: 45%;
+        margin-top: 15px;
+        display: inline-block;
+        vertical-align: bottom;
+        text-align: center;
+        position: relative;
+        cursor: pointer;
+        text-decoration: none;
+        border: none;
+        background: none;
+        transition: 0.35s;
+        text-transform: uppercase;
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: bold;
+        // padding: 16px 22px;
+        border-radius: 10px;
+        color: #252525;
+      }
+  
+      &FindAddress {
+        border: 2px solid #b5d8f7;
+        height: 40px;
+
+        &:hover {
+          background-color: #b5d8f7;
+        }
+      }
+  
+      &Save {
+        // background-color: #b5d8f7;
+        background-color: #DCDCDC;
+        // border: 2px solid #b5d8f7;
+        height: 60px;
+
+        :hover {
+          background-color: white;
+        }
+      }
+    }
+
+    &Map{
+      margin-top: 30px;
+    }
+  }
+}
+
+.error{
+  border: 1px solid red
+}
+
+.errorColor{
+  color: red;
+}

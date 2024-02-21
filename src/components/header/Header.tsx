@@ -17,11 +17,13 @@ import Link from "next/link";
 import PhoneModal from "../phoneModal/PhoneModal";
 import Modal from "../modal/Modal";
 import AuthModal from "../authModal/AuthModal";
-import SignInModal from "../signInModal/SignInModal";
+import SignInModal from "../signUpModal/SignUpModal";
 import ForgetModal from "../forgetModal/ForgetModal";
 import BurgerMenuIcon from "../../../public/images/burgerMenu.png";
 import BasketModal from "../basketModal/BasketModal";
-import AdminHeaderBurger from "../adminNavigation/AdminHeaderBurger";
+import { useAuthContext } from "@/contexts/authContext/AuthContext";
+import AuthUserAccountBurgerMenu from "@/components/authUserHeaderBurgerMenu/AuthUserAccountBurgerMenu";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [isPhoneModalOpen, setIsPhoneModalOpen] = useState<boolean>(false);
@@ -32,7 +34,14 @@ const Header = () => {
   >("auth");
 
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState<boolean>(false);
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+ 
+  const { user, logout } = useAuthContext();
+  const router = useRouter()
+
+  const handleLogout = () => {
+    logout();
+    return router.push("/")
+  };
 
   const toggleMenu = () => {
     setIsBurgerMenuOpen(!isBurgerMenuOpen);
@@ -206,8 +215,7 @@ const Header = () => {
             </div>
           </div>
 
-          <div
-            className={styles.headerMenu}
+          <div className={styles.headerMenu}
             onClick={toggleMenu}
             ref={burgerMenuRef}
           >
@@ -253,9 +261,14 @@ const Header = () => {
             </div>
           </div>
 
-          <div className={styles.headerUser} onClick={onOpenAuthModal}>
+          {user ? (
+            <AuthUserAccountBurgerMenu logout={handleLogout}/>
+          ) : (
+            <div className={styles.headerUser} onClick={onOpenAuthModal}>
             <Image src={User} alt="user" height={25} width={25} />
           </div>
+          )}
+        
 
           <div className={styles.headerBasket} onClick={toogleBasket}>
             <Image src={Basket} alt="basket" height={25} width={25} />
@@ -321,9 +334,14 @@ const Header = () => {
             </a>
           </div>
 
-          <div className={styles.headerTabletUser} onClick={onOpenAuthModal}>
+          
+          {user ? (
+            <AuthUserAccountBurgerMenu logout={handleLogout}/>
+          ) : (
+            <div className={styles.headerTabletUser} onClick={onOpenAuthModal}>
             <Image src={User} alt="user" height={25} width={25} />
           </div>
+          )}
 
           <div
             className={styles.headerTabletMenu}
