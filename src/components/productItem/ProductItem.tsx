@@ -15,7 +15,7 @@ type Props = {
 const ProductItem = ({ products, title }: Props) => {
   return (
     <div className={styles.product}>
-      <Title title={title} />
+      {title && <Title title={title} />}
       {title === "Роли" && <ProductNavigation />}
       <div className={styles.productWrapper}>
         {products.map((product) => {
@@ -23,9 +23,9 @@ const ProductItem = ({ products, title }: Props) => {
             <div className={styles.productWrapperItem} key={product.id}>
               <Link href={`/product/${product.name}`}>
                 {product.image ? (
-                  <Image src={product.image} alt={product.name} />
+                  <Image src={product.image} alt={product.name} height={240}/>
                 ) : (
-                  <Image src={Zsu} alt="defaultProductImage" />
+                  <Image src={Zsu} alt="defaultProductImage" height={240}/>
                 )}
               </Link>
               <p className={styles.productWrapperItemName}>

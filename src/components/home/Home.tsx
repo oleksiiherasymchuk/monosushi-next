@@ -10,6 +10,14 @@ import Delivery from "../../../public/images/greenzone.svg";
 import Logo from "../../../public/images/logo.svg";
 import Bonus from "../../../public/images/mono-bonus.svg";
 import DiscountPaginator from "../discountSwiper/DiscountSwiper";
+import { DiscountType } from "@/shared/types/discount/discount";
+
+import Discount from "../../../public/images/discountSlide1.jpeg";
+import Discount1 from "../../../public/images/discountSlide2.jpeg";
+import Discount2 from "../../../public/images/discountSlider3HP.jpeg";
+import Discount3 from "../../../public/images/discountSlider3Lunch.jpeg";
+import Discount4 from "../../../public/images/discountSlider5Delivery.jpeg";
+import Discount5 from "../../../public/images/DiscountSlider6Photo.jpeg";
 
 type Props = {};
 
@@ -29,9 +37,18 @@ const HomePage = (props: Props) => {
     { id: 6, name: "Сет Філадельфія", price: 435, weight: 15 },
   ];
 
+  const discounts: DiscountType[] = [
+    { id: 1, name: "HP", category: "drinks", imagePath: Discount.src },
+    { id: 2, name: "HP", category: "drinks", imagePath: Discount1.src },
+    { id: 3, name: "HP", category: "drinks", imagePath: Discount2.src },
+    { id: 4, name: "HP", category: "drinks", imagePath: Discount3.src },
+    { id: 5, name: "HP", category: "drinks", imagePath: Discount4.src },
+    { id: 6, name: "HP", category: "drinks", imagePath: Discount5.src },
+  ];
+
   return (
     <div className={styles.home}>
-      <DiscountPaginator />
+      <DiscountPaginator products={discounts} slides={2}/>
 
       <div className={styles.homeInfo}>
         <div className={styles.homeInfoBlock}>

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "./DiscountSwiper.module.scss";
+import styles from "./ProductItem.module.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -8,15 +8,15 @@ import { Keyboard, Mousewheel, Navigation, Pagination } from "swiper/modules";
 import Image from "next/image";
 import Link from "next/link";
 import { RollType } from "@/shared/types/products/rolls";
-import { DiscountType } from "@/shared/types/discount/discount";
+import ProductItem from "./ProductItem";
 
 type Props = {
   slides: number;
   navigation?: boolean;
-  products: DiscountType[] | RollType[] | any[];
+  products:  RollType[] | any[];
 };
 
-const DiscountSwiper = ({
+const ProductsItemSwiper = ({
   slides = 2,
   navigation = false,
   products,
@@ -45,9 +45,7 @@ const DiscountSwiper = ({
         >
           {products?.map((p) => (
             <SwiperSlide key={p.id} style={{ width: "695px" }}>
-              <Link href={`/${p.category}/${p.name}`}>
-                <img src={p.imagePath} alt={`${p.category} ${p.id}`} />
-              </Link>
+                <ProductItem products={[p]} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -61,8 +59,8 @@ const DiscountSwiper = ({
           scrollbar={{ draggable: true }}
           style={{ height: "100%" }}
           navigation={navigation ? false : true}
-          mousewheel={true}
-          keyboard={true}
+          // mousewheel={true}
+          // keyboard={true}
           modules={[Navigation, Pagination, Mousewheel, Keyboard]}
         >
           {products?.map((p) => (
@@ -75,9 +73,7 @@ const DiscountSwiper = ({
                 alignItems: "flex-start",
               }}
             >
-              <Link href={`/${p.category}/${p.name}`}>
-                <img src={p.imagePath} alt={`${p.category} ${p.id}`} />
-              </Link>
+              <ProductItem products={[p]} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -91,8 +87,8 @@ const DiscountSwiper = ({
           scrollbar={{ draggable: true }}
           style={{ height: "100%" }}
           navigation={navigation ? false : true}
-          mousewheel={true}
-          keyboard={true}
+          // mousewheel={true}
+          // keyboard={true}
           modules={[Navigation, Pagination, Mousewheel, Keyboard]}
         >
           {products?.map((p) => (
@@ -105,9 +101,7 @@ const DiscountSwiper = ({
                 alignItems: "flex-start",
               }}
             >
-              <Link href={`/${p.category}/${p.name}`}>
-                <img src={p.imagePath} alt={`${p.category} ${p.id}`} />
-              </Link>
+             <ProductItem products={[p]} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -116,4 +110,4 @@ const DiscountSwiper = ({
   );
 };
 
-export default DiscountSwiper;
+export default ProductsItemSwiper;

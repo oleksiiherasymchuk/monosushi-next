@@ -1,0 +1,23 @@
+.breadcrumb {
+  margin-left: 5%;
+  margin-top: 25px;
+  font-size: 12px;
+  line-height: 13px;
+  margin-bottom: 60px;
+
+  span {
+    position: relative;
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #5a5a5a;
+    margin: 0 10px 2px;
+  }
+}
+
+@media (max-width: 990px){
+  .breadcrumb{
+    display: none;
+  }
+}

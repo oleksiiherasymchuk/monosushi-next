@@ -2,6 +2,7 @@
 import styles from "./discount.module.scss";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 
 type Props = {
   // currentDiscount: DiscountType
@@ -18,37 +19,7 @@ const Discount = (props: Props) => {
 
   return (
     <>
-      <div className={styles.breadcrumb}>
-        <nav className="w-full rounded-md">
-          <ol className="list-reset flex">
-            <li>
-              <Link
-                href="/"
-                className="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
-              >
-                Головна
-              </Link>
-            </li>
-            <li>
-              <span className="mx-2 text-neutral-500 dark:text-neutral-400"></span>
-            </li>
-            <li>
-              <Link
-                href="/actions"
-                className="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
-              >
-                Акції
-              </Link>
-            </li>
-            <li>
-              <span className="mx-2 text-neutral-500 dark:text-neutral-400"></span>
-            </li>
-            <li className="text-neutral-500 dark:text-neutral-400">
-              {currentDiscount.name}
-            </li>
-          </ol>
-        </nav>
-      </div>
+      <Breadcrumb categoryName={'Акції'} productName={currentDiscount.name}/>
 
       <div className={styles.discount}>
         <div className={styles.discountTitle}>
