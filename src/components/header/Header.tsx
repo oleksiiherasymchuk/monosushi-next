@@ -78,30 +78,54 @@ const Header = () => {
     setCurrentModalContent(content);
   };
 
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (
+  //       burgerMenuRef.current &&
+  //       !burgerMenuRef.current.contains(event.target as Node)
+  //     ) {
+  //       setIsBurgerMenuOpen(false);
+  //     }
+  //   };
+
+  //   if (isBurgerMenuOpen) {
+  //     document.addEventListener("mousedown", handleClickOutside);
+  //   } else {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   }
+
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [isBurgerMenuOpen]);
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        burgerMenuRef.current &&
-        !burgerMenuRef.current.contains(event.target as Node)
-      ) {
+    const handleEscapeKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
         setIsBurgerMenuOpen(false);
       }
     };
-
+  
+    const handleDocumentClick = (event: MouseEvent) => {
+      if (!burgerMenuRef.current?.contains(event.target as Node)) {
+        setIsBurgerMenuOpen(false);
+      }
+    };
+  
     if (isBurgerMenuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleEscapeKeyPress);
+      document.addEventListener("click", handleDocumentClick);
     }
-
+  
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscapeKeyPress);
+      document.removeEventListener("click", handleDocumentClick);
     };
   }, [isBurgerMenuOpen]);
+  
+  
 
   const preventPropagation = (e: React.MouseEvent) => {
-    setIsBurgerMenuOpen(false);
     e.stopPropagation();
+    setIsBurgerMenuOpen(false);
   };
 
   return (
@@ -219,7 +243,7 @@ const Header = () => {
             onClick={toggleMenu}
             ref={burgerMenuRef}
           >
-            <Image src={Menu} height={50} width={50} alt="burgerMenu" />
+            <Image src={Menu} height={50} width={50} alt="burgerMenu"/>
             {isBurgerMenuOpen && (
               <div
                 className={styles.headerMenuBurger}
@@ -246,6 +270,7 @@ const Header = () => {
               </div>
             )}
           </div>
+
 
           <div className={styles.headerPhone}>
             <button onClick={onOpenPhoneModal}>

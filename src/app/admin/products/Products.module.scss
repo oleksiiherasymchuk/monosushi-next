@@ -56,6 +56,11 @@
       align-items: flex-start;
       flex-direction: column;
     }
+    .formSelect{
+      margin-left: 10px;
+      border: 1px solid #5a5a5a;
+      border-radius: 7px;
+    }
     .product {
       width: 98%;
       margin-bottom: 15px;
@@ -159,7 +164,8 @@
     }
   }
   tr td:nth-child(8) {
-    padding-top: 15px;
+    // padding-top: 15px;
+    text-align: center;
     color: #b5d8f7;
   }
 

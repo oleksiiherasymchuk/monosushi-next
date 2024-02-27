@@ -1,15 +1,61 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Products.module.scss";
 import logo from "../../../../public/images/logo.svg";
 import Image from "next/image";
+import { deleteFromFirebase } from "../../../firebase/deleteFromFirebase";
+import { useForm } from "react-hook-form";
+import { database, storage } from "@/firebase/config";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v1 } from "uuid";
+import { ProductType } from "@/shared/types/products/product";
 
 const AdminProducts = () => {
+  const { register, handleSubmit, reset } = useForm();
+
   const [isOpen, setIsOpen] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
+  const [adminProducts, setAdminProducts] = useState<any[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [editProductId, setEditProductId] = useState<string | null>(null);
+  const [editProductData, setEditProductData] = useState<ProductType | null>(
+    null
+  );
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const categoriesCollectionRef = collection(database, "categories");
+        const categoriesSnapshot = await getDocs(categoriesCollectionRef);
+        const categoriesData: string[] = [];
+        categoriesSnapshot.forEach((doc) => {
+          // console.log(doc.data().name)
+          categoriesData.push(doc.data().name); // Assuming categories are stored as document IDs
+        });
+        setCategories(categoriesData);
+        console.log(categoriesData);
+      } catch (error) {
+        console.error("Error fetching categories: ", error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const addProductItem = () => {
+    if (categories.length === 0) {
+      alert("Спочатку додайте категорії");
+      return;
+    }
     setIsOpen(!isOpen);
+    setEditProductData(null);
   };
 
   const addProduct = (e: any) => {
@@ -24,29 +70,113 @@ const AdminProducts = () => {
     setIsUploaded(false);
   };
 
-  const valueByControl = (controlName: any) => {};
+  const onSubmit = async (data: any) => {
+    try {
+      if (data.formFile && data.formFile.length > 0) {
+        const imagePath = data.formFile[0];
+        const imageName = imagePath.name;
 
-  const adminProducts = [
-    {
-      category: "Category 1",
-      name: "Product 1",
-      ingredients: "Ingredients 1",
-      weight: "100",
-      price: "10",
-      imagePath: "image1.jpg",
-    },
-    {
-      category: "Category 2",
-      name: "Product 2",
-      ingredients: "Ingredients 2",
-      weight: "200",
-      price: "20",
-      imagePath: "image2.jpg",
-    },
-  ];
+        const storageRef = ref(storage, `images/${imageName}`);
+        await uploadBytes(storageRef, imagePath);
+        const downloadURL = await getDownloadURL(
+          ref(storage, `images/${imageName}`)
+        );
 
-  const editProduct = (product: any) => {};
-  const deleteProduct = (product: any) => {};
+        if (editProductId) {
+          const updatedProduct: ProductType = {
+            ...editProductData,
+            name: data.name,
+            category: data.category,
+            path: data.path,
+            ingredients: data.ingredients,
+            weight: data.weight,
+            price: data.price,
+            imagePath: downloadURL,
+          };
+
+          const productDocRef = doc(
+            collection(database, "products"),
+            editProductId
+          );
+          await updateDoc(productDocRef, updatedProduct);
+
+          setAdminProducts((prevProducts) =>
+            prevProducts.map((product) =>
+              product.id === editProductId
+                ? { ...product, ...updatedProduct }
+                : product
+            )
+          );
+        } else {
+          const product: ProductType = {
+            name: data.name,
+            category: data.category,
+            path: data.path,
+            ingredients: data.ingredients,
+            weight: data.weight,
+            price: data.price,
+            imagePath: downloadURL,
+          };
+
+          const productID = v1();
+          const productDocRef = doc(
+            collection(database, "products"),
+            productID
+          );
+          await setDoc(productDocRef, product);
+
+          setAdminProducts((prevProducts) => [
+            ...prevProducts,
+            { id: productID, ...product },
+          ]);
+        }
+      } else {
+        console.error("No file uploaded.");
+      }
+
+      reset();
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Error adding/updating category: ", error);
+    }
+  };
+ 
+  const editProduct = async (product: any) => {
+    try {
+      setEditProductId(product.id);
+
+      const productDocRef = doc(collection(database, "products"), product.id);
+      const docSnapshot = await getDoc(productDocRef);
+      const productData = docSnapshot.data() as ProductType;
+
+      setEditProductData(productData);
+      reset();
+      setIsOpen(true);
+    } catch (error) {
+      console.error("Error fetching product data: ", error);
+    }
+  };
+
+  const deleteProduct = (productId: string) => {
+    deleteFromFirebase("products", productId, setAdminProducts);
+  };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const productsCollectionRef = collection(database, "products");
+        const productsSnapshot = await getDocs(productsCollectionRef);
+        const productsData: any[] = [];
+        productsSnapshot.forEach((doc) => {
+          productsData.push({ id: doc.id, ...doc.data() });
+        });
+        setAdminProducts(productsData);
+      } catch (error) {
+        console.error("Error fetching products: ", error);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -56,52 +186,62 @@ const AdminProducts = () => {
 
       {isOpen && (
         <div className={styles.form}>
-          <form onSubmit={addProduct}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.product}>
               <label htmlFor="name" className={styles.formLabel}>
                 Category
               </label>
-              <select name="category" className={styles.formSelect}>
-                {adminProducts.map((category: any, index: number) => (
+              <select className={styles.formSelect} {...register("category")}>
+                {categories.map((category, index) => (
                   <option key={index} value={category}>
                     {category}
                   </option>
                 ))}
-                <option>souces</option>
-                <option>drinks</option>
-                <option>sets</option>
-                <option>rolls</option>
               </select>
             </div>
             <div className={styles.name}>
-              <input type="text" placeholder="*Назва" name="name" id="name" />
-              <input type="text" placeholder="*Шлях" name="path" id="path" />
+              <input
+                type="text"
+                placeholder="*Назва"
+                {...register("name", { required: true, maxLength: 20 })}
+                defaultValue={editProductData ? editProductData.name : ""}
+              />
+              <input
+                type="text"
+                placeholder="*Шлях"
+                {...register("path", { required: true, maxLength: 20 })}
+                defaultValue={editProductData ? editProductData.path : ""}
+              />
             </div>
             <div className={styles.ingredients}>
               <input
                 type="text"
                 placeholder="*Інгредієнти"
-                name="ingredients"
-                id="ingredients"
+                {...register("ingredients", { required: true, maxLength: 20 })}
+                defaultValue={editProductData ? editProductData.ingredients : ""}
               />
             </div>
             <div className={styles.name}>
               <input
                 type="text"
                 placeholder="*Вага"
-                name="weight"
-                id="weight"
+                {...register("weight", { required: true, maxLength: 20 })}
+                defaultValue={editProductData ? editProductData.weight : ""}
               />
-              <input type="text" placeholder="*Ціна" name="price" id="price" />
+              <input
+                type="text"
+                placeholder="*Ціна"
+                {...register("price", { required: true, maxLength: 20 })}
+                defaultValue={editProductData ? editProductData.price : ""}
+              />
             </div>
 
             <div className={styles.file}>
               <input
                 type="file"
-                name="formFile"
                 className={styles.fileInput}
-                id="formFile"
-                onChange={upload}
+                // onChange={upload}
+                {...register("formFile")}
               />
             </div>
 
@@ -118,11 +258,7 @@ const AdminProducts = () => {
               </div>
             )}
 
-            <button
-              className={styles.save}
-              // disabled={productForm.invalid}
-              type="submit"
-            >
+            <button className={styles.save} type="submit">
               ЗБЕРЕГТИ
             </button>
           </form>
@@ -144,26 +280,31 @@ const AdminProducts = () => {
             </tr>
           </thead>
           <tbody>
-            {adminProducts.map((product, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{product.category}</td>
-                <td>{product.name}</td>
-                <td>
-                  {product.ingredients.slice(0, 30)}
-                  {product.ingredients.length > 30 && <span>...</span>}
-                </td>
-                <td>{product.weight} г.</td>
-                <td>{product.price} грн.</td>
-                <td>
-                  <img src={product.imagePath} alt="" />
-                </td>
-                <td>
-                  <p onClick={() => editProduct(product)}>Редагувати</p>
-                  <p onClick={() => deleteProduct(product)}>Видалити</p>
-                </td>
-              </tr>
-            ))}
+            {adminProducts.length === 0 && (
+              <p style={{ marginTop: "30px" }}>NO PRODUCTS</p>
+            )}
+            {adminProducts.length !== 0 &&
+              adminProducts.map((product, index) => (
+                <tr key={index}>
+                  <td>{index + 1}.</td>
+                  <td>{product.category}</td>
+                  <td>{product.name}</td>
+                  <td>
+                    {/* {product.ingredients.slice(0, 30)} */}
+                    {/* {product.ingredients.length > 30 && <span>...</span>} */}
+                    {product.ingredients}
+                  </td>
+                  <td>{product.weight} г.</td>
+                  <td>{product.price} грн.</td>
+                  <td>
+                    <img src={product.imagePath} alt="" />
+                  </td>
+                  <td>
+                    <p onClick={() => editProduct(product)}>Редагувати</p>
+                    <p onClick={() => deleteProduct(product.id)}>Видалити</p>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       )}

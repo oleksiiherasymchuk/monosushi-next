@@ -1,48 +1,148 @@
 "use client";
-import React, { useState } from "react";
-import styles from "./Discounts.module.scss"; // Adjust path to your SCSS file
+import React, { useEffect, useState } from "react";
+import styles from "./Discounts.module.scss";
 import Image from "next/image";
 import logo from "../../../../public/images/logo.svg";
+import { useForm } from "react-hook-form";
+import { DiscountType } from "@/shared/types/discount/discount";
+import { database, storage } from "@/firebase/config";
+import {
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+  updateDoc,
+  getDoc,
+} from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v1 } from "uuid";
+import { deleteFromFirebase } from "@/firebase/deleteFromFirebase";
 
 const AdminDiscounts = () => {
+  const { register, handleSubmit, reset } = useForm();
+
   const [isOpen, setIsOpen] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
+  const [imageURL, setImageURL] = useState("");
+  const [editDiscountId, setEditDiscountId] = useState<string | null>(null);
+  const [editDiscountData, setEditDiscountData] = useState<DiscountType | null>(
+    null
+  );
+  const [adminDiscounts, setAdminDiscounts] = useState<any[]>([]);
 
   const addDiscountItem = () => {
     setIsOpen(!isOpen);
-  };
-
-  const addDiscount = (e: any) => {
-    e.preventDefault();
-  };
-
-  const upload = (e: any) => {
-    setIsUploaded(true);
+    setEditDiscountData(null);
   };
 
   const deleteImage = () => {
     setIsUploaded(false);
   };
 
-  const valueByControl = (controlName: any) => {};
+  const onSubmit = async (data: any) => {
+    try {
+      if (data.formFile && data.formFile.length > 0) {
+        const imagePath = data.formFile[0];
+        const imageName = imagePath.name;
 
-  const adminDiscounts = [
-    {
-      name: "Discount 1",
-      title: "Title 1",
-      description: "Description 1",
-      imagePath: "image1.jpg",
-    },
-    {
-      name: "Discount 2",
-      title: "Title 2",
-      description: "Description 2",
-      imagePath: "image2.jpg",
-    },
-  ];
+        const storageRef = ref(storage, `images/${imageName}`);
+        await uploadBytes(storageRef, imagePath);
+        const downloadURL = await getDownloadURL(
+          ref(storage, `images/${imageName}`)
+        );
 
-  const editDiscount = (discount: any) => {};
-  const deleteDiscount = (discount: any) => {};
+        if (editDiscountId) {
+          const updatedDiscount: DiscountType = {
+            ...editDiscountData,
+            name: data?.name,
+            title: data?.title,
+            description: data?.description,
+            imagePath: downloadURL,
+          };
+
+          const discountDocRef = doc(
+            collection(database, "discounts"),
+            editDiscountId
+          );
+          await updateDoc(discountDocRef, updatedDiscount);
+
+          setAdminDiscounts((prevDiscounts) =>
+            prevDiscounts.map((discount) =>
+              discount.id === editDiscountId
+                ? { ...discount, ...updatedDiscount }
+                : discount
+            )
+          );
+        } else {
+          const discount: DiscountType = {
+            name: data.name,
+            title: data.title,
+            description: data.description,
+            imagePath: downloadURL,
+          };
+
+          const discountID = v1();
+          const discountDocRef = doc(
+            collection(database, "discounts"),
+            discountID
+          );
+          await setDoc(discountDocRef, discount);
+
+          setAdminDiscounts((prevDiscounts) => [
+            ...prevDiscounts,
+            { id: discountID, ...discount },
+          ]);
+        }
+      } else {
+        console.error("No file uploaded.");
+      }
+
+      reset();
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Error adding/updating discount: ", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchDiscounts = async () => {
+      try {
+        const discountsCollectionRef = collection(database, "discounts");
+        const discountsSnapshot = await getDocs(discountsCollectionRef);
+        const discountsData: any[] = [];
+        discountsSnapshot.forEach((doc) => {
+          discountsData.push({ id: doc.id, ...doc.data() });
+        });
+        setAdminDiscounts(discountsData);
+      } catch (error) {
+        console.error("Error fetching discounts: ", error);
+      }
+    };
+    fetchDiscounts();
+  }, []);
+
+  const editDiscount = async (discount: any) => {
+    try {
+      setEditDiscountId(discount.id);
+
+      const discountDocRef = doc(
+        collection(database, "discounts"),
+        discount.id
+      );
+      const docSnapshot = await getDoc(discountDocRef);
+      const discountData = docSnapshot.data() as DiscountType;
+
+      setEditDiscountData(discountData);
+      reset();
+      setIsOpen(true);
+    } catch (error) {
+      console.error("Error fetching discount data: ", error);
+    }
+  };
+
+  const deleteDiscount = async (discountId: string) => {
+    deleteFromFirebase("discounts", discountId, setAdminDiscounts);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -52,34 +152,43 @@ const AdminDiscounts = () => {
 
       {isOpen && (
         <div className={styles.form}>
-          <form onSubmit={addDiscount}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.name}>
-              <input type="text" placeholder="*Назва" name="name" id="name" />
+              <input
+                type="text"
+                placeholder="*Назва"
+                {...register("name", { required: true, maxLength: 20 })}
+                defaultValue={editDiscountData ? editDiscountData.name : ""}
+              />
               <input
                 type="text"
                 placeholder="*Заголовок"
-                name="title"
-                id="title"
+                {...register("title", { required: true, maxLength: 20 })}
+                defaultValue={editDiscountData ? editDiscountData.title : ""}
               />
             </div>
             <textarea
               placeholder="*Опис"
-              name="description"
-              id="description"
-            ></textarea>
+              {...register("description", { required: true, maxLength: 300 })}
+              defaultValue={
+                editDiscountData ? editDiscountData.description : ""
+              }
+            />
             <div className={styles.file}>
               <input
                 type="file"
-                name="formFile"
                 className={styles.fileInput}
-                id="formFile"
-                onChange={upload}
+                {...register("formFile")}
               />
             </div>
-
+            {/* {imageURL && <img src={imageURL} alt="Uploaded" style={{ width: "200px" }} />} */}
             {isUploaded && (
               <div>
-                <Image src={logo} alt="logo" className={styles.loadedImg} />
+                <Image
+                  src={logo}
+                  alt="discountLogo"
+                  className={styles.loadedImg}
+                />
                 <button
                   type="button"
                   className={styles.deleteImage}
@@ -114,24 +223,29 @@ const AdminDiscounts = () => {
             </tr>
           </thead>
           <tbody>
-            {adminDiscounts.map((discount, index) => (
-              <tr key={index}>
-                <td>24.03.2023</td>
-                <td>{discount.name}</td>
-                <td>{discount.title}</td>
-                <td>
-                  {discount.description.slice(0, 100)}
-                  {discount.description.length > 60 && <span>...</span>}
-                </td>
-                <td>
-                  <img src={discount.imagePath} alt="" />
-                </td>
-                <td>
-                  <p onClick={() => editDiscount(discount)}>Редагувати</p>
-                  <p onClick={() => deleteDiscount(discount)}>Видалити</p>
-                </td>
-              </tr>
-            ))}
+            {adminDiscounts.length === 0 && (
+              <p style={{ marginTop: "30px" }}>NO DISCOUNTS</p>
+            )}
+            {adminDiscounts.length !== 0 &&
+              adminDiscounts.map((discount, index) => (
+                <tr key={index}>
+                  <td>24.03.2023</td>
+                  <td>{discount?.name}</td>
+                  <td>{discount?.title}</td>
+                  <td>
+                    {/* {discount.description.slice(0, 100)} */}
+                    {/* {discount.description.length > 60 && <span>...</span>} */}
+                    {discount?.description}
+                  </td>
+                  <td>
+                    <img src={discount.imagePath} alt="" />
+                  </td>
+                  <td>
+                    <p onClick={() => editDiscount(discount)}>Редагувати</p>
+                    <p onClick={() => deleteDiscount(discount.id)}>Видалити</p>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       )}

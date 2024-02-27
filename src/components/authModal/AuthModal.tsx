@@ -25,10 +25,19 @@ const AuthModal = ({ onClose, changeContent }: Props) => {
         setPassword('')
         return console.log(error)
     }
+
+    if (email === "aleks2198@gmail.com") {
+      // Redirect to /admin if the user is an admin
+      router.push("/admin");
+    } else {
+      // Redirect to /account for regular users
+      router.push("/account");
+    }
+
     onClose()
     setEmail('')
     setPassword('')
-    return router.push("/account")
+    // return router.push("/account")
 }
 
   const switchToForget = () => {
