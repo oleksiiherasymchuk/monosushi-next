@@ -2,14 +2,16 @@
 import React, { useState } from "react";
 import styles from "./ProductNavigation.module.scss";
 
-type Props = {};
-
 type NavigationItem = {
   label: string;
   active: boolean;
 };
 
-const ProductNavigation = (props: Props) => {
+type Props = {
+  onNavigationClick: (label: string) => void;
+};
+
+const ProductNavigation = ({ onNavigationClick }: Props) => {
   const [navigationItems, setNavigationItems] = useState<NavigationItem[]>([
     { label: "Всі", active: true },
     { label: "Роли Філадельфія", active: false },
@@ -20,11 +22,14 @@ const ProductNavigation = (props: Props) => {
     { label: "Преміум суші", active: false },
   ]);
 
+
   const handleActiveItem = (
     index: number,
     e: React.MouseEvent<HTMLLIElement>
   ) => {
     e.preventDefault();
+    const label = navigationItems[index].label;
+    onNavigationClick(label); // Call the callback with the label
     const changeActiveItem = navigationItems.map((item, i) => ({
       ...item,
       active: i === index,

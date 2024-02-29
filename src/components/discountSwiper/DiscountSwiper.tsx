@@ -43,7 +43,6 @@ const DiscountSwiper = ({
           // }}
         >
           {products?.map((p) => {
-            console.log(p)
             return (
               <SwiperSlide key={p.id} style={{ width: "695px" }}>
                 <Link href={`/actions/${p.title}`}>
