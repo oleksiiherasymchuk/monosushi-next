@@ -15,7 +15,7 @@ const PriceAndQuantity = ({ product }: Props) => {
   return (
     <div className={styles.controls}>
       <div className={styles.controlsPrice}>
-        <span>{product.price * productQuantity}</span> грн
+        <span>{product?.price * productQuantity}</span> грн
       </div>
       <div className={styles.controlsQuantity}>
         <button

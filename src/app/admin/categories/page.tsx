@@ -17,29 +17,22 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v1 } from "uuid";
 import { CategoryType } from "@/shared/types/categories/category";
 import { deleteFromFirebase } from "@/firebase/deleteFromFirebase";
+import Preloader from "@/components/preloader/Preloader";
 
 const AdminCategories = () => {
   const { register, handleSubmit, reset } = useForm();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isUploaded, setIsUploaded] = useState(false);
   const [adminCategories, setAdminCategories] = useState<any[]>([]);
   const [editCategoryId, setEditCategoryId] = useState<string | null>(null);
   const [editCategoryData, setEditCategoryData] = useState<CategoryType | null>(
     null
   );
+  const [loading, setLoading] = useState<boolean>(true);
 
   const addCategoryItem = () => {
     setIsOpen(!isOpen);
     setEditCategoryData(null);
-  };
-
-  const addCategory = (e: any) => {
-    e.preventDefault();
-  };
-
-  const deleteImage = () => {
-    setIsUploaded(false);
   };
 
   const onSubmit = async (data: any) => {
@@ -108,6 +101,7 @@ const AdminCategories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
+        setLoading(true);
         const categoriesCollectionRef = collection(database, "categories");
         const categoriesSnapshot = await getDocs(categoriesCollectionRef);
         const categoriesData: any[] = [];
@@ -117,8 +111,9 @@ const AdminCategories = () => {
         setAdminCategories(categoriesData);
       } catch (error) {
         console.error("Error fetching categories: ", error);
+      } finally {
+        setLoading(false);
       }
-      console.log(adminCategories);
     };
     fetchCategories();
   }, []);
@@ -177,19 +172,6 @@ const AdminCategories = () => {
               />
             </div>
 
-            {isUploaded && (
-              <div>
-                <Image src={logo} alt="logo" className={styles.loadedImg} />
-                <button
-                  type="button"
-                  className={styles.deleteImage}
-                  onClick={deleteImage}
-                >
-                  delete
-                </button>
-              </div>
-            )}
-
             <button className={styles.save} type="submit">
               ЗБЕРЕГТИ
             </button>
@@ -197,38 +179,46 @@ const AdminCategories = () => {
         </div>
       )}
 
-      {!isOpen && (
-        <table>
-          <thead>
-            <tr>
-              <td>№</td>
-              <td>Назва</td>
-              <td>Шлях</td>
-              <td>Картинка</td>
-              <td>Дії</td>
-            </tr>
-          </thead>
-          <tbody>
-            {adminCategories.length === 0 && (
-              <p style={{ marginTop: "30px" }}>NO CATEGORIES</p>
-            )}
-            {adminCategories.length !== 0 &&
-              adminCategories.map((category, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{category.name}</td>
-                  <td>{category.path}</td>
-                  <td>
-                    <img src={category.imagePath} alt="" />
-                  </td>
-                  <td>
-                    <p onClick={() => editCategory(category)}>Редагувати</p>
-                    <p onClick={() => deleteCategory(category.id)}>Видалити</p>
-                  </td>
+      {loading ? (
+        <Preloader />
+      ) : (
+        <>
+          {!isOpen && (
+            <table>
+              <thead>
+                <tr>
+                  <td>№</td>
+                  <td>Назва</td>
+                  <td>Шлях</td>
+                  <td>Картинка</td>
+                  <td>Дії</td>
                 </tr>
-              ))}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {adminCategories.length === 0 && (
+                  <p style={{ marginTop: "30px" }}>NO CATEGORIES</p>
+                )}
+                {adminCategories.length !== 0 &&
+                  adminCategories.map((category, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}.</td>
+                      <td>{category.name}</td>
+                      <td>{category.path}</td>
+                      <td>
+                        <img src={category.imagePath} alt="" />
+                      </td>
+                      <td>
+                        <p onClick={() => editCategory(category)}>Редагувати</p>
+                        <p onClick={() => deleteCategory(category.id)}>
+                          Видалити
+                        </p>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          )}
+        </>
       )}
     </div>
   );

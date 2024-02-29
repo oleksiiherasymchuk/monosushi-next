@@ -3,11 +3,30 @@ import styles from "./Breadcrumb.module.scss";
 import Link from "next/link";
 
 type Props = {
-  categoryName: string;
-  productName: string;
+  categoryName?: string;
+  productName?: string;
 };
 
 const Breadcrumb = ({ categoryName, productName }: Props) => {
+
+  function getCategoryPath(categoryName: any) {
+    switch (categoryName) {
+      case 'Акції':
+        return 'actions';
+      case 'rolls':
+        return 'Роли';
+      case 'sets':
+        return 'Сети';
+      case 'drinks':
+        return 'Безакогольні напої';
+      case 'souces':
+        return 'Соуси';
+      default:
+        return '';
+    }
+  }
+
+
   return (
     <div className={styles.breadcrumb}>
       <nav className="w-full rounded-md">
@@ -25,10 +44,10 @@ const Breadcrumb = ({ categoryName, productName }: Props) => {
           </li>
           <li>
             <Link
-              href={`/${categoryName}`}
+              href={`/product-category/${categoryName}`}
               className="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
             >
-              product category
+              {getCategoryPath(categoryName)}
             </Link>
           </li>
           <li>

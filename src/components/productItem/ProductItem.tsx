@@ -8,37 +8,53 @@ import Zsu from "../../../public/images/zsu.jpeg";
 import ProductNavigation from "../productNavigation/ProductNavigation";
 
 type Props = {
-  products: any[];
+  products: null | any[];
   title?: string;
 };
 
 const ProductItem = ({ products, title }: Props) => {
+
+  const sortProducts = (products: any[]) => {
+    products.sort((a, b) => a.name.localeCompare(b.name));
+  
+    const index = products.findIndex(product => product.name === "Допоможи ЗСУ разом з Моносушиком");
+  
+    if (index !== -1) {
+      const item = products.splice(index, 1)[0];
+      products.unshift(item);
+    }
+  
+    return products;
+  };
+  
+  const sortedProducts = sortProducts(products || []);
+
   return (
     <div className={styles.product}>
       {title && <Title title={title} />}
       {title === "Роли" && <ProductNavigation />}
       <div className={styles.productWrapper}>
-        {products.map((product) => {
+        {sortedProducts?.map((product) => {
           return (
             <div className={styles.productWrapperItem} key={product.id}>
-              <Link href={`/product/${product.name}`}>
-                {product.image ? (
-                  <Image src={product.image} alt={product.name} height={240}/>
+              <Link href={`/product/${product.path}`} className={styles.productWrapperItemImage}>
+                {product.imagePath ? (
+                  <Image src={product.imagePath} alt={product.name} height={240} width={240}/>
                 ) : (
-                  <Image src={Zsu} alt="defaultProductImage" height={240}/>
+                  <Image src={Zsu} alt="defaultProductImage" height={240} width={240}/>
                 )}
               </Link>
               <p className={styles.productWrapperItemName}>
-                <Link href={`/product/${product.name}`}>{product.name}</Link>
+                <Link href={`/product/${product.path}`}>{product.name}</Link>
               </p>
-              {product.description && (
+              {product.ingredients && (
                 <p className={styles.productWrapperItemDescription}>
-                  {product.description}
+                  {product.ingredients}
                 </p>
               )}
               {product.weight && (
                 <p className={styles.productWrapperItemWeight}>
-                  {product.weight} г
+                  {product.weight}
                 </p>
               )}
               <PriceAndQuantity product={product} />

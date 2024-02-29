@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import styles from "./Products.module.scss";
-import logo from "../../../../public/images/logo.svg";
 import Image from "next/image";
 import { deleteFromFirebase } from "../../../firebase/deleteFromFirebase";
 import { useForm } from "react-hook-form";
@@ -17,18 +16,19 @@ import {
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v1 } from "uuid";
 import { ProductType } from "@/shared/types/products/product";
+import Preloader from "@/components/preloader/Preloader";
 
 const AdminProducts = () => {
   const { register, handleSubmit, reset } = useForm();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isUploaded, setIsUploaded] = useState(false);
   const [adminProducts, setAdminProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [editProductId, setEditProductId] = useState<string | null>(null);
   const [editProductData, setEditProductData] = useState<ProductType | null>(
     null
   );
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -37,11 +37,9 @@ const AdminProducts = () => {
         const categoriesSnapshot = await getDocs(categoriesCollectionRef);
         const categoriesData: string[] = [];
         categoriesSnapshot.forEach((doc) => {
-          // console.log(doc.data().name)
-          categoriesData.push(doc.data().name); // Assuming categories are stored as document IDs
+          categoriesData.push(doc.data().name);
         });
         setCategories(categoriesData);
-        console.log(categoriesData);
       } catch (error) {
         console.error("Error fetching categories: ", error);
       }
@@ -56,18 +54,6 @@ const AdminProducts = () => {
     }
     setIsOpen(!isOpen);
     setEditProductData(null);
-  };
-
-  const addProduct = (e: any) => {
-    e.preventDefault();
-  };
-
-  const upload = (e: any) => {
-    setIsUploaded(true);
-  };
-
-  const deleteImage = () => {
-    setIsUploaded(false);
   };
 
   const onSubmit = async (data: any) => {
@@ -150,6 +136,7 @@ const AdminProducts = () => {
       const productData = docSnapshot.data() as ProductType;
 
       setEditProductData(productData);
+
       reset();
       setIsOpen(true);
     } catch (error) {
@@ -164,15 +151,20 @@ const AdminProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setLoading(true)
         const productsCollectionRef = collection(database, "products");
         const productsSnapshot = await getDocs(productsCollectionRef);
         const productsData: any[] = [];
         productsSnapshot.forEach((doc) => {
           productsData.push({ id: doc.id, ...doc.data() });
         });
+        productsData.sort((a, b) => a.category.localeCompare(b.category));
+        
         setAdminProducts(productsData);
       } catch (error) {
         console.error("Error fetching products: ", error);
+      } finally{
+        setLoading(false)
       }
     };
     fetchProducts();
@@ -203,13 +195,13 @@ const AdminProducts = () => {
               <input
                 type="text"
                 placeholder="*Назва"
-                {...register("name", { required: true, maxLength: 20 })}
+                {...register("name", { required: true, maxLength: 3000 })}
                 defaultValue={editProductData ? editProductData.name : ""}
               />
               <input
                 type="text"
                 placeholder="*Шлях"
-                {...register("path", { required: true, maxLength: 20 })}
+                {...register("path", { required: true, maxLength: 200 })}
                 defaultValue={editProductData ? editProductData.path : ""}
               />
             </div>
@@ -217,7 +209,7 @@ const AdminProducts = () => {
               <input
                 type="text"
                 placeholder="*Інгредієнти"
-                {...register("ingredients", { required: true, maxLength: 20 })}
+                {...register("ingredients", { maxLength: 2000 })}
                 defaultValue={editProductData ? editProductData.ingredients : ""}
               />
             </div>
@@ -225,7 +217,7 @@ const AdminProducts = () => {
               <input
                 type="text"
                 placeholder="*Вага"
-                {...register("weight", { required: true, maxLength: 20 })}
+                {...register("weight", { maxLength: 20 })}
                 defaultValue={editProductData ? editProductData.weight : ""}
               />
               <input
@@ -240,23 +232,22 @@ const AdminProducts = () => {
               <input
                 type="file"
                 className={styles.fileInput}
-                // onChange={upload}
                 {...register("formFile")}
               />
             </div>
 
-            {isUploaded && (
+            {/* {editProductData?.imagePath && (
               <div>
-                <Image src={logo} alt="logo" className={styles.loadedImg} />
+                <Image src={editProductData?.imagePath} alt="logo" className={styles.loadedImg} width={50} height={50}/>
                 <button
                   type="button"
                   className={styles.deleteImage}
-                  onClick={deleteImage}
+                  // onClick={deleteImage}
                 >
                   delete
                 </button>
               </div>
-            )}
+            )} */}
 
             <button className={styles.save} type="submit">
               ЗБЕРЕГТИ
@@ -265,49 +256,54 @@ const AdminProducts = () => {
         </div>
       )}
 
-      {!isOpen && (
-        <table>
-          <thead>
-            <tr>
-              <td>№</td>
-              <td>Категорія</td>
-              <td>Назва</td>
-              <td>Інгредієнти</td>
-              <td>Вага</td>
-              <td>Ціна</td>
-              <td>Картинка</td>
-              <td>Дії</td>
-            </tr>
-          </thead>
-          <tbody>
-            {adminProducts.length === 0 && (
-              <p style={{ marginTop: "30px" }}>NO PRODUCTS</p>
-            )}
-            {adminProducts.length !== 0 &&
-              adminProducts.map((product, index) => (
-                <tr key={index}>
-                  <td>{index + 1}.</td>
-                  <td>{product.category}</td>
-                  <td>{product.name}</td>
-                  <td>
-                    {/* {product.ingredients.slice(0, 30)} */}
-                    {/* {product.ingredients.length > 30 && <span>...</span>} */}
-                    {product.ingredients}
-                  </td>
-                  <td>{product.weight} г.</td>
-                  <td>{product.price} грн.</td>
-                  <td>
-                    <img src={product.imagePath} alt="" />
-                  </td>
-                  <td>
-                    <p onClick={() => editProduct(product)}>Редагувати</p>
-                    <p onClick={() => deleteProduct(product.id)}>Видалити</p>
-                  </td>
+      {
+        loading ? <Preloader /> : (
+          <>
+             {!isOpen && (
+            <table>
+              <thead>
+                <tr>
+                  <td>№</td>
+                  <td>Категорія</td>
+                  <td>Назва</td>
+                  <td>Інгредієнти</td>
+                  <td>Вага</td>
+                  <td>Ціна</td>
+                  <td>Картинка</td>
+                  <td>Дії</td>
                 </tr>
-              ))}
-          </tbody>
-        </table>
-      )}
+              </thead>
+              <tbody>
+                {adminProducts.length === 0 && (
+                  <p style={{ marginTop: "30px" }}>NO PRODUCTS</p>
+                )}
+                {adminProducts.length !== 0 &&
+                  adminProducts.map((product, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}.</td>
+                      <td>{product.category}</td>
+                      <td>{product.name}</td>
+                      <td>
+                        {/* {product.ingredients.slice(0, 30)} */}
+                        {/* {product.ingredients.length > 30 && <span>...</span>} */}
+                        {product.ingredients}
+                      </td>
+                      <td>{product.weight}</td>
+                      <td>{product.price} грн.</td>
+                      <td>
+                        <img src={product.imagePath} alt="" />
+                      </td>
+                      <td>
+                        <p onClick={() => editProduct(product)}>Редагувати</p>
+                        <p onClick={() => deleteProduct(product.id)}>Видалити</p>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          )}</>
+        )
+      }
     </div>
   );
 };

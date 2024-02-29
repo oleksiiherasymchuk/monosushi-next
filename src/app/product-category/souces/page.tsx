@@ -1,41 +1,80 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import styles from "./Souces.module.scss";
-import { SoucesType } from "@/shared/types/products/souces";
 import ProductItem from "@/components/productItem/ProductItem";
+import {
+  QueryDocumentSnapshot,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { database } from "@/firebase/config";
+import Preloader from "@/components/preloader/Preloader";
+import { ProductType, ProductsType } from "@/shared/types/products/product";
 
 type Props = {};
 
 const Souces = (props: Props) => {
-  const souces: SoucesType = [
-    {
-      id: 1,
-      name: "Допоможи ЗСУ разом з Моносушиком",
-      price: 50,
-      description:
-        'Всі виручені кошти перераховуємо в благодійний фонд "Повернись живим"',
-    },
-    { id: 2, name: "Ketchup", price: 15, weight: 15 },
-    { id: 3, name: "Mas", price: 25, weight: 15 },
-    { id: 4, name: "Imbyr", price: 35, weight: 15 },
-    { id: 5, name: "Imbyr", price: 35, weight: 15 },
-    { id: 6, name: "Imbyr", price: 35, weight: 15 },
-  ];
+  const [loading, setLoading] = useState<boolean>(true);
+  const [souces, setSouces] = useState<ProductsType | null>(null);
+
+  useEffect(() => {
+    const fetchSouces = async () => {
+      try {
+        setLoading(true);
+        const soucesCollectionRef = collection(database, "products");
+        const soucesQuery = query(
+          soucesCollectionRef,
+          where("category", "==", "souces")
+        );
+        const soucesSnapshot = await getDocs(soucesQuery);
+        const soucesData: ProductType[] = [];
+        soucesSnapshot.forEach((doc: QueryDocumentSnapshot) => {
+          const data = doc.data();
+          soucesData.push({
+            id: doc.id,
+            name: data.name || "",
+            category: data.category || "",
+            path: data.path || "",
+            ingredients: data.ingredients || "",
+            description: data.description || "",
+            price: data.price || "",
+            weight: data.weight || "",
+            imagePath: data.imagePath || "",
+          });
+        });
+        setSouces(soucesData);
+      } catch (error) {
+        console.error("Error fetching souces: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSouces();
+  }, []);
 
   return (
-    <div className={styles.souces}>
-      <ProductItem products={souces} title="Соуси" />
-      <div className={styles.soucesText}>
-        <p>
-          Кожне замовлення включає в себе безкоштовні прибори, кількість яких
-          залежить від кількості замовлених ролів. (1 рол = 1 людина)
-        </p>
-        <ul>
-          <li>Імбир</li>
-          <li>Васабі</li>
-          <li>Соєвий соус</li>
-        </ul>
-      </div>
-    </div>
+    <>
+      {loading ? (
+        <Preloader />
+      ) : (
+        <div className={styles.souces}>
+          <ProductItem products={souces} title="Соуси" />
+          <div className={styles.soucesText}>
+            <p>
+              Кожне замовлення включає в себе безкоштовні прибори, кількість
+              яких залежить від кількості замовлених ролів. (1 рол = 1 людина)
+            </p>
+            <ul>
+              <li>Імбир</li>
+              <li>Васабі</li>
+              <li>Соєвий соус</li>
+            </ul>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

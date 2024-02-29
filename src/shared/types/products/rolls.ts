@@ -1,5 +1,5 @@
 export type RollType = {
-  id: number,
+  id?: number | string,
   name: string,
   description?: string,
   price: number,

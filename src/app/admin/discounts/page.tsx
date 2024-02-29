@@ -17,26 +17,22 @@ import {
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v1 } from "uuid";
 import { deleteFromFirebase } from "@/firebase/deleteFromFirebase";
+import Preloader from "@/components/preloader/Preloader";
 
 const AdminDiscounts = () => {
   const { register, handleSubmit, reset } = useForm();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isUploaded, setIsUploaded] = useState(false);
-  const [imageURL, setImageURL] = useState("");
   const [editDiscountId, setEditDiscountId] = useState<string | null>(null);
   const [editDiscountData, setEditDiscountData] = useState<DiscountType | null>(
     null
   );
   const [adminDiscounts, setAdminDiscounts] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const addDiscountItem = () => {
     setIsOpen(!isOpen);
     setEditDiscountData(null);
-  };
-
-  const deleteImage = () => {
-    setIsUploaded(false);
   };
 
   const onSubmit = async (data: any) => {
@@ -107,6 +103,7 @@ const AdminDiscounts = () => {
   useEffect(() => {
     const fetchDiscounts = async () => {
       try {
+        setLoading(true)
         const discountsCollectionRef = collection(database, "discounts");
         const discountsSnapshot = await getDocs(discountsCollectionRef);
         const discountsData: any[] = [];
@@ -116,6 +113,8 @@ const AdminDiscounts = () => {
         setAdminDiscounts(discountsData);
       } catch (error) {
         console.error("Error fetching discounts: ", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchDiscounts();
@@ -157,19 +156,19 @@ const AdminDiscounts = () => {
               <input
                 type="text"
                 placeholder="*Назва"
-                {...register("name", { required: true, maxLength: 20 })}
+                {...register("name", { required: true, maxLength: 50 })}
                 defaultValue={editDiscountData ? editDiscountData.name : ""}
               />
               <input
                 type="text"
                 placeholder="*Заголовок"
-                {...register("title", { required: true, maxLength: 20 })}
+                {...register("title", { required: true, maxLength: 50 })}
                 defaultValue={editDiscountData ? editDiscountData.title : ""}
               />
             </div>
             <textarea
               placeholder="*Опис"
-              {...register("description", { required: true, maxLength: 300 })}
+              {...register("description", { required: true, maxLength: 2000 })}
               defaultValue={
                 editDiscountData ? editDiscountData.description : ""
               }
@@ -181,23 +180,7 @@ const AdminDiscounts = () => {
                 {...register("formFile")}
               />
             </div>
-            {/* {imageURL && <img src={imageURL} alt="Uploaded" style={{ width: "200px" }} />} */}
-            {isUploaded && (
-              <div>
-                <Image
-                  src={logo}
-                  alt="discountLogo"
-                  className={styles.loadedImg}
-                />
-                <button
-                  type="button"
-                  className={styles.deleteImage}
-                  onClick={deleteImage}
-                >
-                  delete
-                </button>
-              </div>
-            )}
+
 
             <button
               className={styles.save}
@@ -210,7 +193,9 @@ const AdminDiscounts = () => {
         </div>
       )}
 
-      {!isOpen && (
+     { loading ? <Preloader /> : (
+      <>
+       {!isOpen && (
         <table>
           <thead>
             <tr>
@@ -229,12 +214,10 @@ const AdminDiscounts = () => {
             {adminDiscounts.length !== 0 &&
               adminDiscounts.map((discount, index) => (
                 <tr key={index}>
-                  <td>24.03.2023</td>
+                  <td>{index + 1}.</td>
                   <td>{discount?.name}</td>
                   <td>{discount?.title}</td>
                   <td>
-                    {/* {discount.description.slice(0, 100)} */}
-                    {/* {discount.description.length > 60 && <span>...</span>} */}
                     {discount?.description}
                   </td>
                   <td>
@@ -249,6 +232,8 @@ const AdminDiscounts = () => {
           </tbody>
         </table>
       )}
+      </>
+     )}
     </div>
   );
 };

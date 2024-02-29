@@ -5,7 +5,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Keyboard, Mousewheel, Navigation, Pagination } from "swiper/modules";
-import Image from "next/image";
 import Link from "next/link";
 import { RollType } from "@/shared/types/products/rolls";
 import { DiscountType } from "@/shared/types/discount/discount";
@@ -43,13 +42,16 @@ const DiscountSwiper = ({
           //   },
           // }}
         >
-          {products?.map((p) => (
-            <SwiperSlide key={p.id} style={{ width: "695px" }}>
-              <Link href={`/${p.category}/${p.name}`}>
-                <img src={p.imagePath} alt={`${p.category} ${p.id}`} />
-              </Link>
-            </SwiperSlide>
-          ))}
+          {products?.map((p) => {
+            console.log(p)
+            return (
+              <SwiperSlide key={p.id} style={{ width: "695px" }}>
+                <Link href={`/actions/${p.title}`}>
+                  <img src={p.imagePath} alt={`${p.category} ${p.id}`} />
+                </Link>
+              </SwiperSlide>
+            )
+          })}
         </Swiper>
       </div>
 

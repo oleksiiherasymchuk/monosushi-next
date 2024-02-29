@@ -1,63 +1,185 @@
-import Link from 'next/link';
-import React from 'react'
-import styles from './ProductItem.module.scss'
-import Image from 'next/image';
-import cola from '../../../../public/images/colaa.jpeg'
-import PriceAndQuantity from '@/components/priceAndQuantity/PriceAndQuantity';
-import Breadcrumb from '@/components/breadcrumb/Breadcrumb';
-import { DrinksType } from '@/shared/types/products/drinks';
-import ProductItem from '@/components/productItem/ProductItem';
-import DiscountSwiper from '@/components/discountSwiper/DiscountSwiper';
-import { RollsType } from '@/shared/types/products/rolls';
-import ProductsItemSwiper from '@/components/productItem/ProductsItemSwiper';
+"use client";
+import React, { useEffect, useState } from "react";
+import styles from "./ProductItem.module.scss";
+import Image from "next/image";
+import zsu from "../../../../public/images/zsu.jpeg";
+import PriceAndQuantity from "@/components/priceAndQuantity/PriceAndQuantity";
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
+import ProductItem from "@/components/productItem/ProductItem";
+import ProductsItemSwiper from "@/components/productItem/ProductsItemSwiper";
+import { ProductType, ProductsType } from "@/shared/types/products/product";
+import {
+  QueryDocumentSnapshot,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { database } from "@/firebase/config";
+import Preloader from "@/components/preloader/Preloader";
 
-type Props = {}
+type Params = {
+  params: {
+    name: string;
+  };
+};
 
-const Product = (props: Props) => {
+const Product = ({ params }: Params) => {
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const rolls: RollsType = [
-    { id: 1, name: "Сет Філадельфія", price: 115, weight: 15 },
-    { id: 2, name: "Сет Філадельфія", price: 225, weight: 15 },
-    { id: 3, name: "Сет Філадельфія", price: 235, weight: 15 },
-    { id: 4, name: "Сет Філадельфія", price: 355, weight: 15 },
-    { id: 5, name: "Сет Філадельфія", price: 435, weight: 15 },
-  ];
+  const [drinks, setDrinks] = useState<ProductsType | null>(null);
+  const [currentProduct, setCurrentProduct] = useState<ProductType | null>(
+    null
+  );
+  const [sets, setSets] = useState<ProductsType | null>(null);
 
-  const drinks: DrinksType = [
-    { id: 1, name: "Cola", price: 15, weight: 15 },
-    { id: 2, name: "Pepsi", price: 25, weight: 15 },
-    { id: 3, name: "Fanta", price: 35, weight: 15 }
-  ];
+  useEffect(() => {
+    const fetchSets = async () => {
+      try {
+        setLoading(true);
+        const setsCollectionRef = collection(database, "products");
+        const setsQuery = query(
+          setsCollectionRef,
+          where("category", "==", "sets")
+        );
+        const setsSnapshot = await getDocs(setsQuery);
+        const setsData: ProductType[] = [];
+        setsSnapshot.forEach((doc: QueryDocumentSnapshot) => {
+          const data = doc.data();
+          setsData.push({
+            id: doc.id,
+            name: data.name || "",
+            category: data.category || "",
+            path: data.path || "",
+            ingredients: data.ingredients || "",
+            description: data.description || "",
+            price: data.price || "",
+            weight: data.weight || "",
+            imagePath: data.imagePath || "",
+          });
+        });
+        setSets(setsData);
+      } catch (error) {
+        console.error("Error fetching souces: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSets();
+  }, []);
 
-  const product = {name: 'Сет Філадельфія', weight: '1070', squad: 'Філадельфія: з лососем / в кунжуті / з тунцем / з вугрем', price: 10, category: 'sets'}
+  useEffect(() => {
+    const fetchDrinks = async () => {
+      try {
+        setLoading(true);
+        const drinksCollectionRef = collection(database, "products");
+        const drinksQuery = query(
+          drinksCollectionRef,
+          where("category", "==", "drinks")
+        );
+        const drinksSnapshot = await getDocs(drinksQuery);
+        const drinksData: ProductType[] = [];
+        drinksSnapshot.forEach((doc: QueryDocumentSnapshot) => {
+          const data = doc.data();
+          drinksData.push({
+            id: doc.id,
+            name: data.name || "",
+            category: data.category || "",
+            path: data.path || "",
+            ingredients: data.ingredients || "",
+            description: data.description || "",
+            price: data.price || "",
+            weight: data.weight || "",
+            imagePath: data.imagePath || "",
+          });
+        });
+        setDrinks(drinksData);
+      } catch (error) {
+        console.error("Error fetching souces: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDrinks();
+  }, []);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const productQuery = query(
+          collection(database, "products"),
+          where("path", "==", params.name)
+        );
+        const querySnapshot = await getDocs(productQuery);
+        querySnapshot.forEach((doc) => {
+          setCurrentProduct({
+            id: doc.id,
+            ...doc.data(),
+          } as ProductType);
+        });
+      } catch (error) {
+        console.error("Error fetching discount: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (params.name) {
+      fetchProduct();
+    }
+  }, [params.name]);
+
+  useEffect(() => {
+    console.log(currentProduct);
+  }, [currentProduct]);
 
   return (
     <>
-      <Breadcrumb categoryName={product.category} productName={product.name}/>
+      {loading ? (
+        <Preloader />
+      ) : (
+        <>
+          <Breadcrumb
+            categoryName={currentProduct?.category}
+            productName={currentProduct?.name}
+          />
 
-      <div className={styles.product}>
-        <div className={styles.productImage}>
-          <Image src={cola} alt='productImage'/>
-        </div>
-        <div className={styles.productDescription}>
-          <h5>{product.name}</h5>
-          <p><span>Склад: </span>{product.squad}</p>
-          <p><span>Вага: </span>{product.weight} г</p>
-          <PriceAndQuantity product={product} />
-        </div>
-      </div>
+          <div className={styles.product}>
+            <div className={styles.productImage}>
+              <Image
+                src={currentProduct?.imagePath || zsu}
+                alt={currentProduct?.name || "currentProductImage"}
+                width={240}
+                height={240}
+              />
+            </div>
+            <div className={styles.productDescription}>
+              <h5>{currentProduct?.name}</h5>
+              <p>
+                <span>Склад: </span>
+                {currentProduct?.ingredients}
+              </p>
+              <p>
+                <span>Вага: </span>
+                {currentProduct?.weight}
+              </p>
+              <PriceAndQuantity product={currentProduct} />
+            </div>
+          </div>
 
-      <div className={styles.trySwiper}>
-        <h2>Також спробуйте</h2>
-        <ProductsItemSwiper products={rolls} slides={3} navigation={true}/>
-      </div>
+          <div className={styles.trySwiper}>
+            <h2>Також спробуйте</h2>
+            <ProductsItemSwiper products={sets} slides={3} navigation={true} />
+          </div>
 
-      <div className={styles.tasteWithSwiper}>
-        <h2>Смакує разом</h2>
-        <ProductItem products={drinks} />
-      </div>
-      </>
-  )
-}
+          <div className={styles.tasteWithSwiper}>
+            <h2>Смакує разом</h2>
+            <ProductItem products={drinks} />
+          </div>
+        </>
+      )}
+    </>
+  );
+};
 
 export default Product;

@@ -5,15 +5,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Keyboard, Mousewheel, Navigation, Pagination } from "swiper/modules";
-import Image from "next/image";
-import Link from "next/link";
 import { RollType } from "@/shared/types/products/rolls";
 import ProductItem from "./ProductItem";
 
 type Props = {
   slides: number;
   navigation?: boolean;
-  products:  RollType[] | any[];
+  products?:  RollType[] | null | any[];
 };
 
 const ProductsItemSwiper = ({
@@ -31,11 +29,9 @@ const ProductsItemSwiper = ({
           scrollbar={{ draggable: true }}
           style={{ height: "100%" }}
           navigation={navigation ? false : true}
+          modules={[Navigation, Pagination, Mousewheel, Keyboard]}
           // mousewheel={true}
           // keyboard={true}
-          modules={[Navigation, Pagination, Mousewheel, Keyboard]}
-          // onSwiper={(swiper) => console.log(swiper)}
-          // onSlideChange={() => console.log("slide change")}
           // pagination={{
           //   clickable: true,
           //   renderBullet: function (index, swiper) {
@@ -59,8 +55,6 @@ const ProductsItemSwiper = ({
           scrollbar={{ draggable: true }}
           style={{ height: "100%" }}
           navigation={navigation ? false : true}
-          // mousewheel={true}
-          // keyboard={true}
           modules={[Navigation, Pagination, Mousewheel, Keyboard]}
         >
           {products?.map((p) => (
@@ -87,8 +81,6 @@ const ProductsItemSwiper = ({
           scrollbar={{ draggable: true }}
           style={{ height: "100%" }}
           navigation={navigation ? false : true}
-          // mousewheel={true}
-          // keyboard={true}
           modules={[Navigation, Pagination, Mousewheel, Keyboard]}
         >
           {products?.map((p) => (
