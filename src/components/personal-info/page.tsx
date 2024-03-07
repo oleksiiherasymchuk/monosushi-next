@@ -1,11 +1,12 @@
-'use client'
+"use client";
 import React, { useState, useEffect } from "react";
 import styles from "./PersonalInfo.module.scss";
 import Modal from "../modal/Modal";
 import AddressModal from "./AddressModal";
-import { auth, database } from "@/firebase/config";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth } from "@/firebase/config";
 import PasswordModal from "../password/PasswordModal";
+import { useActions } from "@/hooks/useActions";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
 
 type Props = {};
 
@@ -17,67 +18,66 @@ type User = {
 };
 
 const PersonalInfo = (props: Props) => {
+  // const [user, setUser] = useState<User>({
+  // name: "",
+  // surname: "",
+  // phone: "",
+  // email: "",
+  // });
 
-  const [user, setUser] = useState<User>({
+  const [isDataSuccessModal, setIsDataSuccessModal] = useState<boolean>(false);
+  const [modalContent, setModalContent] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [formData, setFormData] = useState<User | any>({
     name: "",
     surname: "",
     phone: "",
     email: "",
   });
 
-  const [isDataSuccessModal, setIsDataSuccessModal] = useState<boolean>(false)
-  const [modalContent, setModalContent] = useState<string>('');
-  const onCloseDataSuccessModal = () => setIsDataSuccessModal(false)
+  const onCloseModal = () => setIsModalOpen(false);
+  const onCloseDataSuccessModal = () => setIsDataSuccessModal(false);
 
-
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const onCloseModal = () => setIsModalOpen(false)
-
+  const { getUserDataThunk, updateUserThunk } = useActions();
+  const user = useTypedSelector((state) => state.auth.user);
+  // const isAuth = useTypedSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const currentUser = auth.currentUser;
-        if (currentUser) {
-          const userDocRef = doc(database, "users", currentUser.uid);
-          const userDocSnapshot = await getDoc(userDocRef);
-          if (userDocSnapshot.exists()) {
-            const userData = userDocSnapshot.data() as User;
-            setUser(userData);
-            console.log(userData)
-          }
-        }
-        console.log(currentUser)
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-    console.log(user)
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      getUserDataThunk({ userId: currentUser.uid });
+    }
+    // console.log(isAuth)
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
     const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
+    setFormData((prevFormData: any) => ({
+      ...prevFormData,
       [name]: value,
     }));
   };
-  const handleSaveChanges = async () => {
+
+
+  const handleSaveChanges = () => {
     try {
       const currentUser = auth.currentUser;
       if (currentUser) {
-        const userDocRef = doc(database, "users", currentUser.uid);
-        await setDoc(userDocRef, user, { merge: true });
-        console.log("User data saved successfully.");
-        setIsDataSuccessModal(true)
-        setModalContent("Дані збережено")
+        updateUserThunk(formData);
       }
+      setIsDataSuccessModal(true)
+      setModalContent("Дані збережено")
     } catch (error) {
-      console.error("Error saving user data:", error);
+      console.log(error)
     }
-  };
+  }
+
+  useEffect(() => {
+    if (user) {
+      setFormData(user);
+    }
+  }, [user]);
 
   return (
     <div className={styles.wrapper}>
@@ -88,35 +88,44 @@ const PersonalInfo = (props: Props) => {
         </div>
 
         <form>
+        {/* <form onSubmit={(e) => e.preventDefault()}> */}
           <div className={styles.names}>
-            <input 
-              type="text" 
-              placeholder="*Імя" 
+            <input
+              type="text"
+              placeholder="*Імя"
               name="name"
-              value={user.name}
-              onChange={handleInputChange}/>
+              // value={user?.name}
+              value={formData.name || ''}
+              onChange={handleInputChange}
+            />
 
-            <input 
-              type="text" 
-              placeholder="*Прізвище" 
+            <input
+              type="text"
+              placeholder="*Прізвище"
               name="surname"
-              value={user.surname}
-              onChange={handleInputChange}/>
+              // value={user?.surname}
+              value={formData.surname || ''}
+              onChange={handleInputChange}
+            />
           </div>
 
-          <input 
-            type="text" 
-            placeholder="*Телефон" 
+          <input
+            type="text"
+            placeholder="*Телефон"
             name="phone"
-            value={user.phone}
-            onChange={handleInputChange}/>
+            // value={user?.phone}
+            value={formData.phone || ''}
+            onChange={handleInputChange}
+          />
 
-          <input 
-            type="text" 
-            placeholder="*Пошта" 
+          <input
+            type="text"
+            placeholder="*Пошта"
             name="email"
-            value={user.email}
-            onChange={handleInputChange}/>
+            // value={user?.email}
+            value={formData.email || ''}
+            onChange={handleInputChange}
+          />
         </form>
       </div>
 
@@ -129,10 +138,17 @@ const PersonalInfo = (props: Props) => {
         </div>
 
         <div className={styles.buttons}>
-          <button className={styles.addAddress} onClick={() => setIsModalOpen(true)}>
+          <button
+            className={styles.addAddress}
+            onClick={() => setIsModalOpen(true)}
+          >
             Додати адресу
           </button>
-          <button className={styles.save} type="submit" onClick={handleSaveChanges}>
+          <button
+            className={styles.save}
+            type="submit"
+            onClick={handleSaveChanges}
+          >
             Зберегти зміни
           </button>
         </div>
@@ -143,10 +159,59 @@ const PersonalInfo = (props: Props) => {
       </Modal>
 
       <Modal isOpen={isDataSuccessModal}>
-        <PasswordModal onClose={onCloseDataSuccessModal} content={modalContent}/>
+        <PasswordModal
+          onClose={onCloseDataSuccessModal}
+          content={modalContent}
+        />
       </Modal>
     </div>
   );
 };
 
 export default PersonalInfo;
+
+// useEffect(() => {
+//   const fetchUserData = async () => {
+//     try {
+//       const currentUser = auth.currentUser;
+//       if (currentUser) {
+//         const userDocRef = doc(database, "users", currentUser.uid);
+//         const userDocSnapshot = await getDoc(userDocRef);
+//         if (userDocSnapshot.exists()) {
+//           const userData = userDocSnapshot.data() as User;
+//           setUser(userData);
+//           console.log(userData)
+//         }
+//       }
+//       console.log(currentUser)
+//     } catch (error) {
+//       console.error("Error fetching user data:", error);
+//     }
+//   };
+
+//   fetchUserData();
+//   console.log(user)
+// }, []);
+
+// const handleSaveChanges = async () => {
+//   try {
+//     const currentUser = auth.currentUser;
+//     if (currentUser) {
+//       const userDocRef = doc(database, "users", currentUser.uid);
+//       await setDoc(userDocRef, user, { merge: true });
+//       console.log("User data saved successfully.");
+//       setIsDataSuccessModal(true)
+//       setModalContent("Дані збережено")
+//     }
+//   } catch (error) {
+//     console.error("Error saving user data:", error);
+//   }
+// };
+
+// const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//   const { name, value } = e.target;
+//   setUser((prevUser: User) => ({
+//     ...prevUser,
+//     [name]: value,
+//   }));
+// };

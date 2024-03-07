@@ -11,8 +11,8 @@ const Breadcrumb = ({ categoryName, productName }: Props) => {
 
   function getCategoryPath(categoryName: any) {
     switch (categoryName) {
-      case 'Акції':
-        return 'actions';
+      case 'actions':
+        return 'Акції';
       case 'rolls':
         return 'Роли';
       case 'sets':
@@ -44,7 +44,7 @@ const Breadcrumb = ({ categoryName, productName }: Props) => {
           </li>
           <li>
             <Link
-              href={`/product-category/${categoryName}`}
+              href={categoryName === 'actions' ? `/actions` : `/product-category/${categoryName}`}
               className="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
             >
               {getCategoryPath(categoryName)}

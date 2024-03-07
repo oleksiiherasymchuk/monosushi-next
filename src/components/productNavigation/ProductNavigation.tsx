@@ -8,7 +8,7 @@ type NavigationItem = {
 };
 
 type Props = {
-  onNavigationClick: (label: string) => void;
+  onNavigationClick: ((label: string) => void) | any;
 };
 
 const ProductNavigation = ({ onNavigationClick }: Props) => {

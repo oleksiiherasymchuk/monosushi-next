@@ -1,60 +1,25 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./Sets.module.scss";
 import ProductItem from "@/components/productItem/ProductItem";
 import Link from "next/link";
 import ShowMore from "@/components/showMoreButton/ShowMore";
-import { ProductType, ProductsType } from "@/shared/types/products/product";
-import {
-  QueryDocumentSnapshot,
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
-import { database } from "@/firebase/config";
 import Preloader from "@/components/preloader/Preloader";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
+import { useActions } from "@/hooks/useActions";
 
 type Props = {};
 
 const Sets = (props: Props) => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [sets, setSets] = useState<ProductsType | null>(null);
+
+  const loading = useTypedSelector(state => state.sets.loading)
+  const sets = useTypedSelector(state => state.sets.sets)
+
+  const { getSetsFromFirebaseThunk } = useActions()
 
   useEffect(() => {
-    const fetchSets = async () => {
-      try {
-        setLoading(true);
-        const setsCollectionRef = collection(database, "products");
-        const setsQuery = query(
-          setsCollectionRef,
-          where("category", "==", "sets")
-        );
-        const setsSnapshot = await getDocs(setsQuery);
-        const setsData: ProductType[] = [];
-        setsSnapshot.forEach((doc: QueryDocumentSnapshot) => {
-          const data = doc.data();
-          setsData.push({
-            id: doc.id,
-            name: data.name || "",
-            category: data.category || "",
-            path: data.path || "",
-            ingredients: data.ingredients || "",
-            description: data.description || "",
-            price: data.price || "",
-            weight: data.weight || "",
-            imagePath: data.imagePath || "",
-          });
-        });
-        setSets(setsData);
-      } catch (error) {
-        console.error("Error fetching souces: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchSets();
-  }, []);
+    getSetsFromFirebaseThunk()
+  },[])
 
   return (
     <>
@@ -163,3 +128,42 @@ const Sets = (props: Props) => {
 };
 
 export default Sets;
+
+
+  // const [loading, setLoading] = useState<boolean>(true);
+  // const [sets, setSets] = useState<ProductsType | null>(null);
+
+  // useEffect(() => {
+  //   const fetchSets = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const setsCollectionRef = collection(database, "products");
+  //       const setsQuery = query(
+  //         setsCollectionRef,
+  //         where("category", "==", "sets")
+  //       );
+  //       const setsSnapshot = await getDocs(setsQuery);
+  //       const setsData: ProductType[] = [];
+  //       setsSnapshot.forEach((doc: QueryDocumentSnapshot) => {
+  //         const data = doc.data();
+  //         setsData.push({
+  //           id: doc.id,
+  //           name: data.name || "",
+  //           category: data.category || "",
+  //           path: data.path || "",
+  //           ingredients: data.ingredients || "",
+  //           description: data.description || "",
+  //           price: data.price || "",
+  //           weight: data.weight || "",
+  //           imagePath: data.imagePath || "",
+  //         });
+  //       });
+  //       setSets(setsData);
+  //     } catch (error) {
+  //       console.error("Error fetching souces: ", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchSets();
+  // }, []);

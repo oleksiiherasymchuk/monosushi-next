@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Products.module.scss";
 import Image from "next/image";
-import { deleteFromFirebase } from "../../../firebase/deleteFromFirebase";
 import { useForm } from "react-hook-form";
 import { database, storage } from "@/firebase/config";
 import {
@@ -17,6 +16,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v1 } from "uuid";
 import { ProductType } from "@/shared/types/products/product";
 import Preloader from "@/components/preloader/Preloader";
+import { deleteFromFirebase } from "@/firebase/deleteFromFirebase";
 
 const AdminProducts = () => {
   const { register, handleSubmit, reset } = useForm();

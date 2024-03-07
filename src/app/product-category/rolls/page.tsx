@@ -4,57 +4,64 @@ import styles from "./Rolls.module.scss";
 import ProductItem from "@/components/productItem/ProductItem";
 import Link from "next/link";
 import ShowMore from "@/components/showMoreButton/ShowMore";
-import { ProductType, ProductsType } from "@/shared/types/products/product";
-import {
-  QueryDocumentSnapshot,
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
-import { database } from "@/firebase/config";
 import Preloader from "@/components/preloader/Preloader";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
+import { useActions } from "@/hooks/useActions";
+import { ProductType, ProductsType } from "@/shared/types/products/product";
+import ProductNavigation from "@/components/productNavigation/ProductNavigation";
 
 type Props = {};
 
-const Sets = (props: Props) => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [rolls, setRolls] = useState<ProductsType | null>(null);
+const Rolls = (props: Props) => {
+
+  const [sortedRolls, setSortedRolls] = useState<ProductsType | null>(null);
+
+  const { loading, rolls } = useTypedSelector(state => state.rolls)
+  const { getRollsFromFirebaseThunk } = useActions()
 
   useEffect(() => {
-    const fetchRolls = async () => {
-      try {
-        setLoading(true);
-        const rollsCollectionRef = collection(database, "products");
-        const rollsQuery = query(
-          rollsCollectionRef,
-          where("category", "==", "rolls")
-        );
-        const rollsSnapshot = await getDocs(rollsQuery);
-        const rollsData: ProductType[] = [];
-        rollsSnapshot.forEach((doc: QueryDocumentSnapshot) => {
-          const data = doc.data();
-          rollsData.push({
-            id: doc.id,
-            name: data.name || "",
-            category: data.category || "",
-            path: data.path || "",
-            ingredients: data.ingredients || "",
-            description: data.description || "",
-            price: data.price || "",
-            weight: data.weight || "",
-            imagePath: data.imagePath || "",
-          });
-        });
-        setRolls(rollsData);
-      } catch (error) {
-        console.error("Error fetching souces: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchRolls();
-  }, []);
+    getRollsFromFirebaseThunk()
+  }, [])
+
+  const handleNavigationClick = (label: string) => {
+    // debugger
+    let sortedProducts: ProductType[] | any = [];
+
+    if (label === "Всі") {
+      sortedProducts = rolls;
+    } else if (label === "Роли Філадельфія") {
+      sortedProducts = rolls?.filter((product) =>
+        product.path?.startsWith("filadelfiya")
+      );
+    } else if (label === "Роли Каліфорнія") {
+      sortedProducts = rolls?.filter((product) =>
+        product.path?.startsWith("kaliforniya")
+      );
+    } else if (label === "Запечені роли") {
+      sortedProducts = rolls?.filter((product) =>
+        product.path?.startsWith("zapechenyj")
+      );
+    } else if (label === "Роли Макі") {
+      sortedProducts = rolls?.filter((product) =>
+        product.path?.startsWith("maki")
+      );
+    } else if (label === "Преміум суші") {
+      sortedProducts = rolls?.filter(
+        (product) => parseInt(product.price) > 350
+      );
+    } else if (label === "Фірмові суші") {
+      sortedProducts = rolls?.filter(
+        (product) =>
+          !product.path?.startsWith("filadelfiya") &&
+          !product.path?.startsWith("kaliforniya") &&
+          !product.path?.startsWith("zapechenyj") &&
+          !product.path?.startsWith("maki") &&
+          !(parseInt(product.price) > 350)
+      );
+    }
+
+    setSortedRolls(sortedProducts);
+  };
 
   return (
     <>
@@ -62,7 +69,9 @@ const Sets = (props: Props) => {
         <Preloader />
       ) : (
         <div className={styles.rolls}>
-          <ProductItem products={rolls} title="Роли" />
+          <ProductItem products={sortedRolls || rolls} title="Роли" onNavigationClick={handleNavigationClick}/>
+          {/* <ProductItem products={sortedRolls || rolls} title="Роли"/> */}
+          {/* <ProductNavigation onNavigationClick={handleNavigationClick} /> */}
           <div className={styles.rollsText}>
             <div className={styles.rollsTextBlock}>
               <h1>Суші і роли: по-справжньому великі порції від Monosushi</h1>
@@ -182,4 +191,42 @@ const Sets = (props: Props) => {
   );
 };
 
-export default Sets;
+export default Rolls;
+
+  // const [loading, setLoading] = useState<boolean>(true);
+  // const [rolls, setRolls] = useState<ProductsType | null>(null);
+
+  // useEffect(() => {
+  //   const fetchRolls = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const rollsCollectionRef = collection(database, "products");
+  //       const rollsQuery = query(
+  //         rollsCollectionRef,
+  //         where("category", "==", "rolls")
+  //       );
+  //       const rollsSnapshot = await getDocs(rollsQuery);
+  //       const rollsData: ProductType[] = [];
+  //       rollsSnapshot.forEach((doc: QueryDocumentSnapshot) => {
+  //         const data = doc.data();
+  //         rollsData.push({
+  //           id: doc.id,
+  //           name: data.name || "",
+  //           category: data.category || "",
+  //           path: data.path || "",
+  //           ingredients: data.ingredients || "",
+  //           description: data.description || "",
+  //           price: data.price || "",
+  //           weight: data.weight || "",
+  //           imagePath: data.imagePath || "",
+  //         });
+  //       });
+  //       setRolls(rollsData);
+  //     } catch (error) {
+  //       console.error("Error fetching souces: ", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchRolls();
+  // }, []);

@@ -7,7 +7,6 @@ type Props = {};
 
 const PersonalHistory = (props: Props) => {
 
-
   const clientOrders = [
     {
       id: 1,

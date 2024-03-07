@@ -1,3 +1,4 @@
+"use client";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
@@ -7,13 +8,15 @@ import Head from "next/head";
 import HeaderLogo from "../../public/images/headerLogo.svg";
 import styles from "./Home.module.scss";
 import { AuthContextProvider } from "@/contexts/authContext/AuthContext";
+import { Provider } from "react-redux";
+import store from "@/redux/store";
 
 const inter = Roboto({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Замовити суші у Львові з безкоштовною доставкою | Monosushi",
-  description: "Created by Oleksii Herasymchuk",
-};
+// export const metadata: Metadata = {
+//   title: "Замовити суші у Львові з безкоштовною доставкою | Monosushi",
+//   description: "Created by Oleksii Herasymchuk",
+// };
 
 export default function RootLayout({
   children,
@@ -27,11 +30,13 @@ export default function RootLayout({
       </Head>
       <body className={inter.className}>
         <AuthContextProvider>
-          <div className={styles.container}>
-            <Header />
-            <main className={styles.content}>{children}</main>
-          <Footer />
-          </div>
+          <Provider store={store}>
+            <div className={styles.container}>
+              <Header />
+              <main className={styles.content}>{children}</main>
+              <Footer />
+            </div>
+          </Provider>
         </AuthContextProvider>
       </body>
     </html>

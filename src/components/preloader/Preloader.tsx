@@ -13,7 +13,7 @@ const style = {
 const Preloader = () => {
   return (
     <div style={style}>
-      <Image src={preloader} alt="preloading" style={{ width: '30%', height: '30%' }}/>
+      <Image src={preloader} alt="preloading" priority style={{ width: '30%', height: '30%' }}/>
     </div>
   )
 }

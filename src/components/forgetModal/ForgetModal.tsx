@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./ForgetModal.module.scss";
-import { auth, database } from "@/firebase/config";
+import { auth } from "@/firebase/config";
 import { sendPasswordResetEmail } from "firebase/auth";
 import Modal from "../modal/Modal";
 import PasswordModal from "../password/PasswordModal";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { checkEmailExists } from "@/services/authService";
 
 export type ModalContent =
   | "Пароль змінено"
@@ -50,16 +50,6 @@ const ForgetModal = ({ onClose, changeContent }: Props) => {
     }
   };
 
-  const checkEmailExists = async (email: string): Promise<boolean> => {
-    try {
-      const usersCollectionRef = collection(database, "users");
-      const snapshot = await getDocs(query(usersCollectionRef, where('email', '==', email)));
-      return !snapshot.empty;
-    } catch (error) {
-      console.error("Error checking email existence:", error);
-      return false;
-    }
-  };
 
   return (
     <div className={styles.forgetModal}>

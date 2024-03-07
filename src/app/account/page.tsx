@@ -1,27 +1,23 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { useAuthContext } from "@/contexts/authContext/AuthContext";
 
-
-type Props = {
-};
+type Props = {};
 
 export default function Page({}: Props) {
-
   const { user } = useAuthContext()
-  const router = useRouter()
+  // const isAuth = useTypedSelector((state) => state.auth.isAuthenticated);
+  // const user = useTypedSelector((state) => state.auth.user);
+  const router = useRouter();
 
   useEffect(() => {
-    console.log(user)
-    if (user == null){
-      router.push("/")
+    if (user == null) {
+      router.push("/");
       // alert('Account page only for authored users')
     }
-  }, [user])
+  }, [user]);
 
-  return (
-    <></>
-  
-  );
+  return <></>;
 }

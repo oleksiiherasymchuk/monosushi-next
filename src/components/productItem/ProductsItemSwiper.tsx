@@ -29,7 +29,7 @@ const ProductsItemSwiper = ({
           scrollbar={{ draggable: true }}
           style={{ height: "100%" }}
           navigation={navigation ? false : true}
-          modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+          modules={[Navigation, Pagination, Keyboard]}
           // mousewheel={true}
           // keyboard={true}
           // pagination={{
@@ -55,7 +55,7 @@ const ProductsItemSwiper = ({
           scrollbar={{ draggable: true }}
           style={{ height: "100%" }}
           navigation={navigation ? false : true}
-          modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+          modules={[Navigation, Pagination, Keyboard]}
         >
           {products?.map((p) => (
             <SwiperSlide
@@ -81,7 +81,7 @@ const ProductsItemSwiper = ({
           scrollbar={{ draggable: true }}
           style={{ height: "100%" }}
           navigation={navigation ? false : true}
-          modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+          modules={[Navigation, Pagination, Keyboard]}
         >
           {products?.map((p) => (
             <SwiperSlide

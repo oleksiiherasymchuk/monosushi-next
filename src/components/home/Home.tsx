@@ -10,24 +10,21 @@ import Delivery from "../../../public/images/greenzone.svg";
 import Logo from "../../../public/images/logo.svg";
 import Bonus from "../../../public/images/mono-bonus.svg";
 import DiscountPaginator from "../discountSwiper/DiscountSwiper";
-import { DiscountType } from "@/shared/types/discount/discount";
-import { ProductType, ProductsType } from "@/shared/types/products/product";
-import {
-  QueryDocumentSnapshot,
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
-import { database } from "@/firebase/config";
 import Preloader from "../preloader/Preloader";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
+import { getDiscountsFromFirebaseThunk } from '../../redux/discountReducer';
+import { useDispatch } from "react-redux";
+import { getRollsFromFirebaseThunk } from "@/redux/rollsReducer";
+import { ProductType, ProductsType } from "@/shared/types/products/product";
 
 type Props = {};
 
 const HomePage = (props: Props) => {
-  const [discounts, setDiscounts] = useState<DiscountType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [rolls, setRolls] = useState<ProductsType | null>(null);
+
+  const dispatch = useDispatch<any>()
+  const loading = useTypedSelector(state => state.discounts.loading)
+  const discounts = useTypedSelector(state => state.discounts.discounts)
+  const rolls = useTypedSelector(state => state.rolls.rolls)
 
   const [sortedRolls, setSortedRolls] = useState<ProductsType | null>(null);
 
@@ -71,59 +68,9 @@ const HomePage = (props: Props) => {
   };
 
   useEffect(() => {
-    const fetchRolls = async () => {
-      try {
-        setLoading(true);
-        const rollsCollectionRef = collection(database, "products");
-        const rollsQuery = query(
-          rollsCollectionRef,
-          where("category", "==", "rolls")
-        );
-        const rollsSnapshot = await getDocs(rollsQuery);
-        const rollsData: ProductType[] = [];
-        rollsSnapshot.forEach((doc: QueryDocumentSnapshot) => {
-          const data = doc.data();
-          rollsData.push({
-            id: doc.id,
-            name: data.name || "",
-            category: data.category || "",
-            path: data.path || "",
-            ingredients: data.ingredients || "",
-            description: data.description || "",
-            price: data.price || "",
-            weight: data.weight || "",
-            imagePath: data.imagePath || "",
-          });
-        });
-        setRolls(rollsData);
-      } catch (error) {
-        console.error("Error fetching souces: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchRolls();
-  }, []);
-
-  useEffect(() => {
-    const fetchDiscounts = async () => {
-      try {
-        setLoading(true);
-        const discountsCollectionRef = collection(database, "discounts");
-        const discountsSnapshot = await getDocs(discountsCollectionRef);
-        const discountsData: DiscountType[] = [];
-        discountsSnapshot.forEach((doc) => {
-          discountsData.push({ id: doc.id, ...doc.data() } as DiscountType);
-        });
-        setDiscounts(discountsData);
-      } catch (error) {
-        console.error("Error fetching discounts: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDiscounts();
-  }, []);
+    dispatch(getDiscountsFromFirebaseThunk())
+    dispatch(getRollsFromFirebaseThunk())
+  }, [dispatch])
 
   return (
     <>
@@ -178,7 +125,7 @@ const HomePage = (props: Props) => {
           </div>
 
           <ProductNavigation onNavigationClick={handleNavigationClick} />
-          <ProductItem products={sortedRolls || rolls} />
+          <ProductItem products={sortedRolls || rolls}/>
           <div className={styles.homeText}>
             <div className={styles.homeTextBlock}>
               <h1>Доставка суші у Львові від “Monosushi”</h1>
@@ -331,3 +278,65 @@ const HomePage = (props: Props) => {
 };
 
 export default HomePage;
+
+
+  // const [discounts, setDiscounts] = useState<DiscountType[]>([]);
+  // const [loading, setLoading] = useState<boolean>(true);
+  // const [rolls, setRolls] = useState<ProductsType | null>(null);
+
+  // useEffect(() => {
+  //   const fetchRolls = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const rollsCollectionRef = collection(database, "products");
+  //       const rollsQuery = query(
+  //         rollsCollectionRef,
+  //         where("category", "==", "rolls")
+  //       );
+  //       const rollsSnapshot = await getDocs(rollsQuery);
+  //       const rollsData: ProductType[] = [];
+  //       rollsSnapshot.forEach((doc: QueryDocumentSnapshot) => {
+  //         const data = doc.data();
+  //         rollsData.push({
+  //           id: doc.id,
+  //           name: data.name || "",
+  //           category: data.category || "",
+  //           path: data.path || "",
+  //           ingredients: data.ingredients || "",
+  //           description: data.description || "",
+  //           price: data.price || "",
+  //           weight: data.weight || "",
+  //           imagePath: data.imagePath || "",
+  //         });
+  //       });
+  //       setRolls(rollsData);
+  //     } catch (error) {
+  //       console.error("Error fetching souces: ", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchRolls();
+  // }, []);
+
+
+  // useEffect(() => {
+  //   const fetchDiscounts = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const discountsCollectionRef = collection(database, "discounts");
+  //       const discountsSnapshot = await getDocs(discountsCollectionRef);
+  //       const discountsData: DiscountType[] = [];
+  //       discountsSnapshot.forEach((doc) => {
+  //         discountsData.push({ id: doc.id, ...doc.data() } as DiscountType);
+  //       });
+  //       setDiscounts(discountsData);
+  //     } catch (error) {
+  //       console.error("Error fetching discounts: ", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchDiscounts();
+  // }, []);
+

@@ -1,39 +1,25 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import styles from "./Actions.module.scss";
 import Action from "../../../public/images/discount.svg";
 import Image from "next/image";
 import { DiscountType } from "@/shared/types/discount/discount";
-import { collection, getDocs } from "firebase/firestore";
-import { database } from "@/firebase/config";
 import Preloader from "@/components/preloader/Preloader";
+import { useActions } from "@/hooks/useActions";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
 
-type Props = {};
 
 export default function Discounts() {
-  const [discounts, setDiscounts] = useState<DiscountType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+
+  const discounts = useTypedSelector(state => state.discounts.discounts)
+  const loading = useTypedSelector(state => state.discounts.loading)
+
+  const { getDiscountsFromFirebaseThunk } = useActions()
 
   useEffect(() => {
-    const fetchDiscounts = async () => {
-      try {
-        setLoading(true);
-        const discountsCollectionRef = collection(database, "discounts");
-        const discountsSnapshot = await getDocs(discountsCollectionRef);
-        const discountsData: DiscountType[] = [];
-        discountsSnapshot.forEach((doc) => {
-          discountsData.push({ id: doc.id, ...doc.data() } as DiscountType);
-        });
-        setDiscounts(discountsData);
-      } catch (error) {
-        console.error("Error fetching discounts: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDiscounts();
-  }, []);
+    getDiscountsFromFirebaseThunk()
+  }, [])
 
   return (
     <>
@@ -144,3 +130,26 @@ export default function Discounts() {
     </>
   );
 }
+
+
+    // const [discounts, setDiscounts] = useState<DiscountType[]>([]);
+  // const [loading, setLoading] = useState<boolean>(true);
+  // useEffect(() => {
+  //   const fetchDiscounts = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const discountsCollectionRef = collection(database, "discounts");
+  //       const discountsSnapshot = await getDocs(discountsCollectionRef);
+  //       const discountsData: DiscountType[] = [];
+  //       discountsSnapshot.forEach((doc) => {
+  //         discountsData.push({ id: doc.id, ...doc.data() } as DiscountType);
+  //       });
+  //       setDiscounts(discountsData);
+  //     } catch (error) {
+  //       console.error("Error fetching discounts: ", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchDiscounts();
+  // }, []);

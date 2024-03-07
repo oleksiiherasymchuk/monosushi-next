@@ -1,60 +1,25 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./Drinks.module.scss";
 import ProductItem from "@/components/productItem/ProductItem";
 import Link from "next/link";
 import ShowMore from "@/components/showMoreButton/ShowMore";
-import { ProductType, ProductsType } from "@/shared/types/products/product";
-import {
-  QueryDocumentSnapshot,
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
-import { database } from "@/firebase/config";
 import Preloader from "@/components/preloader/Preloader";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
+import { useActions } from "@/hooks/useActions";
 
 type Props = {};
 
 const Drinks = (props: Props) => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [drinks, setDrinks] = useState<ProductsType | null>(null);
+
+  const drinks = useTypedSelector(state => state.drinks.drinks)
+  const loading = useTypedSelector(state => state.drinks.loading)
+
+  const { getDrinksFromFirebaseThunk } = useActions()
 
   useEffect(() => {
-    const fetchDrinks = async () => {
-      try {
-        setLoading(true);
-        const drinksCollectionRef = collection(database, "products");
-        const drinksQuery = query(
-          drinksCollectionRef,
-          where("category", "==", "drinks")
-        );
-        const drinksSnapshot = await getDocs(drinksQuery);
-        const drinksData: ProductType[] = [];
-        drinksSnapshot.forEach((doc: QueryDocumentSnapshot) => {
-          const data = doc.data();
-          drinksData.push({
-            id: doc.id,
-            name: data.name || "",
-            category: data.category || "",
-            path: data.path || "",
-            ingredients: data.ingredients || "",
-            description: data.description || "",
-            price: data.price || "",
-            weight: data.weight || "",
-            imagePath: data.imagePath || "",
-          });
-        });
-        setDrinks(drinksData);
-      } catch (error) {
-        console.error("Error fetching souces: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDrinks();
-  }, []);
+    getDrinksFromFirebaseThunk()
+  }, [])
 
   return (
     <>
@@ -132,3 +97,41 @@ const Drinks = (props: Props) => {
 };
 
 export default Drinks;
+
+  // const [loading, setLoading] = useState<boolean>(true);
+  // const [drinks, setDrinks] = useState<ProductsType | null>(null);
+
+  // useEffect(() => {
+  //   const fetchDrinks = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const drinksCollectionRef = collection(database, "products");
+  //       const drinksQuery = query(
+  //         drinksCollectionRef,
+  //         where("category", "==", "drinks")
+  //       );
+  //       const drinksSnapshot = await getDocs(drinksQuery);
+  //       const drinksData: ProductType[] = [];
+  //       drinksSnapshot.forEach((doc: QueryDocumentSnapshot) => {
+  //         const data = doc.data();
+  //         drinksData.push({
+  //           id: doc.id,
+  //           name: data.name || "",
+  //           category: data.category || "",
+  //           path: data.path || "",
+  //           ingredients: data.ingredients || "",
+  //           description: data.description || "",
+  //           price: data.price || "",
+  //           weight: data.weight || "",
+  //           imagePath: data.imagePath || "",
+  //         });
+  //       });
+  //       setDrinks(drinksData);
+  //     } catch (error) {
+  //       console.error("Error fetching souces: ", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchDrinks();
+  // }, []);

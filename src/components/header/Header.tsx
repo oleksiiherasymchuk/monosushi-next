@@ -21,9 +21,11 @@ import SignInModal from "../signUpModal/SignUpModal";
 import ForgetModal from "../forgetModal/ForgetModal";
 import BurgerMenuIcon from "../../../public/images/burgerMenu.png";
 import BasketModal from "../basketModal/BasketModal";
-import { useAuthContext } from "@/contexts/authContext/AuthContext";
 import AuthUserAccountBurgerMenu from "@/components/authUserHeaderBurgerMenu/AuthUserAccountBurgerMenu";
 import { useRouter } from "next/navigation";
+import { useActions } from "@/hooks/useActions";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
+import { useAuthContext } from "@/contexts/authContext/AuthContext";
 
 const Header = () => {
   const [isPhoneModalOpen, setIsPhoneModalOpen] = useState<boolean>(false);
@@ -37,9 +39,14 @@ const Header = () => {
  
   const { user, logout } = useAuthContext();
   const router = useRouter()
+  // const { logOutThunk } = useActions()
+  // const isUserAuthenticated = useTypedSelector(state => state.auth.isAuthenticated)
+  // console.log(isUserAuthenticated)
 
   const handleLogout = () => {
     logout();
+    // authenticateUser(false)
+    // logOutThunk()
     return router.push("/")
   };
 
@@ -287,7 +294,8 @@ const Header = () => {
           </div>
 
           {user ? (
-            <AuthUserAccountBurgerMenu logout={handleLogout}/>
+          // {/* {isUserAuthenticated ? ( */}
+            <AuthUserAccountBurgerMenu logout={handleLogout} />
           ) : (
             <div className={styles.headerUser} onClick={onOpenAuthModal}>
             <Image src={User} alt="user" height={25} width={25} />
@@ -361,6 +369,7 @@ const Header = () => {
 
           
           {user ? (
+          // {/* {isUserAuthenticated ? ( */}
             <AuthUserAccountBurgerMenu logout={handleLogout}/>
           ) : (
             <div className={styles.headerTabletUser} onClick={onOpenAuthModal}>

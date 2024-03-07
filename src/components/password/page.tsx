@@ -16,6 +16,7 @@ const PasswordPage = (props: Props) => {
     handleSubmit,
     reset,
   } = useForm();
+  
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<ModalContent>();
 
