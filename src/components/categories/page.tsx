@@ -1,8 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import styles from "./Categories.module.scss";
-import logo from "../../../../public/images/logo.svg";
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { database, storage } from "@/firebase/config";
 import {

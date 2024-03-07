@@ -41,50 +41,37 @@ const AuthUserAccountBurgerMenu = ({ logout }: Props) => {
   };
 
   return (
-    <div
-      className={styles.menu}
-      onClick={toggleModal}
-      ref={burgerMenuRef}
-    >
+    <div className={styles.menu} onClick={toggleModal} ref={burgerMenuRef}>
       <Image src={User} alt="user" height={25} width={25} />
 
-      {
-        isBurgerMenuOpen && (
-          <div className={styles.menuBurger} onClick={preventPropagation}>
-            <Image
-              src={User}
-              height={25}
-              width={25}
-              alt="burgerMenuOpenIcon"
-              className={styles.menuBurgerIcon}
-              onClick={toggleModal}
-            />
+      {isBurgerMenuOpen && (
+        <div className={styles.menuBurger} onClick={preventPropagation}>
+          <Image
+            src={User}
+            height={25}
+            width={25}
+            alt="burgerMenuOpenIcon"
+            className={styles.menuBurgerIcon}
+            onClick={toggleModal}
+          />
 
-            <div className={styles.menuBurgerItem}>
-              <Link href="/account">Особисті дані </Link>
-            </div>
-
-            <div className={styles.menuBurgerItem}>
-              {/* <Link href="/account">Історія замовлень</Link> */}
-              <Link href="/">Замовити</Link>
-            </div>
-            <div className={styles.menuBurgerItem}>
-              <Link href="/actions">Акції</Link>
-            </div>
-            <div className={styles.menuBurgerItem} onClick={() => logout()}>
-              <button>Вихід</button>
-            </div>
+          <div className={styles.menuBurgerItem}>
+            <Link href="/account">Особисті дані </Link>
           </div>
-        )
-      }
+
+          <div className={styles.menuBurgerItem}>
+            <Link href="/">Замовити</Link>
+          </div>
+          <div className={styles.menuBurgerItem}>
+            <Link href="/actions">Акції</Link>
+          </div>
+          <div className={styles.menuBurgerItem} onClick={() => logout()}>
+            <button>Вихід</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default AuthUserAccountBurgerMenu;
-
-{
-  /* <div className={styles.headerMenu} onClick={toggleMenu} ref={burgerMenuRef}>
-<Image src={Menu} height={50} width={50} alt="burgerMenu" />
-</div> */
-}

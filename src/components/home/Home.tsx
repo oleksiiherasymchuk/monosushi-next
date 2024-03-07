@@ -12,7 +12,7 @@ import Bonus from "../../../public/images/mono-bonus.svg";
 import DiscountPaginator from "../discountSwiper/DiscountSwiper";
 import Preloader from "../preloader/Preloader";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
-import { getDiscountsFromFirebaseThunk } from '../../redux/discountReducer';
+import { getDiscountsFromFirebaseThunk } from "../../redux/discountReducer";
 import { useDispatch } from "react-redux";
 import { getRollsFromFirebaseThunk } from "@/redux/rollsReducer";
 import { ProductType, ProductsType } from "@/shared/types/products/product";
@@ -20,34 +20,33 @@ import { ProductType, ProductsType } from "@/shared/types/products/product";
 type Props = {};
 
 const HomePage = (props: Props) => {
-
-  const dispatch = useDispatch<any>()
-  const loading = useTypedSelector(state => state.discounts.loading)
-  const discounts = useTypedSelector(state => state.discounts.discounts)
-  const rolls = useTypedSelector(state => state.rolls.rolls)
+  const dispatch = useDispatch<any>();
+  const loading = useTypedSelector((state) => state.discounts.loading);
+  const discounts = useTypedSelector((state) => state.discounts.discounts);
+  const rolls = useTypedSelector((state) => state.rolls.rolls);
 
   const [sortedRolls, setSortedRolls] = useState<ProductsType | null>(null);
 
   const handleNavigationClick = (label: string) => {
     let sortedProducts: ProductType[] | any = [];
-  
+
     if (label === "Всі") {
       sortedProducts = rolls;
     } else if (label === "Роли Філадельфія") {
-      sortedProducts = rolls?.filter(
-        (product) => product.path?.startsWith("filadelfiya")
+      sortedProducts = rolls?.filter((product) =>
+        product.path?.startsWith("filadelfiya")
       );
     } else if (label === "Роли Каліфорнія") {
-      sortedProducts = rolls?.filter(
-        (product) => product.path?.startsWith("kaliforniya")
+      sortedProducts = rolls?.filter((product) =>
+        product.path?.startsWith("kaliforniya")
       );
     } else if (label === "Запечені роли") {
-      sortedProducts = rolls?.filter(
-        (product) => product.path?.startsWith("zapechenyj")
+      sortedProducts = rolls?.filter((product) =>
+        product.path?.startsWith("zapechenyj")
       );
     } else if (label === "Роли Макі") {
-      sortedProducts = rolls?.filter(
-        (product) => product.path?.startsWith("maki")
+      sortedProducts = rolls?.filter((product) =>
+        product.path?.startsWith("maki")
       );
     } else if (label === "Преміум суші") {
       sortedProducts = rolls?.filter(
@@ -62,15 +61,15 @@ const HomePage = (props: Props) => {
           !product.path?.startsWith("maki") &&
           !(parseInt(product.price) > 350)
       );
-    } 
+    }
 
     setSortedRolls(sortedProducts);
   };
 
   useEffect(() => {
-    dispatch(getDiscountsFromFirebaseThunk())
-    dispatch(getRollsFromFirebaseThunk())
-  }, [dispatch])
+    dispatch(getDiscountsFromFirebaseThunk());
+    dispatch(getRollsFromFirebaseThunk());
+  }, [dispatch]);
 
   return (
     <>
@@ -125,7 +124,7 @@ const HomePage = (props: Props) => {
           </div>
 
           <ProductNavigation onNavigationClick={handleNavigationClick} />
-          <ProductItem products={sortedRolls || rolls}/>
+          <ProductItem products={sortedRolls || rolls} />
           <div className={styles.homeText}>
             <div className={styles.homeTextBlock}>
               <h1>Доставка суші у Львові від “Monosushi”</h1>
@@ -278,65 +277,3 @@ const HomePage = (props: Props) => {
 };
 
 export default HomePage;
-
-
-  // const [discounts, setDiscounts] = useState<DiscountType[]>([]);
-  // const [loading, setLoading] = useState<boolean>(true);
-  // const [rolls, setRolls] = useState<ProductsType | null>(null);
-
-  // useEffect(() => {
-  //   const fetchRolls = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const rollsCollectionRef = collection(database, "products");
-  //       const rollsQuery = query(
-  //         rollsCollectionRef,
-  //         where("category", "==", "rolls")
-  //       );
-  //       const rollsSnapshot = await getDocs(rollsQuery);
-  //       const rollsData: ProductType[] = [];
-  //       rollsSnapshot.forEach((doc: QueryDocumentSnapshot) => {
-  //         const data = doc.data();
-  //         rollsData.push({
-  //           id: doc.id,
-  //           name: data.name || "",
-  //           category: data.category || "",
-  //           path: data.path || "",
-  //           ingredients: data.ingredients || "",
-  //           description: data.description || "",
-  //           price: data.price || "",
-  //           weight: data.weight || "",
-  //           imagePath: data.imagePath || "",
-  //         });
-  //       });
-  //       setRolls(rollsData);
-  //     } catch (error) {
-  //       console.error("Error fetching souces: ", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchRolls();
-  // }, []);
-
-
-  // useEffect(() => {
-  //   const fetchDiscounts = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const discountsCollectionRef = collection(database, "discounts");
-  //       const discountsSnapshot = await getDocs(discountsCollectionRef);
-  //       const discountsData: DiscountType[] = [];
-  //       discountsSnapshot.forEach((doc) => {
-  //         discountsData.push({ id: doc.id, ...doc.data() } as DiscountType);
-  //       });
-  //       setDiscounts(discountsData);
-  //     } catch (error) {
-  //       console.error("Error fetching discounts: ", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchDiscounts();
-  // }, []);
-

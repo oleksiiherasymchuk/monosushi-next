@@ -130,26 +130,3 @@ export default function Discounts() {
     </>
   );
 }
-
-
-    // const [discounts, setDiscounts] = useState<DiscountType[]>([]);
-  // const [loading, setLoading] = useState<boolean>(true);
-  // useEffect(() => {
-  //   const fetchDiscounts = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const discountsCollectionRef = collection(database, "discounts");
-  //       const discountsSnapshot = await getDocs(discountsCollectionRef);
-  //       const discountsData: DiscountType[] = [];
-  //       discountsSnapshot.forEach((doc) => {
-  //         discountsData.push({ id: doc.id, ...doc.data() } as DiscountType);
-  //       });
-  //       setDiscounts(discountsData);
-  //     } catch (error) {
-  //       console.error("Error fetching discounts: ", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchDiscounts();
-  // }, []);

@@ -14,7 +14,7 @@ const initialState: ISets = {
 };
 
 export const setLoading = (loading: boolean) => ({
-  type: 'sets/setLoading',
+  type: "sets/setLoading",
   payload: loading,
 });
 
@@ -44,19 +44,15 @@ export const setsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getSetsFromFirebaseThunk.fulfilled, (state, action) => {
-        if(action.payload){
+        if (action.payload) {
           state.sets = action.payload;
         }
       })
       .addCase(getSetsFromFirebaseThunk.rejected, (state, action) => {
         console.error(action.error);
-      })
-      // .addCase(getSetsFromFirebaseThunk.pending, (state, action) => {
-      //   console.log(action)
-      // })
-      
+      });
   },
 });
 
 export const setsReducer = setsSlice.reducer;
-export const setsActions = {...setsSlice.actions, getSetsFromFirebaseThunk};
+export const setsActions = { ...setsSlice.actions, getSetsFromFirebaseThunk };

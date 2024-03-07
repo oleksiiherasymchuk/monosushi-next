@@ -63,8 +63,8 @@
   justify-content: center;
   margin-bottom: 30px;
   // border: 1px solid red;
-    
-  h2{
+
+  h2 {
     font-size: 42px;
     line-height: 1.2em;
     color: #252525;
@@ -74,16 +74,15 @@
   }
 }
 
-@media (max-width: 768px){
-  .product{
+@media (max-width: 768px) {
+  .product {
     margin-top: 30px;
     height: min-content;
     flex-direction: column;
 
     &Image,
-    &Description{
+    &Description {
       width: 66%;
     }
   }
 }
-

@@ -14,7 +14,7 @@ const initialState: IDrinks = {
 };
 
 export const setLoading = (loading: boolean) => ({
-  type: 'drinks/setLoading',
+  type: "drinks/setLoading",
   payload: loading,
 });
 
@@ -44,16 +44,18 @@ export const drinksSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getDrinksFromFirebaseThunk.fulfilled, (state, action) => {
-        if(action.payload){
+        if (action.payload) {
           state.drinks = action.payload;
         }
       })
       .addCase(getDrinksFromFirebaseThunk.rejected, (state, action) => {
         console.error(action.error);
       });
-      
   },
 });
 
 export const drinksReducer = drinksSlice.reducer;
-export const drinksActions = {...drinksSlice.actions, getDrinksFromFirebaseThunk};
+export const drinksActions = {
+  ...drinksSlice.actions,
+  getDrinksFromFirebaseThunk,
+};

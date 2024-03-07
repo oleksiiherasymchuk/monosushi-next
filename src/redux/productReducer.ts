@@ -1,6 +1,11 @@
 import { firebaseService } from "@/services/firebaseService";
 import { ProductType } from "@/shared/types/products/product";
-import { Draft, createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  Draft,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 
 interface IProduct {
   loading: boolean;
@@ -15,7 +20,7 @@ const initialState: IProduct = {
 };
 
 export const setLoading = (loading: boolean) => ({
-  type: 'products/setLoading',
+  type: "products/setLoading",
   payload: loading,
 });
 
@@ -36,20 +41,19 @@ export const setLoading = (loading: boolean) => ({
 
 export const getProductByName = createAsyncThunk(
   "products/currentProduct",
-  async ( name: string, { dispatch } ) => {
+  async (name: string, { dispatch }) => {
     try {
       dispatch(setLoading(true));
-      debugger
-      const currentProduct = await firebaseService.getCurrentProduct(name)
-      return currentProduct
+      debugger;
+      const currentProduct = await firebaseService.getCurrentProduct(name);
+      return currentProduct;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     } finally {
       dispatch(setLoading(false));
     }
   }
-)
-
+);
 
 export const productSlice = createSlice({
   name: "products",
@@ -70,15 +74,15 @@ export const productSlice = createSlice({
       //   console.error(action.error);
       // })
       .addCase(getProductByName.fulfilled, (state, action) => {
-        if(action.payload){
-          state.currentProduct = action.payload
+        if (action.payload) {
+          state.currentProduct = action.payload;
         }
       })
       .addCase(getProductByName.rejected, (state, action) => {
-        console.log(action.error)
-      })
+        console.log(action.error);
+      });
   },
 });
 
 export const productReducer = productSlice.reducer;
-export const productActions = {...productSlice.actions , getProductByName};
+export const productActions = { ...productSlice.actions, getProductByName };

@@ -14,7 +14,7 @@ const initialState: IRolls = {
 };
 
 export const setLoading = (loading: boolean) => ({
-  type: 'rolls/setLoading',
+  type: "rolls/setLoading",
   payload: loading,
 });
 
@@ -22,7 +22,6 @@ export const getRollsFromFirebaseThunk = createAsyncThunk(
   "rolls/getRolls",
   async (_, { dispatch }) => {
     try {
-      // debugger
       dispatch(setLoading(true));
       const rolls = await firebaseService.getRolls();
       return rolls;
@@ -45,19 +44,18 @@ export const rollsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getRollsFromFirebaseThunk.fulfilled, (state, action) => {
-        if(action.payload){
+        if (action.payload) {
           state.rolls = action.payload;
         }
       })
       .addCase(getRollsFromFirebaseThunk.rejected, (state, action) => {
         console.error(action.error);
-      })
-      // .addCase(getRollsFromFirebaseThunk.pending, (state, action) => {
-      //   console.log(action)
-      // })
-      
+      });
   },
 });
 
 export const rollsReducer = rollsSlice.reducer;
-export const rollsActions = {...rollsSlice.actions, getRollsFromFirebaseThunk};
+export const rollsActions = {
+  ...rollsSlice.actions,
+  getRollsFromFirebaseThunk,
+};

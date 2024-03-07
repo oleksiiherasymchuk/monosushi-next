@@ -4,7 +4,6 @@ import BasketEmpty from "../../../public/images/cart-empty-img.svg";
 import Image from "next/image";
 import Link from "next/link";
 import Trash from "../../../public/images/trash.png";
-import California from "../../../public/images/californiaa.jpeg";
 
 type Props = {
   onClose?: () => void;

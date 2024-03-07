@@ -1,5 +1,5 @@
 "use client";
-import React, { useState , useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "./ProductItem.module.scss";
 import Image from "next/image";
 import zsu from "../../../../public/images/zsu.jpeg";
@@ -19,19 +19,23 @@ type Params = {
 };
 
 const Product = ({ params }: Params) => {
+  const { loading, currentProduct } = useTypedSelector(
+    (state) => state.products
+  );
+  const drinks = useTypedSelector((state) => state.drinks.drinks);
+  const sets = useTypedSelector((state) => state.sets.sets);
 
-  const { loading,  currentProduct }  = useTypedSelector(state => state.products)
-  const drinks = useTypedSelector(state => state.drinks.drinks)
-  const sets = useTypedSelector(state => state.sets.sets)
-
-  const { getDrinksFromFirebaseThunk, getSetsFromFirebaseThunk, getProductByName } = useActions()
+  const {
+    getDrinksFromFirebaseThunk,
+    getSetsFromFirebaseThunk,
+    getProductByName,
+  } = useActions();
 
   useEffect(() => {
-    getDrinksFromFirebaseThunk()
-    getSetsFromFirebaseThunk()
-    getProductByName(params.name)
-  }, [params.name])
-
+    getDrinksFromFirebaseThunk();
+    getSetsFromFirebaseThunk();
+    getProductByName(params.name);
+  }, [params.name]);
 
   const sortSets = (sets: ProductType[]) => {
     const sortedSets = [...sets];
@@ -74,21 +78,29 @@ const Product = ({ params }: Params) => {
             </div>
             <div className={styles.productDescription}>
               <h5>{currentProduct?.name}</h5>
-              {currentProduct?.ingredients && <p>
-                <span>Склад: </span>
-                {currentProduct?.ingredients}
-              </p>}
-              {currentProduct?.weight && <p>
-                <span>Вага: </span>
-                {currentProduct?.weight}
-              </p>}
+              {currentProduct?.ingredients && (
+                <p>
+                  <span>Склад: </span>
+                  {currentProduct?.ingredients}
+                </p>
+              )}
+              {currentProduct?.weight && (
+                <p>
+                  <span>Вага: </span>
+                  {currentProduct?.weight}
+                </p>
+              )}
               <PriceAndQuantity product={currentProduct} />
             </div>
           </div>
 
           <div className={styles.trySwiper}>
             <h2>Також спробуйте</h2>
-            <ProductsItemSwiper products={sortedSets} slides={3} navigation={true} />
+            <ProductsItemSwiper
+              products={sortedSets}
+              slides={3}
+              navigation={true}
+            />
           </div>
 
           <div className={styles.tasteWithSwiper}>
@@ -102,110 +114,3 @@ const Product = ({ params }: Params) => {
 };
 
 export default Product;
-
-    // const [loading, setLoading] = useState<boolean>(true);
-  // const [currentProduct, setCurrentProduct] = useState<ProductType | null>(
-  //   null
-  // );
-  // const [drinks, setDrinks] = useState<ProductsType | null>(null);
-  // const [sets, setSets] = useState<ProductsType | null>(null);
-
-  // useEffect(() => {
-  //   const fetchSets = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const setsCollectionRef = collection(database, "products");
-  //       const setsQuery = query(
-  //         setsCollectionRef,
-  //         where("category", "==", "sets")
-  //       );
-  //       const setsSnapshot = await getDocs(setsQuery);
-  //       const setsData: ProductType[] = [];
-  //       setsSnapshot.forEach((doc: QueryDocumentSnapshot) => {
-  //         const data = doc.data();
-  //         setsData.push({
-  //           id: doc.id,
-  //           name: data.name || "",
-  //           category: data.category || "",
-  //           path: data.path || "",
-  //           ingredients: data.ingredients || "",
-  //           description: data.description || "",
-  //           price: data.price || "",
-  //           weight: data.weight || "",
-  //           imagePath: data.imagePath || "",
-  //         });
-  //       });
-  //       setSets(setsData);
-  //     } catch (error) {
-  //       console.error("Error fetching souces: ", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchSets();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchDrinks = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const drinksCollectionRef = collection(database, "products");
-  //       const drinksQuery = query(
-  //         drinksCollectionRef,
-  //         where("category", "==", "drinks")
-  //       );
-  //       const drinksSnapshot = await getDocs(drinksQuery);
-  //       const drinksData: ProductType[] = [];
-  //       drinksSnapshot.forEach((doc: QueryDocumentSnapshot) => {
-  //         const data = doc.data();
-  //         drinksData.push({
-  //           id: doc.id,
-  //           name: data.name || "",
-  //           category: data.category || "",
-  //           path: data.path || "",
-  //           ingredients: data.ingredients || "",
-  //           description: data.description || "",
-  //           price: data.price || "",
-  //           weight: data.weight || "",
-  //           imagePath: data.imagePath || "",
-  //         });
-  //       });
-  //       setDrinks(drinksData);
-  //     } catch (error) {
-  //       console.error("Error fetching souces: ", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchDrinks();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchProduct = async () => {
-  //     try {
-  //       const productQuery = query(
-  //         collection(database, "products"),
-  //         where("path", "==", params.name)
-  //       );
-  //       const querySnapshot = await getDocs(productQuery);
-  //       querySnapshot.forEach((doc) => {
-  //         setCurrentProduct({
-  //           id: doc.id,
-  //           ...doc.data(),
-  //         } as ProductType);
-  //       });
-  //     } catch (error) {
-  //       console.error("Error fetching discount: ", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   if (params.name) {
-  //     fetchProduct();
-  //   }
-  // }, [params.name]);
-
-  // useEffect(() => {
-  //   console.log(currentProduct);
-  // }, [currentProduct]);

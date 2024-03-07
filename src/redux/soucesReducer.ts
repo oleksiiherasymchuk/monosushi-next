@@ -14,7 +14,7 @@ const initialState: ISouces = {
 };
 
 export const setLoading = (loading: boolean) => ({
-  type: 'souces/setLoading',
+  type: "souces/setLoading",
   payload: loading,
 });
 
@@ -44,16 +44,18 @@ export const soucesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getSoucesFromFirebaseThunk.fulfilled, (state, action) => {
-        if(action.payload){
+        if (action.payload) {
           state.souces = action.payload;
         }
       })
       .addCase(getSoucesFromFirebaseThunk.rejected, (state, action) => {
         console.error(action.error);
       });
-      
   },
 });
 
 export const soucesReducer = soucesSlice.reducer;
-export const soucesActions = {...soucesSlice.actions, getSoucesFromFirebaseThunk};
+export const soucesActions = {
+  ...soucesSlice.actions,
+  getSoucesFromFirebaseThunk,
+};

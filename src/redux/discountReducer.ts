@@ -1,6 +1,5 @@
 import { firebaseService } from "@/services/firebaseService";
 import { DiscountType } from "@/shared/types/discount/discount";
-import { RollType } from "@/shared/types/products/rolls";
 import { Draft, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 
@@ -17,7 +16,7 @@ const initialState: IDiscount = {
 };
 
 export const setLoading = (loading: boolean) => ({
-  type: 'discounts/setLoading',
+  type: "discounts/setLoading",
   payload: loading,
 });
 
@@ -38,19 +37,18 @@ export const getDiscountsFromFirebaseThunk = createAsyncThunk(
 
 export const getDiscountByName = createAsyncThunk(
   "discount/currentDiscount",
-  async ( name: string, { dispatch } ) => {
+  async (name: string, { dispatch }) => {
     try {
       dispatch(setLoading(true));
-      const currentDiscount = await firebaseService.getCurrentDiscount(name)
-      return currentDiscount
+      const currentDiscount = await firebaseService.getCurrentDiscount(name);
+      return currentDiscount;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     } finally {
       dispatch(setLoading(false));
     }
   }
-)
-
+);
 
 export const discountSlice = createSlice({
   name: "discounts",
@@ -63,7 +61,7 @@ export const discountSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getDiscountsFromFirebaseThunk.fulfilled, (state, action) => {
-        if(action.payload){
+        if (action.payload) {
           state.discounts = action.payload;
         }
       })
@@ -71,12 +69,16 @@ export const discountSlice = createSlice({
         console.error(action.error);
       })
       .addCase(getDiscountByName.fulfilled, (state, action) => {
-        if(action.payload){
-          state.currentDiscount = action.payload
+        if (action.payload) {
+          state.currentDiscount = action.payload;
         }
-      })
+      });
   },
 });
 
 export const discountReducer = discountSlice.reducer;
-export const discountActions = {...discountSlice.actions, getDiscountsFromFirebaseThunk , getDiscountByName};
+export const discountActions = {
+  ...discountSlice.actions,
+  getDiscountsFromFirebaseThunk,
+  getDiscountByName,
+};

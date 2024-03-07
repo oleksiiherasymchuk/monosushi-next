@@ -49,7 +49,7 @@ const DiscountSwiper = ({
                   <img src={p.imagePath} alt={`${p.category} ${p.id}`} />
                 </Link>
               </SwiperSlide>
-            )
+            );
           })}
         </Swiper>
       </div>

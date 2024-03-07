@@ -176,7 +176,6 @@ export default function Page(props: Props) {
               </button>
             </div>
             {isDropdownOpen.deliveryTime && (
-              // <div className={styles.aboutQuestionsDropdownsDropdownFull}>
               <div
                 className={`${styles.aboutQuestionsDropdownsDropdownFull} ${
                   isDropdownOpen.deliveryTime

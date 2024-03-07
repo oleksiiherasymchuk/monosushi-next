@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import styles from "./Products.module.scss";
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { database, storage } from "@/firebase/config";
 import {
@@ -126,7 +125,7 @@ const AdminProducts = () => {
       console.error("Error adding/updating category: ", error);
     }
   };
- 
+
   const editProduct = async (product: any) => {
     try {
       setEditProductId(product.id);
@@ -151,7 +150,7 @@ const AdminProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         const productsCollectionRef = collection(database, "products");
         const productsSnapshot = await getDocs(productsCollectionRef);
         const productsData: any[] = [];
@@ -159,12 +158,12 @@ const AdminProducts = () => {
           productsData.push({ id: doc.id, ...doc.data() });
         });
         productsData.sort((a, b) => a.category.localeCompare(b.category));
-        
+
         setAdminProducts(productsData);
       } catch (error) {
         console.error("Error fetching products: ", error);
-      } finally{
-        setLoading(false)
+      } finally {
+        setLoading(false);
       }
     };
     fetchProducts();
@@ -210,7 +209,9 @@ const AdminProducts = () => {
                 type="text"
                 placeholder="*Інгредієнти"
                 {...register("ingredients", { maxLength: 2000 })}
-                defaultValue={editProductData ? editProductData.ingredients : ""}
+                defaultValue={
+                  editProductData ? editProductData.ingredients : ""
+                }
               />
             </div>
             <div className={styles.name}>
@@ -256,10 +257,11 @@ const AdminProducts = () => {
         </div>
       )}
 
-      {
-        loading ? <Preloader /> : (
-          <>
-             {!isOpen && (
+      {loading ? (
+        <Preloader />
+      ) : (
+        <>
+          {!isOpen && (
             <table>
               <thead>
                 <tr>
@@ -295,15 +297,17 @@ const AdminProducts = () => {
                       </td>
                       <td>
                         <p onClick={() => editProduct(product)}>Редагувати</p>
-                        <p onClick={() => deleteProduct(product.id)}>Видалити</p>
+                        <p onClick={() => deleteProduct(product.id)}>
+                          Видалити
+                        </p>
                       </td>
                     </tr>
                   ))}
               </tbody>
             </table>
-          )}</>
-        )
-      }
+          )}
+        </>
+      )}
     </div>
   );
 };

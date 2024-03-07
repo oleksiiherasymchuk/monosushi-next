@@ -208,7 +208,8 @@
     }
   }
 
-  &Tablet, &Mobile {
+  &Tablet,
+  &Mobile {
     display: none;
   }
 }

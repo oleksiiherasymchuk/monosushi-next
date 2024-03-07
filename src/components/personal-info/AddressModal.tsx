@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./PersonalInfo.module.scss";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
-import Map from '../../../public/images/mapAddress.png'
+import Map from "../../../public/images/mapAddress.png";
 
 type Props = {
   onClose: () => void;
@@ -13,8 +13,6 @@ const AddressModal = ({ onClose }: Props) => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    getValues,
-    reset,
   } = useForm();
 
   const onSubmit = () => {};
@@ -47,7 +45,6 @@ const AddressModal = ({ onClose }: Props) => {
           placeholder="*Введіть вулицю доставки"
           {...register("delivery", {
             required: true,
-            // pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
           })}
         />
 
@@ -85,7 +82,7 @@ const AddressModal = ({ onClose }: Props) => {
         </div>
 
         <div className={styles.modalFormMap}>
-          <Image src={Map} alt='map' height={290} width={480}/>
+          <Image src={Map} alt="map" height={290} width={480} />
         </div>
       </form>
     </div>

@@ -30,26 +30,24 @@ const ForgetModal = ({ onClose, changeContent }: Props) => {
 
   const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+
     try {
       const emailExists = await checkEmailExists(email);
 
       if (!emailExists) {
-        // onClose()
         setIsModalOpen(true);
         setModalContent("Невірний email. Перевірте введені дані.");
         return;
       }
 
       await sendPasswordResetEmail(auth, email);
-      // onClose();
+      
       setIsModalOpen(true);
       setModalContent("Лист відновлення паролю надіслано.");
     } catch (error) {
       console.log(error);
     }
   };
-
 
   return (
     <div className={styles.forgetModal}>

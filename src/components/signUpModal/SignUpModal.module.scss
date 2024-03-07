@@ -77,29 +77,29 @@
         margin-right: 10px;
       }
 
-      span{
-        a{
+      span {
+        a {
           font-weight: bold;
           position: relative;
 
-        &::before {
-          content: "";
-          position: absolute;
-          bottom: -2px;
-          left: 0;
-          width: 0;
-          height: 2px;
-          background-color: #b5d8f7;
-          transition: width 0.3s ease;
-        }
+          &::before {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #b5d8f7;
+            transition: width 0.3s ease;
+          }
 
-        &:hover::before {
-          width: 100%;
-        }
+          &:hover::before {
+            width: 100%;
+          }
 
-        &:hover{
-          color: #b5d8f7;
-        }
+          &:hover {
+            color: #b5d8f7;
+          }
         }
       }
     }
@@ -151,10 +151,10 @@
   }
 }
 
-.error{
-  border: 1px solid red
+.error {
+  border: 1px solid red;
 }
 
-.errorColor{
+.errorColor {
   color: red;
 }

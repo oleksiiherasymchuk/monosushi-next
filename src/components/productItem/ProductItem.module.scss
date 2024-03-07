@@ -27,9 +27,9 @@
       align-items: center;
       flex-direction: column;
       position: relative;
-      transition: .3;
+      transition: 0.3;
 
-      &Image{
+      &Image {
         width: 240px;
         height: 240px;
         display: flex;
@@ -39,11 +39,11 @@
         img {
           width: 80%;
           height: 80%;
-          &:hover{
+          &:hover {
             scale: 1.1;
           }
         }
-      }     
+      }
 
       p {
         width: 100%;

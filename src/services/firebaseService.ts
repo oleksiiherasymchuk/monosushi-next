@@ -2,7 +2,6 @@ import { database } from "@/firebase/config";
 import {
   QueryDocumentSnapshot,
   collection,
-  doc,
   getDocs,
   query,
   where,
@@ -12,16 +11,15 @@ import { ProductType } from "@/shared/types/products/product";
 
 interface IFirebaseService {
   getDiscounts: () => Promise<DiscountType[]>;
-  getCurrentDiscount: ( name : string) => Promise<DiscountType | null>;
+  getCurrentDiscount: (name: string) => Promise<DiscountType | null>;
   getRolls: () => Promise<ProductType[]>;
   getDrinks: () => Promise<ProductType[]>;
   getSets: () => Promise<ProductType[]>;
   getSouces: () => Promise<ProductType[]>;
-  getCurrentProduct: ( name : string ) => Promise<ProductType | null>;
+  getCurrentProduct: (name: string) => Promise<ProductType | null>;
 }
 
 export const firebaseService: IFirebaseService = {
-
   getDiscounts: async (): Promise<DiscountType[]> => {
     try {
       const discountsCollectionRef = collection(database, "discounts");
@@ -47,24 +45,23 @@ export const firebaseService: IFirebaseService = {
       );
       const querySnapshot = await getDocs(discountQuery);
       let currentDiscount: DiscountType | null = null;
-  
+
       querySnapshot.forEach((doc) => {
         currentDiscount = {
           id: doc.id,
           ...doc.data(),
         } as DiscountType;
       });
-  
+
       return currentDiscount;
     } catch (error) {
       console.error("Error fetching current discount: ", error);
       return null;
     }
   },
-  
+
   getRolls: async (): Promise<ProductType[]> => {
     try {
-      // debugger
       const rollsCollectionRef = collection(database, "products");
       const rollsQuery = query(
         rollsCollectionRef,
@@ -185,21 +182,21 @@ export const firebaseService: IFirebaseService = {
 
   getCurrentProduct: async (name: string): Promise<ProductType | null> => {
     try {
-      debugger
+      debugger;
       const productQuery = query(
         collection(database, "products"),
         where("path", "==", name)
       );
       const querySnapshot = await getDocs(productQuery);
       let currentProduct: ProductType | null = null;
-  
+
       querySnapshot.forEach((doc) => {
         currentProduct = {
           id: doc.id,
           ...doc.data(),
         } as ProductType;
       });
-  
+
       return currentProduct;
     } catch (error) {
       console.error("Error fetching current product: ", error);
@@ -207,5 +204,3 @@ export const firebaseService: IFirebaseService = {
     }
   },
 };
-
-

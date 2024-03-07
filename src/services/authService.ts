@@ -7,17 +7,24 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { DocumentData, collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
+import {
+  DocumentData,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
 interface IAuthService {
   createUser: (user: UserType) => Promise<User | null>;
-  getUserData: (userId: string) => Promise<DocumentData>,
-  signIn: (email: string, password: string) => Promise<UserCredential | null>,
-  updateUser: ( user: User) => Promise<DocumentData | null>,
-  logOut: () => Promise<void>,
+  getUserData: (userId: string) => Promise<DocumentData>;
+  signIn: (email: string, password: string) => Promise<UserCredential | null>;
+  updateUser: (user: User) => Promise<DocumentData | null>;
+  logOut: () => Promise<void>;
 }
-
-
 
 export const authService: IAuthService = {
   getUserData: async (userId: string) => {
@@ -54,9 +61,9 @@ export const authService: IAuthService = {
 
   logOut: async () => {
     try {
-      await signOut(auth)
+      await signOut(auth);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   },
 
@@ -99,7 +106,7 @@ export const authService: IAuthService = {
     }
   },
 
-  updateUser: async (user: any): Promise<User | null > => {
+  updateUser: async (user: any): Promise<User | null> => {
     try {
       const userId = user.userID;
       const userDocRef = doc(database, "users", userId);
@@ -107,13 +114,11 @@ export const authService: IAuthService = {
       await setDoc(userDocRef, user, { merge: true });
       console.log("User data updated successfully.");
       return user;
-
     } catch (error) {
       console.error("Error updating user data:", error);
       throw error;
     }
-  }
-  
+  },
 };
 
 export const checkEmailExists = async (email: string): Promise<boolean> => {

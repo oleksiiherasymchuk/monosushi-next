@@ -1,8 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./Discounts.module.scss";
-import Image from "next/image";
-import logo from "../../../../public/images/logo.svg";
 import { useForm } from "react-hook-form";
 import { DiscountType } from "@/shared/types/discount/discount";
 import { database, storage } from "@/firebase/config";
@@ -103,7 +101,7 @@ const AdminDiscounts = () => {
   useEffect(() => {
     const fetchDiscounts = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         const discountsCollectionRef = collection(database, "discounts");
         const discountsSnapshot = await getDocs(discountsCollectionRef);
         const discountsData: any[] = [];
@@ -181,7 +179,6 @@ const AdminDiscounts = () => {
               />
             </div>
 
-
             <button
               className={styles.save}
               // disabled={discountForm.invalid}
@@ -193,47 +190,49 @@ const AdminDiscounts = () => {
         </div>
       )}
 
-     { loading ? <Preloader /> : (
-      <>
-       {!isOpen && (
-        <table>
-          <thead>
-            <tr>
-              <td>Дата</td>
-              <td>Назва</td>
-              <td>Заголовок</td>
-              <td>Опис</td>
-              <td>Картинка</td>
-              <td>Дії</td>
-            </tr>
-          </thead>
-          <tbody>
-            {adminDiscounts.length === 0 && (
-              <p style={{ marginTop: "30px" }}>NO DISCOUNTS</p>
-            )}
-            {adminDiscounts.length !== 0 &&
-              adminDiscounts.map((discount, index) => (
-                <tr key={index}>
-                  <td>{index + 1}.</td>
-                  <td>{discount?.name}</td>
-                  <td>{discount?.title}</td>
-                  <td>
-                    {discount?.description}
-                  </td>
-                  <td>
-                    <img src={discount.imagePath} alt="" />
-                  </td>
-                  <td>
-                    <p onClick={() => editDiscount(discount)}>Редагувати</p>
-                    <p onClick={() => deleteDiscount(discount.id)}>Видалити</p>
-                  </td>
+      {loading ? (
+        <Preloader />
+      ) : (
+        <>
+          {!isOpen && (
+            <table>
+              <thead>
+                <tr>
+                  <td>Дата</td>
+                  <td>Назва</td>
+                  <td>Заголовок</td>
+                  <td>Опис</td>
+                  <td>Картинка</td>
+                  <td>Дії</td>
                 </tr>
-              ))}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {adminDiscounts.length === 0 && (
+                  <p style={{ marginTop: "30px" }}>NO DISCOUNTS</p>
+                )}
+                {adminDiscounts.length !== 0 &&
+                  adminDiscounts.map((discount, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}.</td>
+                      <td>{discount?.name}</td>
+                      <td>{discount?.title}</td>
+                      <td>{discount?.description}</td>
+                      <td>
+                        <img src={discount.imagePath} alt="" />
+                      </td>
+                      <td>
+                        <p onClick={() => editDiscount(discount)}>Редагувати</p>
+                        <p onClick={() => deleteDiscount(discount.id)}>
+                          Видалити
+                        </p>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          )}
+        </>
       )}
-      </>
-     )}
     </div>
   );
 };

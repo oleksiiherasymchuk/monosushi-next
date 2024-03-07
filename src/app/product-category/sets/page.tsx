@@ -11,15 +11,14 @@ import { useActions } from "@/hooks/useActions";
 type Props = {};
 
 const Sets = (props: Props) => {
+  const loading = useTypedSelector((state) => state.sets.loading);
+  const sets = useTypedSelector((state) => state.sets.sets);
 
-  const loading = useTypedSelector(state => state.sets.loading)
-  const sets = useTypedSelector(state => state.sets.sets)
-
-  const { getSetsFromFirebaseThunk } = useActions()
+  const { getSetsFromFirebaseThunk } = useActions();
 
   useEffect(() => {
-    getSetsFromFirebaseThunk()
-  },[])
+    getSetsFromFirebaseThunk();
+  }, []);
 
   return (
     <>
@@ -128,42 +127,3 @@ const Sets = (props: Props) => {
 };
 
 export default Sets;
-
-
-  // const [loading, setLoading] = useState<boolean>(true);
-  // const [sets, setSets] = useState<ProductsType | null>(null);
-
-  // useEffect(() => {
-  //   const fetchSets = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const setsCollectionRef = collection(database, "products");
-  //       const setsQuery = query(
-  //         setsCollectionRef,
-  //         where("category", "==", "sets")
-  //       );
-  //       const setsSnapshot = await getDocs(setsQuery);
-  //       const setsData: ProductType[] = [];
-  //       setsSnapshot.forEach((doc: QueryDocumentSnapshot) => {
-  //         const data = doc.data();
-  //         setsData.push({
-  //           id: doc.id,
-  //           name: data.name || "",
-  //           category: data.category || "",
-  //           path: data.path || "",
-  //           ingredients: data.ingredients || "",
-  //           description: data.description || "",
-  //           price: data.price || "",
-  //           weight: data.weight || "",
-  //           imagePath: data.imagePath || "",
-  //         });
-  //       });
-  //       setSets(setsData);
-  //     } catch (error) {
-  //       console.error("Error fetching souces: ", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchSets();
-  // }, []);

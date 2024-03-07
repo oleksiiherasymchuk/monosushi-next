@@ -13,7 +13,7 @@ type Props = {
 
 const SignUpModal = ({ onClose, changeContent }: Props) => {
   const router = useRouter();
-  const { createUserThunk } = useActions()
+  const { createUserThunk } = useActions();
 
   const {
     register,
@@ -23,7 +23,6 @@ const SignUpModal = ({ onClose, changeContent }: Props) => {
     reset,
   } = useForm();
 
-
   const { password, confirmPassword } = getValues();
 
   const onSubmit = async (user: any) => {
@@ -32,12 +31,10 @@ const SignUpModal = ({ onClose, changeContent }: Props) => {
     }
 
     try {
-      await createUserThunk(user)
+      await createUserThunk(user);
       reset();
       onClose();
-      // debugger
       router.push("/account");
-      // console.log(user)
     } catch (error) {
       console.error("Failed to sign up:", error);
     }
@@ -104,7 +101,6 @@ const SignUpModal = ({ onClose, changeContent }: Props) => {
           })}
         />
 
-
         <div className={styles.signInModalFormHalfInput}>
           <input
             type="password"
@@ -165,46 +161,3 @@ const SignUpModal = ({ onClose, changeContent }: Props) => {
 };
 
 export default SignUpModal;
-
-
- // const onSubmit = async (user: any) => {
-  //     if (user.password !== user.confirmPassword) {
-  //     return;
-  //   }
-
-  //   const usersCollectionRef = collection(database, 'users');
-  //   const querySnapshot = await getDocs(query(usersCollectionRef, where('email', '==', user.email)));
-  //   if (!querySnapshot.empty) {
-  //   console.error('Email already exists');
-  //   return;
-  //   }
-
-  //   createUserWithEmailAndPassword(auth, user.email, user.password)
-  //   .then((userCredential) => {
-  //     const authUser = userCredential.user;
-  //     const dataUser = {
-  //       userID: authUser.uid,
-  //       email: authUser.email,
-  //       name: user.name,
-  //       surname: user.surname,
-  //       phone: user.phone,
-  //       role: "User"
-  //     };
-  //     const usersCollectionRef = collection(database, "users");
-  //     const userDocRef = doc(usersCollectionRef, authUser.uid);
-  //     setDoc(userDocRef, dataUser)
-  //       .then(() => {
-  //         console.log("user signed up");
-  //         reset()
-  //         onClose()
-  //         router.push("/account");
-  //       })
-  //       .catch((error) => {
-  //         console.error("user sign up failed", error);
-  //       });
-  //   })
-
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
-  // }

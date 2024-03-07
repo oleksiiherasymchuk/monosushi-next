@@ -13,14 +13,15 @@ type Params = {
 };
 
 export default function Discount({ params }: Params) {
-  
-  const loading = useTypedSelector(state => state.discounts.loading)
-  const currentDiscount = useTypedSelector(state => state.discounts.currentDiscount)
-  const { getDiscountByName } = useActions()
+  const loading = useTypedSelector((state) => state.discounts.loading);
+  const currentDiscount = useTypedSelector(
+    (state) => state.discounts.currentDiscount
+  );
+  const { getDiscountByName } = useActions();
 
   useEffect(() => {
-    getDiscountByName(params.name)
-  }, [params.name])
+    getDiscountByName(params.name);
+  }, [params.name]);
 
   return (
     <>
@@ -29,7 +30,6 @@ export default function Discount({ params }: Params) {
       ) : (
         <>
           <Breadcrumb
-            // categoryName={"Акції"}
             categoryName={"actions"}
             productName={currentDiscount?.name}
           />
@@ -53,34 +53,3 @@ export default function Discount({ params }: Params) {
     </>
   );
 }
-
-  // const [currentDiscount, setCurrentDiscount] = useState<DiscountType | null>(
-  //   null
-  // );
-  // const [loading, setLoading] = useState<boolean>(true);
-
-  // useEffect(() => {
-  //   const fetchDiscount = async () => {
-      // try {
-      //   const discountQuery = query(
-      //     collection(database, "discounts"),
-      //     where("title", "==", params.name)
-      //   );
-      //   const querySnapshot = await getDocs(discountQuery);
-      //   querySnapshot.forEach((doc) => {
-      //     setCurrentDiscount({
-      //       id: doc.id,
-      //       ...doc.data(),
-      //     } as DiscountType);
-      //   });
-      // } catch (error) {
-      //   console.error("Error fetching discount: ", error);
-      // } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   if (params.name) {
-  //     fetchDiscount();
-  //   }
-  // }, [params.name]);

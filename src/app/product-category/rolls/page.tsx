@@ -8,20 +8,18 @@ import Preloader from "@/components/preloader/Preloader";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { useActions } from "@/hooks/useActions";
 import { ProductType, ProductsType } from "@/shared/types/products/product";
-import ProductNavigation from "@/components/productNavigation/ProductNavigation";
 
 type Props = {};
 
 const Rolls = (props: Props) => {
-
   const [sortedRolls, setSortedRolls] = useState<ProductsType | null>(null);
 
-  const { loading, rolls } = useTypedSelector(state => state.rolls)
-  const { getRollsFromFirebaseThunk } = useActions()
+  const { loading, rolls } = useTypedSelector((state) => state.rolls);
+  const { getRollsFromFirebaseThunk } = useActions();
 
   useEffect(() => {
-    getRollsFromFirebaseThunk()
-  }, [])
+    getRollsFromFirebaseThunk();
+  }, []);
 
   const handleNavigationClick = (label: string) => {
     // debugger
@@ -69,9 +67,11 @@ const Rolls = (props: Props) => {
         <Preloader />
       ) : (
         <div className={styles.rolls}>
-          <ProductItem products={sortedRolls || rolls} title="Роли" onNavigationClick={handleNavigationClick}/>
-          {/* <ProductItem products={sortedRolls || rolls} title="Роли"/> */}
-          {/* <ProductNavigation onNavigationClick={handleNavigationClick} /> */}
+          <ProductItem
+            products={sortedRolls || rolls}
+            title="Роли"
+            onNavigationClick={handleNavigationClick}
+          />
           <div className={styles.rollsText}>
             <div className={styles.rollsTextBlock}>
               <h1>Суші і роли: по-справжньому великі порції від Monosushi</h1>
@@ -192,41 +192,3 @@ const Rolls = (props: Props) => {
 };
 
 export default Rolls;
-
-  // const [loading, setLoading] = useState<boolean>(true);
-  // const [rolls, setRolls] = useState<ProductsType | null>(null);
-
-  // useEffect(() => {
-  //   const fetchRolls = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const rollsCollectionRef = collection(database, "products");
-  //       const rollsQuery = query(
-  //         rollsCollectionRef,
-  //         where("category", "==", "rolls")
-  //       );
-  //       const rollsSnapshot = await getDocs(rollsQuery);
-  //       const rollsData: ProductType[] = [];
-  //       rollsSnapshot.forEach((doc: QueryDocumentSnapshot) => {
-  //         const data = doc.data();
-  //         rollsData.push({
-  //           id: doc.id,
-  //           name: data.name || "",
-  //           category: data.category || "",
-  //           path: data.path || "",
-  //           ingredients: data.ingredients || "",
-  //           description: data.description || "",
-  //           price: data.price || "",
-  //           weight: data.weight || "",
-  //           imagePath: data.imagePath || "",
-  //         });
-  //       });
-  //       setRolls(rollsData);
-  //     } catch (error) {
-  //       console.error("Error fetching souces: ", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchRolls();
-  // }, []);

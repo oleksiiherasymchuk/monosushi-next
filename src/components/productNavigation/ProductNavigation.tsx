@@ -22,7 +22,6 @@ const ProductNavigation = ({ onNavigationClick }: Props) => {
     { label: "Преміум суші", active: false },
   ]);
 
-
   const handleActiveItem = (
     index: number,
     e: React.MouseEvent<HTMLLIElement>

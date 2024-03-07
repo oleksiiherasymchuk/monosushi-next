@@ -4,14 +4,14 @@ import styles from "./ProductItem.module.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Keyboard, Mousewheel, Navigation, Pagination } from "swiper/modules";
+import { Keyboard, Navigation, Pagination } from "swiper/modules";
 import { RollType } from "@/shared/types/products/rolls";
 import ProductItem from "./ProductItem";
 
 type Props = {
   slides: number;
   navigation?: boolean;
-  products?:  RollType[] | null | any[];
+  products?: RollType[] | null | any[];
 };
 
 const ProductsItemSwiper = ({
@@ -30,18 +30,10 @@ const ProductsItemSwiper = ({
           style={{ height: "100%" }}
           navigation={navigation ? false : true}
           modules={[Navigation, Pagination, Keyboard]}
-          // mousewheel={true}
-          // keyboard={true}
-          // pagination={{
-          //   clickable: true,
-          //   renderBullet: function (index, swiper) {
-          //     return `<span class="${styles.bullet} ${index === swiper.activeIndex ? styles.activeBullet : ''}"></span>`;
-          //   },
-          // }}
         >
           {products?.map((p) => (
             <SwiperSlide key={p.id} style={{ width: "695px" }}>
-                <ProductItem products={[p]} />
+              <ProductItem products={[p]} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -93,7 +85,7 @@ const ProductsItemSwiper = ({
                 alignItems: "flex-start",
               }}
             >
-             <ProductItem products={[p]} />
+              <ProductItem products={[p]} />
             </SwiperSlide>
           ))}
         </Swiper>

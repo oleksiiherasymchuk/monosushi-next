@@ -30,9 +30,6 @@ const myCustomApiService = {
   //     throw error;
   //   }
   // },
-
-
-  
 };
 
 export default myCustomApiService;
