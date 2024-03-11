@@ -1,5 +1,5 @@
 export type DiscountType = {
-  id?: string | number,
+  id?: string,
   imagePath?: string,
   name: string,
   title: string,

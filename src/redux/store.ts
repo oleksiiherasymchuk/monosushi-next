@@ -8,10 +8,12 @@ import { drinksReducer } from "./drinksReducer";
 import { setsReducer } from "./setsReducer";
 import { soucesReducer } from "./soucesReducer";
 import { productReducer } from "./productReducer";
+import { adminReducer } from "./adminReducer";
 
 const store = configureStore({
   reducer: {
     // [productApi.reducerPath]: productApi.reducer,
+    admin: adminReducer,
     auth: authReducer,
     order: orderReducer,
     discounts: discountReducer,

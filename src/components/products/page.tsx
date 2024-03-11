@@ -2,52 +2,34 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Products.module.scss";
 import { useForm } from "react-hook-form";
-import { database, storage } from "@/firebase/config";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { v1 } from "uuid";
 import { ProductType } from "@/shared/types/products/product";
 import Preloader from "@/components/preloader/Preloader";
-import { deleteFromFirebase } from "@/firebase/deleteFromFirebase";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
+import { useActions } from "@/hooks/useActions";
 
 const AdminProducts = () => {
   const { register, handleSubmit, reset } = useForm();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [adminProducts, setAdminProducts] = useState<any[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+
   const [editProductId, setEditProductId] = useState<string | null>(null);
   const [editProductData, setEditProductData] = useState<ProductType | null>(
     null
   );
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const categoriesCollectionRef = collection(database, "categories");
-        const categoriesSnapshot = await getDocs(categoriesCollectionRef);
-        const categoriesData: string[] = [];
-        categoriesSnapshot.forEach((doc) => {
-          categoriesData.push(doc.data().name);
-        });
-        setCategories(categoriesData);
-      } catch (error) {
-        console.error("Error fetching categories: ", error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  const { loading, categories, products } = useTypedSelector(
+    (state) => state.admin
+  );
+  const {
+    getProductsThunk,
+    createProductThunk,
+    editProductThunk,
+    deleteProductThunk,
+    getCurrentProductToEditThunk,
+    getCategoriesThunk,
+  } = useActions();
 
   const addProductItem = () => {
-    if (categories.length === 0) {
+    if (categories?.length === 0) {
       alert("Спочатку додайте категорії");
       return;
     }
@@ -57,117 +39,52 @@ const AdminProducts = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      if (data.formFile && data.formFile.length > 0) {
-        const imagePath = data.formFile[0];
-        const imageName = imagePath.name;
-
-        const storageRef = ref(storage, `images/${imageName}`);
-        await uploadBytes(storageRef, imagePath);
-        const downloadURL = await getDownloadURL(
-          ref(storage, `images/${imageName}`)
-        );
-
-        if (editProductId) {
-          const updatedProduct: ProductType = {
-            ...editProductData,
-            name: data.name,
-            category: data.category,
-            path: data.path,
-            ingredients: data.ingredients,
-            weight: data.weight,
-            price: data.price,
-            imagePath: downloadURL,
-          };
-
-          const productDocRef = doc(
-            collection(database, "products"),
-            editProductId
-          );
-          await updateDoc(productDocRef, updatedProduct);
-
-          setAdminProducts((prevProducts) =>
-            prevProducts.map((product) =>
-              product.id === editProductId
-                ? { ...product, ...updatedProduct }
-                : product
-            )
-          );
-        } else {
-          const product: ProductType = {
-            name: data.name,
-            category: data.category,
-            path: data.path,
-            ingredients: data.ingredients,
-            weight: data.weight,
-            price: data.price,
-            imagePath: downloadURL,
-          };
-
-          const productID = v1();
-          const productDocRef = doc(
-            collection(database, "products"),
-            productID
-          );
-          await setDoc(productDocRef, product);
-
-          setAdminProducts((prevProducts) => [
-            ...prevProducts,
-            { id: productID, ...product },
-          ]);
-        }
+      if (editProductData) {
+        await editProductThunk({ data, productID: editProductId! });
       } else {
-        console.error("No file uploaded.");
+        await createProductThunk(data);
       }
-
       reset();
+      setEditProductData(null);
       setIsOpen(false);
+
+      getProductsThunk();
     } catch (error) {
-      console.error("Error adding/updating category: ", error);
+      console.error("Error adding/updating product: ", error);
     }
   };
 
   const editProduct = async (product: any) => {
+    getProductsThunk();
     try {
       setEditProductId(product.id);
-
-      const productDocRef = doc(collection(database, "products"), product.id);
-      const docSnapshot = await getDoc(productDocRef);
-      const productData = docSnapshot.data() as ProductType;
-
-      setEditProductData(productData);
+      getCurrentProductToEditThunk(product.id);
+      setEditProductData(product);
 
       reset();
       setIsOpen(true);
     } catch (error) {
-      console.error("Error fetching product data: ", error);
+      console.error("Error editing product data: ", error);
     }
   };
 
-  const deleteProduct = (productId: string) => {
-    deleteFromFirebase("products", productId, setAdminProducts);
+  const deleteProduct = async (productId: string | undefined) => {
+    getProductsThunk();
+    if (productId) {
+      deleteProductThunk(productId);
+    } else {
+      console.error("Invalid product to delete:", productId);
+    }
   };
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const productsCollectionRef = collection(database, "products");
-        const productsSnapshot = await getDocs(productsCollectionRef);
-        const productsData: any[] = [];
-        productsSnapshot.forEach((doc) => {
-          productsData.push({ id: doc.id, ...doc.data() });
-        });
-        productsData.sort((a, b) => a.category.localeCompare(b.category));
-
-        setAdminProducts(productsData);
-      } catch (error) {
-        console.error("Error fetching products: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
+    getCategoriesThunk();
+    getProductsThunk();
   }, []);
+
+  const sortedProducts = products
+    ? [...products].sort((a, b) => a.category.localeCompare(b.category))
+    : [];
 
   return (
     <div className={styles.wrapper}>
@@ -183,11 +100,14 @@ const AdminProducts = () => {
                 Category
               </label>
               <select className={styles.formSelect} {...register("category")}>
-                {categories.map((category, index) => (
-                  <option key={index} value={category}>
-                    {category}
-                  </option>
-                ))}
+                {categories?.map((category: any, index) => {
+                  console.log(category);
+                  return (
+                    <option key={index} value={category.name}>
+                      {category.name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className={styles.name}>
@@ -276,20 +196,16 @@ const AdminProducts = () => {
                 </tr>
               </thead>
               <tbody>
-                {adminProducts.length === 0 && (
+                {products?.length === 0 && (
                   <p style={{ marginTop: "30px" }}>NO PRODUCTS</p>
                 )}
-                {adminProducts.length !== 0 &&
-                  adminProducts.map((product, index) => (
+                {products?.length !== 0 &&
+                  sortedProducts?.map((product, index) => (
                     <tr key={index}>
                       <td>{index + 1}.</td>
                       <td>{product.category}</td>
                       <td>{product.name}</td>
-                      <td>
-                        {/* {product.ingredients.slice(0, 30)} */}
-                        {/* {product.ingredients.length > 30 && <span>...</span>} */}
-                        {product.ingredients}
-                      </td>
+                      <td>{product.ingredients}</td>
                       <td>{product.weight}</td>
                       <td>{product.price} грн.</td>
                       <td>

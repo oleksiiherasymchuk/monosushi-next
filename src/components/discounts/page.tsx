@@ -3,19 +3,9 @@ import React, { useEffect, useState } from "react";
 import styles from "./Discounts.module.scss";
 import { useForm } from "react-hook-form";
 import { DiscountType } from "@/shared/types/discount/discount";
-import { database, storage } from "@/firebase/config";
-import {
-  collection,
-  doc,
-  getDocs,
-  setDoc,
-  updateDoc,
-  getDoc,
-} from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { v1 } from "uuid";
-import { deleteFromFirebase } from "@/firebase/deleteFromFirebase";
 import Preloader from "@/components/preloader/Preloader";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
+import { useActions } from "@/hooks/useActions";
 
 const AdminDiscounts = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -25,8 +15,14 @@ const AdminDiscounts = () => {
   const [editDiscountData, setEditDiscountData] = useState<DiscountType | null>(
     null
   );
-  const [adminDiscounts, setAdminDiscounts] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { loading, discounts } = useTypedSelector((state) => state.admin);
+  const {
+    createDiscountThunk,
+    getCurrentDiscountToEditThunk,
+    deleteDiscountThunk,
+    editDiscountThunk,
+    getDiscountsThunk,
+  } = useActions();
 
   const addDiscountItem = () => {
     setIsOpen(!isOpen);
@@ -35,111 +31,47 @@ const AdminDiscounts = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      if (data.formFile && data.formFile.length > 0) {
-        const imagePath = data.formFile[0];
-        const imageName = imagePath.name;
-
-        const storageRef = ref(storage, `images/${imageName}`);
-        await uploadBytes(storageRef, imagePath);
-        const downloadURL = await getDownloadURL(
-          ref(storage, `images/${imageName}`)
-        );
-
-        if (editDiscountId) {
-          const updatedDiscount: DiscountType = {
-            ...editDiscountData,
-            name: data?.name,
-            title: data?.title,
-            description: data?.description,
-            imagePath: downloadURL,
-          };
-
-          const discountDocRef = doc(
-            collection(database, "discounts"),
-            editDiscountId
-          );
-          await updateDoc(discountDocRef, updatedDiscount);
-
-          setAdminDiscounts((prevDiscounts) =>
-            prevDiscounts.map((discount) =>
-              discount.id === editDiscountId
-                ? { ...discount, ...updatedDiscount }
-                : discount
-            )
-          );
-        } else {
-          const discount: DiscountType = {
-            name: data.name,
-            title: data.title,
-            description: data.description,
-            imagePath: downloadURL,
-          };
-
-          const discountID = v1();
-          const discountDocRef = doc(
-            collection(database, "discounts"),
-            discountID
-          );
-          await setDoc(discountDocRef, discount);
-
-          setAdminDiscounts((prevDiscounts) => [
-            ...prevDiscounts,
-            { id: discountID, ...discount },
-          ]);
-        }
+      if (editDiscountData) {
+        await editDiscountThunk({ data, discountID: editDiscountId! });
       } else {
-        console.error("No file uploaded.");
+        await createDiscountThunk(data);
       }
+      reset();
+      setEditDiscountData(null);
+      setIsOpen(false);
+
+      getDiscountsThunk();
+    } catch (error) {
+      console.error("Error adding/updating category: ", error);
+    }
+  };
+
+  const editDiscount = async (discount: any) => {
+    getDiscountsThunk();
+    try {
+      setEditDiscountId(discount.id);
+      getCurrentDiscountToEditThunk(discount.id);
+      setEditDiscountData(discount);
 
       reset();
-      setIsOpen(false);
+      setIsOpen(true);
     } catch (error) {
-      console.error("Error adding/updating discount: ", error);
+      console.error("Error editing discount data: ", error);
+    }
+  };
+
+  const deleteDiscount = async (discountId: string | undefined) => {
+    getDiscountsThunk();
+    if (discountId) {
+      deleteDiscountThunk(discountId);
+    } else {
+      console.error("Invalid category to delete:", discountId);
     }
   };
 
   useEffect(() => {
-    const fetchDiscounts = async () => {
-      try {
-        setLoading(true);
-        const discountsCollectionRef = collection(database, "discounts");
-        const discountsSnapshot = await getDocs(discountsCollectionRef);
-        const discountsData: any[] = [];
-        discountsSnapshot.forEach((doc) => {
-          discountsData.push({ id: doc.id, ...doc.data() });
-        });
-        setAdminDiscounts(discountsData);
-      } catch (error) {
-        console.error("Error fetching discounts: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDiscounts();
+    getDiscountsThunk();
   }, []);
-
-  const editDiscount = async (discount: any) => {
-    try {
-      setEditDiscountId(discount.id);
-
-      const discountDocRef = doc(
-        collection(database, "discounts"),
-        discount.id
-      );
-      const docSnapshot = await getDoc(discountDocRef);
-      const discountData = docSnapshot.data() as DiscountType;
-
-      setEditDiscountData(discountData);
-      reset();
-      setIsOpen(true);
-    } catch (error) {
-      console.error("Error fetching discount data: ", error);
-    }
-  };
-
-  const deleteDiscount = async (discountId: string) => {
-    deleteFromFirebase("discounts", discountId, setAdminDiscounts);
-  };
 
   return (
     <div className={styles.wrapper}>
@@ -179,11 +111,7 @@ const AdminDiscounts = () => {
               />
             </div>
 
-            <button
-              className={styles.save}
-              // disabled={discountForm.invalid}
-              type="submit"
-            >
+            <button className={styles.save} type="submit">
               ЗБЕРЕГТИ
             </button>
           </form>
@@ -207,11 +135,11 @@ const AdminDiscounts = () => {
                 </tr>
               </thead>
               <tbody>
-                {adminDiscounts.length === 0 && (
+                {discounts?.length === 0 && (
                   <p style={{ marginTop: "30px" }}>NO DISCOUNTS</p>
                 )}
-                {adminDiscounts.length !== 0 &&
-                  adminDiscounts.map((discount, index) => (
+                {discounts?.length !== 0 &&
+                  discounts?.map((discount, index) => (
                     <tr key={index}>
                       <td>{index + 1}.</td>
                       <td>{discount?.name}</td>

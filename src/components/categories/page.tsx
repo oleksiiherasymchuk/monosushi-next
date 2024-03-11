@@ -2,31 +2,29 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Categories.module.scss";
 import { useForm } from "react-hook-form";
-import { database, storage } from "@/firebase/config";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { v1 } from "uuid";
 import { CategoryType } from "@/shared/types/categories/category";
-import { deleteFromFirebase } from "@/firebase/deleteFromFirebase";
 import Preloader from "@/components/preloader/Preloader";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
+import { useActions } from "@/hooks/useActions";
 
 const AdminCategories = () => {
   const { register, handleSubmit, reset } = useForm();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [adminCategories, setAdminCategories] = useState<any[]>([]);
+  const { loading, categories } = useTypedSelector((state) => state.admin);
+
   const [editCategoryId, setEditCategoryId] = useState<string | null>(null);
   const [editCategoryData, setEditCategoryData] = useState<CategoryType | null>(
     null
   );
-  const [loading, setLoading] = useState<boolean>(true);
+
+  const {
+    getCategoriesThunk,
+    createCategoryThunk,
+    editCategoryThunk,
+    deleteCategoryThunk,
+    getCurrentCategoryToEditThunk,
+  } = useActions();
 
   const addCategoryItem = () => {
     setIsOpen(!isOpen);
@@ -35,109 +33,47 @@ const AdminCategories = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      if (data.formFile && data.formFile.length > 0) {
-        const imagePath = data.formFile[0];
-        const imageName = imagePath.name;
-
-        const storageRef = ref(storage, `images/${imageName}`);
-        await uploadBytes(storageRef, imagePath);
-        const downloadURL = await getDownloadURL(
-          ref(storage, `images/${imageName}`)
-        );
-
-        if (editCategoryId) {
-          const updatedCategory: CategoryType = {
-            ...editCategoryData,
-            name: data?.name,
-            path: data?.path,
-            imagePath: downloadURL,
-          };
-
-          const categoryDocRef = doc(
-            collection(database, "categories"),
-            editCategoryId
-          );
-          await updateDoc(categoryDocRef, updatedCategory);
-
-          setAdminCategories((prevCategories) =>
-            prevCategories.map((category) =>
-              category.id === editCategoryId
-                ? { ...category, ...updatedCategory }
-                : category
-            )
-          );
-        } else {
-          const category: CategoryType = {
-            name: data.name,
-            path: data.path,
-            imagePath: downloadURL,
-          };
-
-          const categoryID = v1();
-          const categoryDocRef = doc(
-            collection(database, "categories"),
-            categoryID
-          );
-          await setDoc(categoryDocRef, category);
-
-          setAdminCategories((prevCategories) => [
-            ...prevCategories,
-            { id: categoryID, ...category },
-          ]);
-        }
+      if (editCategoryData) {
+        await editCategoryThunk({ data, categoryId: editCategoryId! });
       } else {
-        console.error("No file uploaded.");
+        await createCategoryThunk(data);
       }
-
       reset();
+      setEditCategoryData(null);
       setIsOpen(false);
+
+      getCategoriesThunk();
     } catch (error) {
       console.error("Error adding/updating category: ", error);
     }
   };
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        setLoading(true);
-        const categoriesCollectionRef = collection(database, "categories");
-        const categoriesSnapshot = await getDocs(categoriesCollectionRef);
-        const categoriesData: any[] = [];
-        categoriesSnapshot.forEach((doc) => {
-          categoriesData.push({ id: doc.id, ...doc.data() });
-        });
-        setAdminCategories(categoriesData);
-      } catch (error) {
-        console.error("Error fetching categories: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCategories();
-  }, []);
-
   const editCategory = async (category: any) => {
+    getCategoriesThunk();
     try {
       setEditCategoryId(category.id);
+      getCurrentCategoryToEditThunk(category.id);
+      setEditCategoryData(category);
 
-      const categoryDocRef = doc(
-        collection(database, "categories"),
-        category.id
-      );
-      const docSnapshot = await getDoc(categoryDocRef);
-      const categoryData = docSnapshot.data() as CategoryType;
-
-      setEditCategoryData(categoryData);
       reset();
       setIsOpen(true);
     } catch (error) {
-      console.error("Error fetching category data: ", error);
+      console.error("Error editing category data: ", error);
     }
   };
 
-  const deleteCategory = async (categoryId: string) => {
-    deleteFromFirebase("categories", categoryId, setAdminCategories);
+  const deleteCategory = async (categoryId: string | undefined) => {
+    getCategoriesThunk();
+    if (categoryId) {
+      deleteCategoryThunk(categoryId);
+    } else {
+      console.error("Invalid category to delete:", categoryId);
+    }
   };
+
+  useEffect(() => {
+    getCategoriesThunk();
+  }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -193,11 +129,11 @@ const AdminCategories = () => {
                 </tr>
               </thead>
               <tbody>
-                {adminCategories.length === 0 && (
+                {categories?.length === 0 && (
                   <p style={{ marginTop: "30px" }}>NO CATEGORIES</p>
                 )}
-                {adminCategories.length !== 0 &&
-                  adminCategories.map((category, index) => (
+                {categories?.length !== 0 &&
+                  categories?.map((category: CategoryType, index: number) => (
                     <tr key={index}>
                       <td>{index + 1}.</td>
                       <td>{category.name}</td>
