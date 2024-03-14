@@ -25,6 +25,7 @@ import AuthUserAccountBurgerMenu from "@/components/authUserHeaderBurgerMenu/Aut
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/contexts/authContext/AuthContext";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
+import Overlay from "./Overlay";
 
 const Header = () => {
   const [isPhoneModalOpen, setIsPhoneModalOpen] = useState<boolean>(false);
@@ -51,6 +52,7 @@ const Header = () => {
   };
 
   const burgerMenuRef = useRef<HTMLDivElement>(null);
+  const basketMenuRef = useRef<HTMLDivElement>(null);
 
   const onClosePhoneModal = () => {
     setIsPhoneModalOpen(false);
@@ -124,6 +126,22 @@ const Header = () => {
     };
   }, [isBurgerMenuOpen]);
 
+  useEffect(() => {
+    const handleEscapeKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsBasketOpen(false);
+      }
+    };
+
+    if (isBasketOpen) {
+      document.addEventListener("keydown", handleEscapeKeyPress);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscapeKeyPress);
+    };
+  }, [isBasketOpen]);
+
   const preventPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsBurgerMenuOpen(false);
@@ -131,6 +149,7 @@ const Header = () => {
 
   const totalSum = products.reduce((total, product) => total + Number(product.price) * product.quantity!, 0)
   const sum = totalSum === 0 ? 0 : totalSum
+
   useEffect(() => {
     console.log(sum)
   }, [products])
@@ -301,7 +320,7 @@ const Header = () => {
             </div>
           )}
 
-          <div className={styles.headerBasket} onClick={toogleBasket}>
+          <div className={styles.headerBasket} onClick={toogleBasket} ref={basketMenuRef}>
             <Image src={Basket} alt="basket" height={25} width={25} />
             <span className={styles.headerBasketProductQuantity}>{products.length}</span>
             <span>{sum} грн</span>
@@ -434,10 +453,10 @@ const Header = () => {
             )}
           </div>
 
-          <div className={styles.headerTabletBasket} onClick={toogleBasket}>
+          <div className={styles.headerTabletBasket} onClick={toogleBasket} ref={basketMenuRef}>
             <Image src={Basket} alt="basket" height={25} width={25} />
-            <span className={styles.headerBasketProductQuantity}>0</span>
-            <span>0 грн</span>
+            <span className={styles.headerBasketProductQuantity}>{products.length}</span>
+            <span>{sum} грн</span>
           </div>
         </nav>
         {/* END HEADER FORMTABLET 769px-1200px */}
@@ -499,6 +518,7 @@ const Header = () => {
         {/* END PRODUCTS NAVBAR */}
       </header>
       {isBasketOpen && <BasketModal onClose={onCloseBasketModal} />}
+      {isBasketOpen && <Overlay onClick={onCloseBasketModal} />}
     </>
   );
 };

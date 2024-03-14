@@ -295,6 +295,16 @@
   }
 }
 
+.overlay {
+  position: fixed;
+  top: 95px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 999;
+}
+
 @media (min-width: 769px) and (max-width: 1200px) {
   .header {
     display: none;
@@ -519,6 +529,10 @@
 
   .productsNavbar {
     display: flex;
+  }
+
+  .overlay{
+    top: 60px;
   }
 }
 
@@ -747,6 +761,10 @@
   .productsNavbar {
     display: flex;
   }
+
+  .overlay{
+    top: 60px;
+  }
 }
 
 @keyframes rotateBorder {
@@ -797,3 +815,5 @@
 .hidden {
   opacity: 0;
 }
+
+

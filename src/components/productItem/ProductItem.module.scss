@@ -37,8 +37,10 @@
         align-items: center;
         padding-top: 10px;
         img {
+          // width: 80%;
+          // height: 80%;
           width: 80%;
-          height: 80%;
+          height: 50%;
           &:hover {
             scale: 1.1;
           }
@@ -137,6 +139,8 @@
     }
   }
 }
+
+
 
 @keyframes rotateBorder {
   25% {

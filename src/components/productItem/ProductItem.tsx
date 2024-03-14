@@ -46,6 +46,7 @@ const ProductItem = ({ products, title, onNavigationClick }: Props) => {
           alt={product.name}
           height={240}
           width={240}
+          style={(product.category === 'drinks' || product.category === 'souces') ? { height: '80%' } : { height: '50%' }}
         />
       </Link>
       <p className={styles.productWrapperItemName}>
