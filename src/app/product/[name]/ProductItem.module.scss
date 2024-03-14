@@ -16,8 +16,6 @@
     img {
       width: 50%;
       height: 50%;
-      // width: 448px;
-      // height: 130px;
     }
   }
 
@@ -62,7 +60,6 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 30px;
-  // border: 1px solid red;
 
   h2 {
     font-size: 42px;
@@ -70,7 +67,14 @@
     color: #252525;
     font-weight: bold;
     text-align: center;
-    // margin-bottom: 40px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .product {
+    &Description {
+      width: 55%;
+    }
   }
 }
 
@@ -82,7 +86,11 @@
 
     &Image,
     &Description {
-      width: 66%;
+      width: 96%;
+      padding: 20px;
+      h5 {
+        font-size: 32px;
+      }
     }
   }
 }

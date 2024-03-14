@@ -7,7 +7,8 @@ export type ProductType = {
   description?: string;
   price: string;
   weight?: string | number;
-  imagePath: string
+  imagePath: string;
+  quantity?: number;
 };
 
 export type ProductsType = Array<ProductType> | null;

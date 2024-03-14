@@ -20,6 +20,8 @@ const allActions = {
   ...setsActions,
   ...soucesActions,
   ...productActions,
+  ...orderActions,
+  
 };
 
 export const useActions = () => {

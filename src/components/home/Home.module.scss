@@ -247,4 +247,14 @@
   .homeInfoTablet {
     display: none;
   }
+
+  .home {
+    &Text {
+      &Block {
+        h1 {
+          font-size: 50px;
+        }
+      }
+    }
+  }
 }

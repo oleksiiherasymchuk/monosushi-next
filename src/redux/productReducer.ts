@@ -44,7 +44,6 @@ export const getProductByName = createAsyncThunk(
   async (name: string, { dispatch }) => {
     try {
       dispatch(setLoading(true));
-      debugger;
       const currentProduct = await firebaseService.getCurrentProduct(name);
       return currentProduct;
     } catch (error) {
@@ -65,14 +64,6 @@ export const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(getProductsFromFirebaseThunk.fulfilled, (state, action) => {
-      //   if(action.payload){
-      //     state.discounts = action.payload;
-      //   }
-      // })
-      // .addCase(getProductsFromFirebaseThunk.rejected, (state, action) => {
-      //   console.error(action.error);
-      // })
       .addCase(getProductByName.fulfilled, (state, action) => {
         if (action.payload) {
           state.currentProduct = action.payload;

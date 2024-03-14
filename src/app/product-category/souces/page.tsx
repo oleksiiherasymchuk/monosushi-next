@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import styles from "./Souces.module.scss";
 import ProductItem from "@/components/productItem/ProductItem";
 import Preloader from "@/components/preloader/Preloader";

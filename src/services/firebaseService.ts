@@ -81,6 +81,7 @@ export const firebaseService: IFirebaseService = {
           price: data.price || "",
           weight: data.weight || "",
           imagePath: data.imagePath || "",
+          // quantity: data.quantity || 1
         });
       });
       return rollsData;
@@ -111,6 +112,7 @@ export const firebaseService: IFirebaseService = {
           price: data.price || "",
           weight: data.weight || "",
           imagePath: data.imagePath || "",
+          // quantity: data.quantity || 1
         });
       });
       return drinksData;
@@ -141,6 +143,7 @@ export const firebaseService: IFirebaseService = {
           price: data.price || "",
           weight: data.weight || "",
           imagePath: data.imagePath || "",
+          // quantity: data.quantity || 1
         });
       });
       return setsData;
@@ -171,6 +174,7 @@ export const firebaseService: IFirebaseService = {
           price: data.price || "",
           weight: data.weight || "",
           imagePath: data.imagePath || "",
+          // quantity: data.quantity || 1
         });
       });
       return soucesData;
@@ -182,7 +186,6 @@ export const firebaseService: IFirebaseService = {
 
   getCurrentProduct: async (name: string): Promise<ProductType | null> => {
     try {
-      debugger;
       const productQuery = query(
         collection(database, "products"),
         where("path", "==", name)

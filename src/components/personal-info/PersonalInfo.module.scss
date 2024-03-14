@@ -159,7 +159,7 @@
 
 .modal {
   width: 42vw;
-  height: 780px;
+  height: min-content;
   border-radius: 7px;
   position: absolute;
   background-color: white;
@@ -261,7 +261,8 @@
         // background-color: #b5d8f7;
         background-color: #dcdcdc;
         // border: 2px solid #b5d8f7;
-        height: 60px;
+        // height: 60px;
+        height: 40px;
 
         :hover {
           background-color: white;
@@ -271,6 +272,86 @@
 
     &Map {
       margin-top: 30px;
+    }
+  }
+}
+
+@media (min-width: 769px) and (max-width: 990px) {
+  .modal {
+    width: 90vw;
+    top: 300px;
+
+    &Form {
+      input {
+        height: 35px;
+        padding-left: 10px;
+      }
+
+      &Buttons {
+        height: 50px;
+
+        button {
+          font-size: 14px;
+          line-height: 14px;
+          font-weight: 400;
+          padding: 8px 10px;
+          height: 30px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    .info {
+      form {
+        height: 150px;
+
+        .names {
+          input {
+            height: 35px;
+            padding-left: 10px;
+          }
+        }
+        input {
+          height: 35px;
+          padding-left: 10px;
+        }
+      }
+    }
+
+    .buttons {
+      button {
+        font-size: 10px;
+        line-height: 10px;
+        font-weight: 300;
+        padding: 8px 10px;
+      }
+    }
+  }
+
+  .modal {
+    width: 90vw;
+    top: 300px;
+
+    &Form {
+      input {
+        height: 35px;
+        padding-left: 10px;
+      }
+
+      &Buttons {
+        height: 50px;
+
+        button {
+          font-size: 10px;
+          line-height: 10px;
+          font-weight: 300;
+          padding: 8px 10px;
+          height: 30px;
+        }
+      }
     }
   }
 }

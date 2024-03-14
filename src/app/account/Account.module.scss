@@ -1,8 +1,17 @@
 .account {
   width: 100%;
-  height: 600px;
+  height: min-content;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   padding-top: 100px;
+}
+
+@media (max-width: 768px){
+  .account{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+  }
 }

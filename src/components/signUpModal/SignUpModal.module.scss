@@ -151,6 +151,18 @@
   }
 }
 
+@media (min-width: 769px) and (max-width: 1200px) {
+  .signInModal {
+    width: 66vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .signInModal {
+    width: 97vw;
+  }
+}
+
 .error {
   border: 1px solid red;
 }

@@ -150,3 +150,16 @@
     color: black;
   }
 }
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .entrance {
+    width: 66vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .entrance,
+  .forgetModal {
+    width: 90vw;
+  }
+}

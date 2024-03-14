@@ -12,18 +12,17 @@ import Bonus from "../../../public/images/mono-bonus.svg";
 import DiscountPaginator from "../discountSwiper/DiscountSwiper";
 import Preloader from "../preloader/Preloader";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
-import { getDiscountsFromFirebaseThunk } from "../../redux/discountReducer";
-import { useDispatch } from "react-redux";
-import { getRollsFromFirebaseThunk } from "@/redux/rollsReducer";
 import { ProductType, ProductsType } from "@/shared/types/products/product";
+import { useActions } from "@/hooks/useActions";
 
 type Props = {};
 
 const HomePage = (props: Props) => {
-  const dispatch = useDispatch<any>();
   const loading = useTypedSelector((state) => state.discounts.loading);
   const discounts = useTypedSelector((state) => state.discounts.discounts);
   const rolls = useTypedSelector((state) => state.rolls.rolls);
+  const { getDiscountsFromFirebaseThunk, getRollsFromFirebaseThunk } =
+    useActions();
 
   const [sortedRolls, setSortedRolls] = useState<ProductsType | null>(null);
 
@@ -67,9 +66,9 @@ const HomePage = (props: Props) => {
   };
 
   useEffect(() => {
-    dispatch(getDiscountsFromFirebaseThunk());
-    dispatch(getRollsFromFirebaseThunk());
-  }, [dispatch]);
+    getDiscountsFromFirebaseThunk();
+    getRollsFromFirebaseThunk();
+  }, []);
 
   return (
     <>

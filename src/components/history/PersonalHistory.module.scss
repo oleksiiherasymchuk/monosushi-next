@@ -41,7 +41,6 @@
 
   td {
     height: 60px;
-    width: 200px;
     text-align: center;
     font-style: 13px;
     text-align: start;
@@ -82,5 +81,98 @@
 
   tr {
     border-bottom: 1px solid gainsboro;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    width: 97%;
+    height: auto;
+    margin: 0px 0px 30px;
+
+    p {
+      font-size: 10px;
+      line-height: 1em;
+      font-family: "RotondaC";
+      color: #5a5a5a;
+      margin-top: 30px;
+
+      a {
+        color: #b5d8f7;
+        &:hover {
+          text-decoration-line: underline;
+          transition: 0.35s;
+        }
+      }
+    }
+
+    table {
+      font-size: 9px;
+      width: 100%;
+      height: auto;
+      border: 0;
+      border-collapse: collapse;
+      border-spacing: 0 5px;
+    }
+
+    thead {
+      border-bottom: 2px solid #b5d8f7;
+      border-collapse: separate;
+      border-spacing: 5px 5px;
+      height: 50px;
+      color: #5a5a5a;
+
+      tr td:nth-child(5) {
+        display: none;
+      }
+    }
+
+    .head {
+      border-top: 2px solid #b5d8f7;
+    }
+
+    td {
+      height: 60px;
+      text-align: center;
+      font-style: 8px;
+      text-align: start;
+      color: #5a5a5a;
+    }
+
+    td:nth-child(1) {
+      font-weight: bold;
+      color: black;
+    }
+
+    tr td:nth-child(4) {
+      span {
+        font-weight: bold;
+        color: black;
+      }
+    }
+    tr td:nth-child(5) {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      p {
+        margin-bottom: 2rem;
+      }
+    }
+
+    tr td:nth-child(5) {
+      .done {
+        display: none;
+        color: green;
+      }
+
+      .repeat {
+        color: #b5d8f7;
+      }
+    }
+
+    tr {
+      border-bottom: 1px solid gainsboro;
+    }
   }
 }

@@ -24,6 +24,7 @@ import BasketModal from "../basketModal/BasketModal";
 import AuthUserAccountBurgerMenu from "@/components/authUserHeaderBurgerMenu/AuthUserAccountBurgerMenu";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/contexts/authContext/AuthContext";
+import { useTypedSelector } from "@/hooks/useTypedSelector";
 
 const Header = () => {
   const [isPhoneModalOpen, setIsPhoneModalOpen] = useState<boolean>(false);
@@ -32,6 +33,8 @@ const Header = () => {
   const [currentModalContent, setCurrentModalContent] = useState<
     "auth" | "signIn" | "forget"
   >("auth");
+
+  const { products } = useTypedSelector(state => state.order)
 
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState<boolean>(false);
 
@@ -125,6 +128,12 @@ const Header = () => {
     e.stopPropagation();
     setIsBurgerMenuOpen(false);
   };
+
+  const totalSum = products.reduce((total, product) => total + Number(product.price) * product.quantity!, 0)
+  const sum = totalSum === 0 ? 0 : totalSum
+  useEffect(() => {
+    console.log(sum)
+  }, [products])
 
   return (
     <>
@@ -294,8 +303,8 @@ const Header = () => {
 
           <div className={styles.headerBasket} onClick={toogleBasket}>
             <Image src={Basket} alt="basket" height={25} width={25} />
-            <span className={styles.headerBasketProductQuantity}>0</span>
-            <span>0 грн</span>
+            <span className={styles.headerBasketProductQuantity}>{products.length}</span>
+            <span>{sum} грн</span>
           </div>
         </nav>
         {/* END HEADER FOR 1200px+ */}
