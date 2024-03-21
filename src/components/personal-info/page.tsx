@@ -7,6 +7,7 @@ import { auth } from "@/firebase/config";
 import PasswordModal from "../password/PasswordModal";
 import { useActions } from "@/hooks/useActions";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
+import { toast } from "react-toastify";
 
 type Props = {};
 
@@ -44,6 +45,7 @@ const PersonalInfo = (props: Props) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name, value } = e.target;
+    
     setFormData((prevFormData: any) => ({
       ...prevFormData,
       [name]: value,
@@ -53,6 +55,16 @@ const PersonalInfo = (props: Props) => {
   const handleSaveChanges = () => {
     try {
       const currentUser = auth.currentUser;
+      if (!/^\+380\d{9}$/.test(formData.phone)) {
+        toast.error("Будь ласка, введіть номер телефону у форматі +380931234567");
+        return;
+      }
+
+      if(!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)){
+        toast.error("Будь ласка, введіть електронну пошту у форматі ukraine@ukraine.ua");
+        return;
+      }
+
       if (currentUser) {
         updateUserThunk(formData);
       }
@@ -102,6 +114,9 @@ const PersonalInfo = (props: Props) => {
             name="phone"
             value={formData.phone || ""}
             onChange={handleInputChange}
+            // pattern="^\d{12}$"
+            // pattern="[380][0-9]{9}"
+            // required
           />
 
           <input

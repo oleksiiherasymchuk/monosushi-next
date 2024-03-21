@@ -4,6 +4,7 @@ import { DiscountType } from "@/shared/types/discount/discount";
 import { ProductType } from "@/shared/types/products/product";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 interface IAdminDiscount {
   loading: boolean;
@@ -288,16 +289,19 @@ export const adminSlice = createSlice({
       .addCase(createCategoryThunk.fulfilled, (state, action: any) => {
         if (action.payload) {
           state.categories?.push(action.payload);
+          toast.success("Категорія успішно створена!")
         }
       })
       .addCase(createDiscountThunk.fulfilled, (state, action: any) => {
         if (action.payload) {
           state.discounts?.push(action.payload);
+          toast.success("Акція успішно створена!")
         }
       })
       .addCase(createProductThunk.fulfilled, (state, action: any) => {
         if (action.payload) {
           state.products?.push(action.payload);
+          toast.success("Продукт успішно створений!")
         }
       })
 
@@ -312,6 +316,7 @@ export const adminSlice = createSlice({
               ...action.payload,
             };
           }
+          toast.success("Категорія успішно змінена!")
         }
       })
       .addCase(editDiscountThunk.fulfilled, (state, action) => {
@@ -325,6 +330,7 @@ export const adminSlice = createSlice({
               ...action.payload,
             };
           }
+          toast.success("Акція успішно змінена!")
         }
       })
       .addCase(editProductThunk.fulfilled, (state, action) => {
@@ -338,6 +344,7 @@ export const adminSlice = createSlice({
               ...action.payload,
             };
           }
+          toast.success("Продукт успішно змінений!")
         }
       })
 
@@ -346,6 +353,7 @@ export const adminSlice = createSlice({
           state.categories = state.categories.filter(
             (category) => category.id !== action.payload
           );
+          toast.info("Категорія успішно видалена!")
         }
       })
       .addCase(deleteDiscountThunk.fulfilled, (state, action) => {
@@ -353,16 +361,18 @@ export const adminSlice = createSlice({
           state.discounts = state.discounts.filter(
             (discount) => discount.id !== action.payload
           );
+          toast.info("Акція успішно видалена!")
         }
       })
       .addCase(deleteProductThunk.fulfilled, (state, action) => {
         if (state.products) {
-          state.products = state.products.filter(
-            (product) => product.id !== action.payload
-          );
+            state.products = state.products.filter(
+              (product) => product.id !== action.payload
+            );
+            toast.info(`Product: successfully deleted!`);
         }
       })
-
+ 
       .addCase(getCurrentCategoryToEditThunk.fulfilled, (state, action) => {
         if (action.payload) {
           state.categories = [action.payload];

@@ -8,6 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 interface IOrderService {
   createOrder: (order: ProductType[], userId?: string) => Promise<void>;
@@ -43,7 +44,7 @@ export const orderService: IOrderService = {
 
       await addDoc(orderCollectionRef, orderData);
     } catch (error) {
-      console.error("Error creating order:", error);
+      toast.error("На жаль, ваше замовлення неможливе через технічні збої:(");
     }
   },
 };

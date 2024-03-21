@@ -151,3 +151,22 @@
     border-bottom: 1px solid gainsboro;
   }
 }
+
+@media (max-width: 768px){
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: min-content;
+  
+    .form {
+      width: 90%;
+  
+      form {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -34,7 +34,7 @@ const PersonalHistory = (props: Props) => {
       {loading ? (
         <Preloader />
       ) : orders?.length === 0 ? (
-        <p>
+        <p style={{ height: "300px"}}>
           Поки що ви не зробили жодного замовлення{" "}
           <Link href="/">перейти в каталог</Link>
         </p>

@@ -10,6 +10,8 @@ import styles from "./Home.module.scss";
 import { AuthContextProvider } from "@/contexts/authContext/AuthContext";
 import { Provider } from "react-redux";
 import store from "@/redux/store";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Roboto({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
@@ -38,6 +40,7 @@ export default function RootLayout({
             </div>
           </Provider>
         </AuthContextProvider>
+        <ToastContainer />
       </body>
     </html>
   );

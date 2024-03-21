@@ -10,6 +10,7 @@ import { soucesReducer } from "./soucesReducer";
 import { productReducer } from "./productReducer";
 import { adminReducer } from "./adminReducer";
 
+
 const store = configureStore({
   reducer: {
     // [productApi.reducerPath]: productApi.reducer,
@@ -32,6 +33,7 @@ const store = configureStore({
       },
       serializableCheck: false,
     }),
+    
 });
 
 export type TypeRootReducer = ReturnType<typeof store.getState>;

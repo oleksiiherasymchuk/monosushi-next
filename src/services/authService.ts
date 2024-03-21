@@ -17,6 +17,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 interface IAuthService {
   createUser: (user: UserType) => Promise<User | null>;
@@ -54,7 +55,7 @@ export const authService: IAuthService = {
       );
       return userCredential;
     } catch (error) {
-      console.error("Error signing in:", error);
+      toast.error("Помилка логінування:(");
       return null;
     }
   },
@@ -75,7 +76,7 @@ export const authService: IAuthService = {
       );
 
       if (!querySnapshot.empty) {
-        console.error("Email already exists");
+        toast.error("Користувач з такою поштою вже зареєстрований!");
         return null;
       }
 
@@ -98,10 +99,10 @@ export const authService: IAuthService = {
       const userDocRef = doc(usersCollectionRef, authUser.uid);
       await setDoc(userDocRef, userData);
 
-      console.log("User signed up");
+      // console.log("User signed up");
       return authUser;
     } catch (error) {
-      console.error("Failed to create user:", error);
+      toast.error("Сталась помилка реєстрації акаунту:(");
       throw new Error("Failed to create user");
     }
   },
@@ -112,10 +113,10 @@ export const authService: IAuthService = {
       const userDocRef = doc(database, "users", userId);
 
       await setDoc(userDocRef, user, { merge: true });
-      console.log("User data updated successfully.");
+      toast.success(`Дані користувача ${user.email} успішно оновлені!`);
       return user;
     } catch (error) {
-      console.error("Error updating user data:", error);
+      toast.error("Помилка оновлення даних користувача:(");
       throw error;
     }
   },

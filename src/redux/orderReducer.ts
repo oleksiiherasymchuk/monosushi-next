@@ -1,6 +1,7 @@
 import { orderService } from "@/services/orderService";
 import { ProductType } from "@/shared/types/products/product";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 interface IOrder {
   products: ProductType[] | [];
@@ -129,6 +130,7 @@ export const orderSlice = createSlice({
           state.orders?.push(action.payload);
         }
         state.products = [];
+        toast.success("Ваше замовлення прийнято!")
       });
   },
 });

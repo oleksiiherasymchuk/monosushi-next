@@ -1,6 +1,6 @@
 .discount {
   width: 56%;
-  height: 100vh;
+  height: min-content;
   margin: 40px auto;
 
   &Title {
@@ -52,4 +52,21 @@
       }
     }
   }
+}
+
+@media (max-width: 768px){
+  .discount{
+    width: 80%;
+    
+    &Title{
+      &Title{ 
+        p{
+          font-size: 24px;
+          line-height: 1em;
+        }
+      }
+    }
+  }
+ 
+
 }

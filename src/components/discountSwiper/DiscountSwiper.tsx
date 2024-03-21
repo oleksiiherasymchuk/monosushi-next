@@ -76,7 +76,8 @@ const DiscountSwiper = ({
                 alignItems: "flex-start",
               }}
             >
-              <Link href={`/${p.category}/${p.name}`}>
+              {/* <Link href={`/${p.category}/${p.name}`}> */}
+              <Link href={`/actions/${p.title}`}>
                 <img src={p.imagePath} alt={`${p.category} ${p.id}`} />
               </Link>
             </SwiperSlide>
@@ -106,7 +107,8 @@ const DiscountSwiper = ({
                 alignItems: "flex-start",
               }}
             >
-              <Link href={`/${p.category}/${p.name}`}>
+              {/* <Link href={`/${p.category}/${p.name}`}> */}
+              <Link href={`/actions/${p.title}`}>
                 <img src={p.imagePath} alt={`${p.category} ${p.id}`} />
               </Link>
             </SwiperSlide>

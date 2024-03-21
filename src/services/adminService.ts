@@ -8,10 +8,13 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
   setDoc,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { toast } from "react-toastify";
 import { v1 } from "uuid";
 
 interface IAdminService {
@@ -88,6 +91,16 @@ export const adminService: IAdminService = {
   // CREATE ADMIN
   createCategory: async (data: any) => {
     try {
+      const categoriesCollectionRef = collection(database, "categories");
+      const querySnapshot = await getDocs(
+        query(categoriesCollectionRef, where("name", "==", data.name))
+      );
+  
+      if (!querySnapshot.empty) {
+        toast.error("Категорія вже існує!");
+        return null;
+      }
+
       if (data.formFile && data.formFile.length > 0) {
         const imagePath = data.formFile[0];
         const imageName = imagePath.name;
@@ -111,14 +124,27 @@ export const adminService: IAdminService = {
 
         return category;
       } else {
-        console.error("No file uploaded.");
+        toast.error("При додаванні категорії не було додано зображення. Спробуйте ще раз!");
+        return null
       }
     } catch (error) {
+      debugger
       console.log(error);
+      return null
     }
   },
   createDiscount: async (data: any) => {
     try {
+      const discountsCollectionRef = collection(database, "discounts");
+      const querySnapshot = await getDocs(
+        query(discountsCollectionRef, where("name", "==", data.name))
+      );
+  
+      if (!querySnapshot.empty) {
+        toast.error("Акція вже існує!");
+        return null;
+      }
+
       if (data.formFile && data.formFile.length > 0) {
         const imagePath = data.formFile[0];
         const imageName = imagePath.name;
@@ -143,14 +169,26 @@ export const adminService: IAdminService = {
 
         return discount;
       } else {
-        console.error("No file uploaded.");
+        toast.error("При додаванні акції не було додано зображення. Спробуйте ще раз!");
+        return null
       }
     } catch (error) {
       console.log(error);
+      return null
     }
   },
   createProduct: async (data: any) => {
     try {
+      const productsCollectionRef = collection(database, "products");
+      const querySnapshot = await getDocs(
+        query(productsCollectionRef, where("name", "==", data.name))
+      );
+  
+      if (!querySnapshot.empty) {
+        toast.error("Продукт вже існує!");
+        return null;
+      }
+
       if (data.formFile && data.formFile.length > 0) {
         const imagePath = data.formFile[0];
         const imageName = imagePath.name;
@@ -176,10 +214,12 @@ export const adminService: IAdminService = {
 
         return product;
       } else {
-        console.error("No file uploaded.");
+        toast.error("При додаванні продукту не було додано зображення. Спробуйте ще раз!");
+        return null
       }
     } catch (error) {
       console.log(error);
+      return null
     }
   },
 
@@ -208,11 +248,12 @@ export const adminService: IAdminService = {
 
         return category;
       } else {
-        console.error("No file uploaded.");
+        toast.error("При редагуванні категорії не було додано зображення. Спробуйте ще раз!");
         return null;
       }
     } catch (error) {
       console.error("Error editing category:", error);
+      toast.error("Виникла якась помилка при редагуванні категорії:(");
       return null;
     }
   },
@@ -241,13 +282,12 @@ export const adminService: IAdminService = {
 
         return discount;
       } else {
-        console.error("No file uploaded.");
-
+        toast.error("При редагуванні акції не було додано зображення. Спробуйте ще раз!");
         return null;
       }
     } catch (error) {
       console.error("Error editing discount:", error);
-
+      toast.error("Виникла якась помилка при редагуванні акції:(");
       return null;
     }
   },
@@ -276,13 +316,12 @@ export const adminService: IAdminService = {
 
         return product;
       } else {
-        console.error("No file uploaded.");
-        // return false;
+        toast.error("При редагуванні продукту не було додано зображення. Спробуйте ще раз!");
         return null;
       }
     } catch (error) {
       console.error("Error editing product:", error);
-      // return false;
+      toast.error("Виникла якась помилка при редагуванні продукту:(");
       return null;
     }
   },

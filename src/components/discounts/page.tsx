@@ -144,9 +144,14 @@ const AdminDiscounts = () => {
                       <td>{index + 1}.</td>
                       <td>{discount?.name}</td>
                       <td>{discount?.title}</td>
-                      <td>{discount?.description}</td>
+                      {/* <td>{discount?.description?.length > 100 && discount?.description?.slice(0,100)} ...</td> */}
                       <td>
-                        <img src={discount.imagePath} alt="" />
+                        {discount?.description && discount.description.length > 100
+                          ? `${discount.description.slice(0, 50)} ...`
+                          : discount?.description}
+                      </td>
+                      <td>
+                        <img src={discount.imagePath} alt={discount.name} />
                       </td>
                       <td>
                         <p onClick={() => editDiscount(discount)}>Редагувати</p>
