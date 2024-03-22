@@ -99,7 +99,6 @@ export const authService: IAuthService = {
       const userDocRef = doc(usersCollectionRef, authUser.uid);
       await setDoc(userDocRef, userData);
 
-      // console.log("User signed up");
       return authUser;
     } catch (error) {
       toast.error("Сталась помилка реєстрації акаунту:(");

@@ -12,9 +12,7 @@ type DropdownState = {
   [key: string]: boolean;
 };
 
-type Props = {};
-
-export default function Page(props: Props) {
+export default function Page() {
   const [isDropdownOpen, setIsDropdownOpen] = useState<DropdownState>({});
 
   const toggleDropdown = (dropdownName: string) => {

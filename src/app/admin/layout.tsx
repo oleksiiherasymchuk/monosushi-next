@@ -1,16 +1,16 @@
-"use client"
-import React, { useState } from 'react';
-import styles from './Admin.module.scss'
-import AdminNavigation from '@/components/adminNavigation/AdminNavigation';
-import AdminDiscounts from '@/components/discounts/page';
-import AdminCategories from '@/components/categories/page';
-import AdminProducts from '@/components/products/page';
+"use client";
+import React, { useState } from "react";
+import styles from "./Admin.module.scss";
+import AdminNavigation from "@/components/adminNavigation/AdminNavigation";
+import AdminDiscounts from "@/components/discounts/page";
+import AdminCategories from "@/components/categories/page";
+import AdminProducts from "@/components/products/page";
 
 interface AdminLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
-const AdminLayout: React.FC<AdminLayoutProps> = ({ children}) => {
+const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const [activePage, setActivePage] = useState("Discounts");
 
   const handleNavigationClick = (page: string) => {
@@ -32,7 +32,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children}) => {
   return (
     <div className={styles.admin}>
       <AdminNavigation onNavigationClick={handleNavigationClick} />
-      { children }
+      {children}
       {renderActivePage()}
     </div>
   );

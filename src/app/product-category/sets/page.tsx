@@ -8,9 +8,7 @@ import Preloader from "@/components/preloader/Preloader";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { useActions } from "@/hooks/useActions";
 
-type Props = {};
-
-const Sets = (props: Props) => {
+const Sets = () => {
   const loading = useTypedSelector((state) => state.sets.loading);
   const sets = useTypedSelector((state) => state.sets.sets);
 

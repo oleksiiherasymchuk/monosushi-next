@@ -9,8 +9,6 @@ import { useActions } from "@/hooks/useActions";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { toast } from "react-toastify";
 
-type Props = {};
-
 type User = {
   name: string;
   surname: string;
@@ -18,7 +16,7 @@ type User = {
   email: string;
 };
 
-const PersonalInfo = (props: Props) => {
+const PersonalInfo = () => {
   const [isDataSuccessModal, setIsDataSuccessModal] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -45,7 +43,7 @@ const PersonalInfo = (props: Props) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name, value } = e.target;
-    
+
     setFormData((prevFormData: any) => ({
       ...prevFormData,
       [name]: value,
@@ -56,12 +54,18 @@ const PersonalInfo = (props: Props) => {
     try {
       const currentUser = auth.currentUser;
       if (!/^\+380\d{9}$/.test(formData.phone)) {
-        toast.error("Будь ласка, введіть номер телефону у форматі +380931234567");
+        toast.error(
+          "Будь ласка, введіть номер телефону у форматі +380931234567"
+        );
         return;
       }
 
-      if(!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)){
-        toast.error("Будь ласка, введіть електронну пошту у форматі ukraine@ukraine.ua");
+      if (
+        !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)
+      ) {
+        toast.error(
+          "Будь ласка, введіть електронну пошту у форматі ukraine@ukraine.ua"
+        );
         return;
       }
 
@@ -114,9 +118,6 @@ const PersonalInfo = (props: Props) => {
             name="phone"
             value={formData.phone || ""}
             onChange={handleInputChange}
-            // pattern="^\d{12}$"
-            // pattern="[380][0-9]{9}"
-            // required
           />
 
           <input

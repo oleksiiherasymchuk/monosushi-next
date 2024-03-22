@@ -1,14 +1,12 @@
 "use client";
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import styles from "./Souces.module.scss";
 import ProductItem from "@/components/productItem/ProductItem";
 import Preloader from "@/components/preloader/Preloader";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { useActions } from "@/hooks/useActions";
 
-type Props = {};
-
-const Souces = (props: Props) => {
+const Souces = () => {
   const loading = useTypedSelector((state) => state.souces.loading);
   const souces = useTypedSelector((state) => state.souces.souces);
 

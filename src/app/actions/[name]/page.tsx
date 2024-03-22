@@ -17,6 +17,7 @@ export default function Discount({ params }: Params) {
   const currentDiscount = useTypedSelector(
     (state) => state.discounts.currentDiscount
   );
+
   const { getDiscountByName } = useActions();
 
   useEffect(() => {

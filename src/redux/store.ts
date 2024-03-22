@@ -10,10 +10,8 @@ import { soucesReducer } from "./soucesReducer";
 import { productReducer } from "./productReducer";
 import { adminReducer } from "./adminReducer";
 
-
 const store = configureStore({
   reducer: {
-    // [productApi.reducerPath]: productApi.reducer,
     admin: adminReducer,
     auth: authReducer,
     order: orderReducer,
@@ -24,8 +22,6 @@ const store = configureStore({
     souces: soucesReducer,
     products: productReducer,
   },
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware().concat(productApi.middleware),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {
@@ -33,10 +29,8 @@ const store = configureStore({
       },
       serializableCheck: false,
     }),
-    
 });
 
 export type TypeRootReducer = ReturnType<typeof store.getState>;
-// export type AppDispatch = typeof store.dispatch
 
 export default store;

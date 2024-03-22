@@ -9,9 +9,7 @@ import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { useActions } from "@/hooks/useActions";
 import { ProductType, ProductsType } from "@/shared/types/products/product";
 
-type Props = {};
-
-const Rolls = (props: Props) => {
+const Rolls = () => {
   const [sortedRolls, setSortedRolls] = useState<ProductsType | null>(null);
 
   const { loading, rolls } = useTypedSelector((state) => state.rolls);
@@ -22,7 +20,6 @@ const Rolls = (props: Props) => {
   }, []);
 
   const handleNavigationClick = (label: string) => {
-    // debugger
     let sortedProducts: ProductType[] | any = [];
 
     if (label === "Всі") {

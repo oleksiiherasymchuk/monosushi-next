@@ -136,7 +136,6 @@
     }
   }
   tr td:nth-child(5) {
-    // padding-top: 15px;
     text-align: center;
     color: #b5d8f7;
   }
@@ -152,7 +151,7 @@
   }
 }
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
   .wrapper {
     display: flex;
     flex-direction: column;
@@ -160,10 +159,10 @@
     align-items: center;
     width: 90%;
     height: min-content;
-  
+
     .form {
       width: 90%;
-  
+
       form {
         width: 100%;
       }

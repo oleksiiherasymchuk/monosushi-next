@@ -3,6 +3,7 @@ import React, { FormEvent, useState } from "react";
 import styles from "./AuthModal.module.scss";
 import { useRouter } from "next/navigation";
 import authMe from "@/firebase/auth";
+import { toast } from "react-toastify";
 
 type Props = {
   onClose: () => void;
@@ -23,6 +24,9 @@ const AuthModal = ({ onClose, changeContent }: Props) => {
     if (error) {
       setEmail("");
       setPassword("");
+      toast.error(
+        "Сталась помилка авторизації. Перевірте правильність вводу даних!"
+      );
       return console.log(error);
     }
 

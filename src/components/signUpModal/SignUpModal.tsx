@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useActions } from "@/hooks/useActions";
+import { toast } from "react-toastify";
 
 type Props = {
   onClose: () => void;
@@ -36,6 +37,7 @@ const SignUpModal = ({ onClose, changeContent }: Props) => {
       onClose();
       router.push("/account");
     } catch (error) {
+      toast.error("Помилка реєстрації;(");
       console.error("Failed to sign up:", error);
     }
   };
@@ -81,7 +83,6 @@ const SignUpModal = ({ onClose, changeContent }: Props) => {
           className={`${styles.signInModalFormPhone} ${
             errors.phone ? styles.error : ""
           }`}
-          // placeholder="Ваш телефон"
           placeholder="+380XXXXXXXXX"
           {...register("phone", {
             required: true,
@@ -137,7 +138,6 @@ const SignUpModal = ({ onClose, changeContent }: Props) => {
           </label>
         </div>
 
-        {/* <button disabled={registerForm.invalid} type="submit"> */}
         <button
           type="submit"
           disabled={isSubmitting || Object.keys(errors).length > 0}

@@ -152,7 +152,7 @@
   }
 }
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
   .wrapper {
     display: flex;
     flex-direction: column;
@@ -161,17 +161,17 @@
     width: 90%;
     margin: 10px auto;
     min-height: 600px;
-  
+
     .form {
       width: 90%;
-  
+
       form {
         width: 100%;
       }
     }
-  
-    td:nth-child(1), 
-    td:nth-child(2), 
+
+    td:nth-child(1),
+    td:nth-child(2),
     td:nth-child(4) {
       width: 320px;
       padding-left: 0px;

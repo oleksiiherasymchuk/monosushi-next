@@ -30,17 +30,7 @@ const DiscountSwiper = ({
           scrollbar={{ draggable: true }}
           style={{ height: "100%" }}
           navigation={navigation ? false : true}
-          // mousewheel={true}
-          // keyboard={true}
           modules={[Navigation, Pagination, Mousewheel, Keyboard]}
-          // onSwiper={(swiper) => console.log(swiper)}
-          // onSlideChange={() => console.log("slide change")}
-          // pagination={{
-          //   clickable: true,
-          //   renderBullet: function (index, swiper) {
-          //     return `<span class="${styles.bullet} ${index === swiper.activeIndex ? styles.activeBullet : ''}"></span>`;
-          //   },
-          // }}
         >
           {products?.map((p) => {
             return (
@@ -76,7 +66,6 @@ const DiscountSwiper = ({
                 alignItems: "flex-start",
               }}
             >
-              {/* <Link href={`/${p.category}/${p.name}`}> */}
               <Link href={`/actions/${p.title}`}>
                 <img src={p.imagePath} alt={`${p.category} ${p.id}`} />
               </Link>
@@ -107,7 +96,6 @@ const DiscountSwiper = ({
                 alignItems: "flex-start",
               }}
             >
-              {/* <Link href={`/${p.category}/${p.name}`}> */}
               <Link href={`/actions/${p.title}`}>
                 <img src={p.imagePath} alt={`${p.category} ${p.id}`} />
               </Link>

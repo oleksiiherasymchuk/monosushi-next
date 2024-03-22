@@ -245,14 +245,14 @@
   }
 }
 
-@media (min-width: 769px) and (max-width: 1200px){
-  .basket{
+@media (min-width: 769px) and (max-width: 1200px) {
+  .basket {
     top: 60px;
     right: 0px;
 
-    &Order{
-      &Empty{
-        button{ 
+    &Order {
+      &Empty {
+        button {
           width: 160px;
           padding: 0px;
           font-size: 12px;
@@ -268,20 +268,20 @@
         align-items: center;
         padding: 5px;
         border-bottom: 1px solid gainsboro;
-  
+
         &Item {
           width: 100%;
-  
+
           height: 60px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-  
+
           img {
             width: 50px;
             height: 50px;
           }
-  
+
           &Description {
             height: 45px;
             width: 350px;
@@ -291,14 +291,13 @@
             margin-right: 10px;
             text-align: center;
 
-  
             &Controls {
               display: flex;
               justify-content: space-between;
               align-items: center;
               width: 40%;
               margin-top: 5px;
-  
+
               &Quantity {
                 width: 75px;
                 height: 30px;
@@ -310,7 +309,7 @@
                 font-size: 12px;
                 line-height: 14px;
                 margin-left: 0px;
-  
+
                 button {
                   width: 31px;
                   height: 22px;
@@ -326,36 +325,36 @@
                   margin: 4px;
                   border: none;
                 }
-  
+
                 input {
                   width: 30px;
                   height: 25px;
                   text-align: center;
                 }
-  
+
                 input::-webkit-outer-spin-button,
                 input::-webkit-inner-spin-button {
                   -webkit-appearance: none;
                   margin: 0;
                 }
-  
+
                 input[type="number"] {
                   --moz-appearance: textfield;
                 }
               }
-  
+
               &Price {
                 color: #252525;
                 font-weight: 200;
                 font-size: 10px;
                 width: 84px;
                 height: 15px;
-  
+
                 span {
                   font-weight: 700;
                 }
               }
-  
+
               &Button {
                 border: none;
                 border-radius: 7px;
@@ -366,14 +365,14 @@
                 text-transform: uppercase;
                 margin-right: 3px;
                 font-weight: 700;
-  
+
                 &:hover {
                   background-color: #fff;
                   border: 2px solid #b5d8f7;
                 }
               }
             }
-  
+
             p {
               font-weight: 400;
               width: 120px;
@@ -381,13 +380,13 @@
               text-align: center;
               height: 25%;
             }
-  
+
             &Button {
               border: none;
               margin-left: 20px;
               position: relative;
               top: 1px;
-  
+
               img {
                 width: 20px;
                 height: 20px;
@@ -396,13 +395,10 @@
           }
         }
       }
-     
     }
 
-
-
-    &Bottom{
-      button{
+    &Bottom {
+      button {
         width: 160px;
         padding: 0px;
         font-size: 10px;
@@ -412,21 +408,21 @@
   }
 }
 
-@media (max-width: 768px){
-  .basket{
+@media (max-width: 768px) {
+  .basket {
     top: 60px;
     right: 0px;
 
-    &Order{
-      &Empty{
-        p{
+    &Order {
+      &Empty {
+        p {
           font-size: 14px;
           margin-top: 10px;
           line-height: 1em;
           font-weight: 400;
         }
 
-        button{ 
+        button {
           width: 140px;
           padding: 0px;
           font-size: 8px;
@@ -443,20 +439,20 @@
         align-items: center;
         padding: 5px;
         border-bottom: 1px solid gainsboro;
-  
+
         &Item {
           width: 100%;
-  
+
           height: 40px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-  
+
           img {
             width: 30px;
             height: 30px;
           }
-  
+
           &Description {
             height: 45px;
             width: 130px;
@@ -466,14 +462,13 @@
             margin-right: 10px;
             text-align: center;
 
-  
             &Controls {
               display: flex;
               justify-content: space-between;
               align-items: center;
               width: 70%;
               margin-top: 5px;
-  
+
               &Quantity {
                 width: 50px;
                 height: 20px;
@@ -485,7 +480,7 @@
                 font-size: 12px;
                 line-height: 14px;
                 margin-left: 15px;
-  
+
                 button {
                   width: 28px;
                   height: 15px;
@@ -501,36 +496,36 @@
                   margin: 4px;
                   border: none;
                 }
-  
+
                 input {
                   width: 20px;
                   height: 15px;
                   text-align: center;
                 }
-  
+
                 input::-webkit-outer-spin-button,
                 input::-webkit-inner-spin-button {
                   -webkit-appearance: none;
                   margin: 0;
                 }
-  
+
                 input[type="number"] {
                   --moz-appearance: textfield;
                 }
               }
-  
+
               &Price {
                 color: #252525;
                 font-weight: 200;
                 font-size: 8px;
                 width: 84px;
                 height: 12px;
-  
+
                 span {
                   font-weight: 700;
                 }
               }
-  
+
               &Button {
                 border: none;
                 border-radius: 7px;
@@ -541,14 +536,14 @@
                 text-transform: uppercase;
                 margin-right: 3px;
                 font-weight: 700;
-  
+
                 &:hover {
                   background-color: #fff;
                   border: 2px solid #b5d8f7;
                 }
               }
             }
-  
+
             p {
               font-weight: 400;
               width: 120px;
@@ -557,13 +552,13 @@
               height: 25%;
               display: none;
             }
-  
+
             &Button {
               border: none;
               margin-left: 10px;
               position: relative;
               top: 1px;
-  
+
               img {
                 width: 10px;
                 height: 10px;
@@ -574,16 +569,16 @@
       }
     }
 
-    &Bottom{
+    &Bottom {
       height: 60px;
       padding-right: 10px;
       padding-left: 10px;
 
-      p{
+      p {
         font-size: 10px;
       }
 
-      button{
+      button {
         width: 70px;
         height: 35px;
         padding: 0px;

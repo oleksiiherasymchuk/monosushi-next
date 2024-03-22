@@ -144,11 +144,11 @@ const AdminDiscounts = () => {
                       <td>{index + 1}.</td>
                       <td>{discount?.name}</td>
                       <td>{discount?.title}</td>
-                      {/* <td>{discount?.description?.length > 100 && discount?.description?.slice(0,100)} ...</td> */}
                       <td>
-                        {discount?.description && discount.description.length > 100
+                        {discount?.description &&
+                        discount.description.length > 100
                           ? `${discount.description.slice(0, 50)} ...`
-                          : discount?.description}
+                          : discount.description}
                       </td>
                       <td>
                         <img src={discount.imagePath} alt={discount.name} />

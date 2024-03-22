@@ -9,17 +9,15 @@ import Preloader from "@/components/preloader/Preloader";
 import { useActions } from "@/hooks/useActions";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 
-
 export default function Discounts() {
+  const discounts = useTypedSelector((state) => state.discounts.discounts);
+  const loading = useTypedSelector((state) => state.discounts.loading);
 
-  const discounts = useTypedSelector(state => state.discounts.discounts)
-  const loading = useTypedSelector(state => state.discounts.loading)
-
-  const { getDiscountsFromFirebaseThunk } = useActions()
+  const { getDiscountsFromFirebaseThunk } = useActions();
 
   useEffect(() => {
-    getDiscountsFromFirebaseThunk()
-  }, [])
+    getDiscountsFromFirebaseThunk();
+  }, []);
 
   return (
     <>
@@ -32,7 +30,7 @@ export default function Discounts() {
           </div>
 
           <div className={styles.actionsDiscounts}>
-            {discounts?.map((discount: DiscountType, index: number) => {
+            {discounts?.map((discount: DiscountType) => {
               return (
                 <div
                   className={styles.actionsDiscountsDiscount}

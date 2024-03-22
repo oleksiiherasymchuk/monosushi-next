@@ -139,7 +139,7 @@ const AdminCategories = () => {
                       <td>{category.name}</td>
                       <td>{category.path}</td>
                       <td>
-                        <img src={category.imagePath} alt="" />
+                        <img src={category.imagePath} alt="categoryImage" />
                       </td>
                       <td>
                         <p onClick={() => editCategory(category)}>Редагувати</p>

@@ -37,8 +37,6 @@
         align-items: center;
         padding-top: 10px;
         img {
-          // width: 80%;
-          // height: 80%;
           width: 80%;
           height: 50%;
           &:hover {
@@ -140,8 +138,6 @@
   }
 }
 
-
-
 @keyframes rotateBorder {
   25% {
     border-top: 2px solid #b5d8f7;
@@ -185,17 +181,6 @@
     height: 30px;
     position: relative;
     top: -26px;
-
-    // .swiper-pagination-bullet {
-    //   width: 22px;
-    //   height: 22px;
-    //   // background-color: red;
-    //   // opacity: 0.5;
-    //   // margin: 0 12px;
-    // }
-    // .swiper-pagination-bullet-active {
-    //   background-color: blue; /* Your custom active bullet color */
-    // }
   }
 
   &Tablet,

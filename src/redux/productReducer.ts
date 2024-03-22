@@ -24,21 +24,6 @@ export const setLoading = (loading: boolean) => ({
   payload: loading,
 });
 
-// export const getProductsFromFirebaseThunk = createAsyncThunk(
-//   "products/getProducts",
-//   async (_, { dispatch }) => {
-//     try {
-//       dispatch(setLoading(true));
-//       // const products = await firebaseService.getProducts();
-//       // return products;
-//     } catch (error) {
-//       console.log(error);
-//     } finally {
-//       dispatch(setLoading(false));
-//     }
-//   }
-// );
-
 export const getProductByName = createAsyncThunk(
   "products/currentProduct",
   async (name: string, { dispatch }) => {

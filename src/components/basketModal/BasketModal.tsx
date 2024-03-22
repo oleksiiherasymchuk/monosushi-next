@@ -36,7 +36,6 @@ const BasketModal = ({ onClose }: Props) => {
 
   const acceptOrder = async (products: ProductType[]) => {
     if (user) {
-      debugger;
       await createUserOrderThunk({ products, userId: user.uid });
     } else {
       await createUserOrderThunk({ products });

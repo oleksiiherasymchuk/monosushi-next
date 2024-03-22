@@ -18,7 +18,6 @@ interface IOrderService {
 export const orderService: IOrderService = {
   getUserOrder: async (userId: string) => {
     try {
-      // debugger
       const orderCollectionRef = collection(database, "orders");
       const q = query(orderCollectionRef, where("userId", "==", userId));
       const querySnapshot = await getDocs(q);

@@ -83,11 +83,7 @@ export const orderSlice = createSlice({
       );
       state.totalPrice = addDecimal(Number(state.productPrice));
     },
-    deleteFromBasket: (
-      state,
-      action
-      // : PayloadAction<{ id: number | string }>
-    ) => {
+    deleteFromBasket: (state, action) => {
       state.products = state.products.filter(
         (prod) => prod.id !== action.payload.id
       );
@@ -125,12 +121,12 @@ export const orderSlice = createSlice({
         }
       })
       .addCase(createUserOrderThunk.fulfilled, (state, action: any) => {
-        debugger
+        debugger;
         if (action.payload) {
           state.orders?.push(action.payload);
         }
         state.products = [];
-        toast.success("Ваше замовлення прийнято!")
+        toast.success("Ваше замовлення прийнято!");
       });
   },
 });

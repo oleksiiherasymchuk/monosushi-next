@@ -1,8 +1,7 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import styles from "./PriceAndQuantity.module.scss";
 import { useActions } from "@/hooks/useActions";
-import { useTypedSelector } from "@/hooks/useTypedSelector";
 
 type Props = {
   product: any;
@@ -11,23 +10,18 @@ type Props = {
 const PriceAndQuantity = ({ product }: Props) => {
   const { addToBasket, updateProductQuantity } = useActions();
   const [productQuantity, setProductQuantity] = useState<number>(1);
-  const { products } = useTypedSelector((state) => state.order);
 
   const handleDecrease = useCallback(() => {
     if (productQuantity > 1) {
       setProductQuantity((prevQuantity) => prevQuantity - 1);
       updateProductQuantity({ id: product.id, quantity: productQuantity - 1 });
     }
-  }, [product.id, productQuantity, updateProductQuantity]);
+  }, [product?.id, productQuantity, updateProductQuantity]);
 
   const handleIncrease = useCallback(() => {
     setProductQuantity((prevQuantity) => prevQuantity + 1);
     updateProductQuantity({ id: product.id, quantity: productQuantity + 1 });
-  }, [product.id, productQuantity, updateProductQuantity]);
-
-  useEffect(() => {
-    console.log(products);
-  }, [products]);
+  }, [product?.id, productQuantity, updateProductQuantity]);
 
   return (
     <div className={styles.controls}>

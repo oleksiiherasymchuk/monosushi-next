@@ -28,7 +28,7 @@ const ProductNavigation = ({ onNavigationClick }: Props) => {
   ) => {
     e.preventDefault();
     const label = navigationItems[index].label;
-    onNavigationClick(label); // Call the callback with the label
+    onNavigationClick(label);
     const changeActiveItem = navigationItems.map((item, i) => ({
       ...item,
       active: i === index,

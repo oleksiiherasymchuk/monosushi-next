@@ -35,7 +35,7 @@ const Header = () => {
     "auth" | "signIn" | "forget"
   >("auth");
 
-  const { products } = useTypedSelector(state => state.order)
+  const { products } = useTypedSelector((state) => state.order);
 
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState<boolean>(false);
 
@@ -147,12 +147,15 @@ const Header = () => {
     setIsBurgerMenuOpen(false);
   };
 
-  const totalSum = products.reduce((total, product) => total + Number(product.price) * product.quantity!, 0)
-  const sum = totalSum === 0 ? 0 : totalSum
+  const totalSum = products.reduce(
+    (total, product) => total + Number(product.price) * product.quantity!,
+    0
+  );
+  const sum = totalSum === 0 ? 0 : totalSum;
 
   useEffect(() => {
-    console.log(sum)
-  }, [products])
+    console.log(sum);
+  }, [products]);
 
   return (
     <>
@@ -320,9 +323,15 @@ const Header = () => {
             </div>
           )}
 
-          <div className={styles.headerBasket} onClick={toogleBasket} ref={basketMenuRef}>
+          <div
+            className={styles.headerBasket}
+            onClick={toogleBasket}
+            ref={basketMenuRef}
+          >
             <Image src={Basket} alt="basket" height={25} width={25} />
-            <span className={styles.headerBasketProductQuantity}>{products.length}</span>
+            <span className={styles.headerBasketProductQuantity}>
+              {products.length}
+            </span>
             <span>{sum} грн</span>
           </div>
         </nav>
@@ -453,9 +462,15 @@ const Header = () => {
             )}
           </div>
 
-          <div className={styles.headerTabletBasket} onClick={toogleBasket} ref={basketMenuRef}>
+          <div
+            className={styles.headerTabletBasket}
+            onClick={toogleBasket}
+            ref={basketMenuRef}
+          >
             <Image src={Basket} alt="basket" height={25} width={25} />
-            <span className={styles.headerBasketProductQuantity}>{products.length}</span>
+            <span className={styles.headerBasketProductQuantity}>
+              {products.length}
+            </span>
             <span>{sum} грн</span>
           </div>
         </nav>

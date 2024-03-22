@@ -1,6 +1,7 @@
 .delivery {
   margin-top: 45px;
   margin-bottom: 100px;
+
   &Title {
     display: flex;
     justify-content: center;
@@ -183,7 +184,6 @@
   }
 
   &TextPage {
-    // width: 900px;
     width: 90%;
     height: 230px;
     display: flex;
@@ -202,32 +202,31 @@
   }
 }
 
-
-@media (max-width: 768px){
-  .delivery{
-
-    &Title{
-      h1{
+@media (max-width: 768px) {
+  .delivery {
+    &Title {
+      h1 {
         font-size: 24px;
       }
     }
 
-    &Zones{
+    &Zones {
       flex-direction: column;
       height: min-content;
 
-      &GreenZone, &YellowZone{
+      &GreenZone,
+      &YellowZone {
         margin: 10px;
       }
     }
 
-    &Map{
+    &Map {
       width: 90%;
       height: 500px;
       margin-bottom: 30px;
     }
 
-    &Payment{
+    &Payment {
       width: 90%;
       height: min-content;
       padding-top: 50px;
@@ -237,7 +236,7 @@
         line-height: 1em;
       }
 
-      &Items{
+      &Items {
         width: 90%;
         height: 250px;
         flex-direction: column;
@@ -245,7 +244,7 @@
       }
     }
 
-    &TextPage{
+    &TextPage {
       height: min-content;
     }
   }

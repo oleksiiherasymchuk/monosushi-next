@@ -8,18 +8,15 @@ import Preloader from "@/components/preloader/Preloader";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { useActions } from "@/hooks/useActions";
 
-type Props = {};
+const Drinks = () => {
+  const drinks = useTypedSelector((state) => state.drinks.drinks);
+  const loading = useTypedSelector((state) => state.drinks.loading);
 
-const Drinks = (props: Props) => {
-
-  const drinks = useTypedSelector(state => state.drinks.drinks)
-  const loading = useTypedSelector(state => state.drinks.loading)
-
-  const { getDrinksFromFirebaseThunk } = useActions()
+  const { getDrinksFromFirebaseThunk } = useActions();
 
   useEffect(() => {
-    getDrinksFromFirebaseThunk()
-  }, [])
+    getDrinksFromFirebaseThunk();
+  }, []);
 
   return (
     <>

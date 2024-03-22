@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/contexts/authContext/AuthContext";
+import { toast } from "react-toastify";
 
 export default function Page() {
   const { user } = useAuthContext();
@@ -10,7 +11,7 @@ export default function Page() {
   useEffect(() => {
     if (user == null) {
       router.push("/");
-      // alert('Admin page!!!')
+      toast.error("Сторінка доступа лише адміністратору!");
     }
   }, [user]);
 

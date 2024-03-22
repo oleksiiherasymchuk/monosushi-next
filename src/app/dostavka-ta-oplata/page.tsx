@@ -6,9 +6,7 @@ import cash from "../../../public/images/cash.svg";
 import cashless from "../../../public/images/cashless.svg";
 import Image from "next/image";
 
-type Props = {};
-
-const DeliveryAndPaymentPage = (props: Props) => {
+const DeliveryAndPaymentPage = () => {
   return (
     <div className={styles.delivery}>
       <div className={styles.deliveryTitle}>

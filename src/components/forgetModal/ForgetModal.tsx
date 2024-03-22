@@ -41,7 +41,7 @@ const ForgetModal = ({ onClose, changeContent }: Props) => {
       }
 
       await sendPasswordResetEmail(auth, email);
-      
+
       setIsModalOpen(true);
       setModalContent("Лист відновлення паролю надіслано.");
     } catch (error) {

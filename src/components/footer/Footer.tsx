@@ -9,9 +9,7 @@ import Liqpay from "../../../public/images/liqpay.svg";
 import Facebook from "../../../public/images/facebook-icon.svg";
 import Instagram from "../../../public/images/inst.png";
 
-type Props = {};
-
-const Footer = (props: Props) => {
+const Footer = () => {
   return (
     <>
       <footer className={styles.footer}>

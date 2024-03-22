@@ -1,6 +1,5 @@
-.admin{
+.admin {
   width: 100%;
-  // min-height: 600px;
   height: min-content;
   display: flex;
   justify-content: flex-start;
@@ -8,12 +7,11 @@
   padding-top: 100px;
 }
 
-@media (max-width: 768px){
-  .admin{
+@media (max-width: 768px) {
+  .admin {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // padding-top: 0px;
     padding-top: 50px;
   }
 }

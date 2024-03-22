@@ -26,7 +26,6 @@ const PersonalHistory = (props: Props) => {
 
   useEffect(() => {
     getUserDataThunk(user.uid);
-    console.log(userData);
   }, []);
 
   return (
@@ -67,7 +66,6 @@ const PersonalHistory = (props: Props) => {
                       <td></td>
                       <td>
                         <p className={styles.done}>виконано</p>
-                        {/* <p className={styles.repeat}>Повторити</p> */}
                       </td>
                     </tr>
                     {order.products.map(

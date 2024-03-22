@@ -6,6 +6,7 @@ import { ProductType } from "@/shared/types/products/product";
 import Preloader from "@/components/preloader/Preloader";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { useActions } from "@/hooks/useActions";
+import { toast } from "react-toastify";
 
 const AdminProducts = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -30,7 +31,7 @@ const AdminProducts = () => {
 
   const addProductItem = () => {
     if (categories?.length === 0) {
-      alert("Спочатку додайте категорії");
+      toast.info("Спочатку додайте категорії!");
       return;
     }
     setIsOpen(!isOpen);
@@ -156,19 +157,6 @@ const AdminProducts = () => {
                 {...register("formFile")}
               />
             </div>
-
-            {/* {editProductData?.imagePath && (
-              <div>
-                <Image src={editProductData?.imagePath} alt="logo" className={styles.loadedImg} width={50} height={50}/>
-                <button
-                  type="button"
-                  className={styles.deleteImage}
-                  // onClick={deleteImage}
-                >
-                  delete
-                </button>
-              </div>
-            )} */}
 
             <button className={styles.save} type="submit">
               ЗБЕРЕГТИ
