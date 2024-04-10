@@ -6,4 +6,11 @@
 
 .content {
   flex-grow: 1;
+  margin-top: 95px;
+}
+
+@media (max-width: 1200px){
+  .content{
+    margin-top: 60px;
+  }
 }

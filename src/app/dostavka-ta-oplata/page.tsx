@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./Dostavka.module.scss";
 import greenZone from "../../../public/images/greenzone.svg";
-import map from "../../../public/images/map.png";
 import cash from "../../../public/images/cash.svg";
 import cashless from "../../../public/images/cashless.svg";
 import Image from "next/image";
+import Map from "@/components/Map/Map";
 
 const DeliveryAndPaymentPage = () => {
   return (
@@ -48,7 +48,7 @@ const DeliveryAndPaymentPage = () => {
       </div>
 
       <div className={styles.deliveryMap}>
-        <Image src={map} alt="map" />
+        <Map />
       </div>
 
       <div className={styles.deliveryTextPage}>

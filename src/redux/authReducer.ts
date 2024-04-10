@@ -1,8 +1,10 @@
+import { auth } from "@/firebase/config";
 import { authService } from "@/services/authService";
 import { UserType } from "@/shared/types/user/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { User, UserCredential } from "firebase/auth";
 import { DocumentData } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 interface IAuthState {
   isAuthenticated: boolean;
@@ -74,6 +76,48 @@ export const logOutThunk = createAsyncThunk<void>("auth/logout", async () => {
   }
 });
 
+export const addAddressThunk = createAsyncThunk<
+  DocumentData | null,
+  { userId: string; newAddress: any }
+>("auth/addAddress", async ({ userId, newAddress }) => {
+  try {
+    await authService.addAddress(userId, newAddress);
+    const updatedUserData = await authService.getUserData(userId);
+    return updatedUserData;
+  } catch (error) {
+    console.error("Error adding address:", error);
+    throw error;
+  }
+});
+
+export const editAddressThunk = createAsyncThunk(
+  "auth/editAddress",
+  async ({ data }: { data: any }) => {
+    try {
+      const editedAddress = await authService.editAddress(data);
+      return editedAddress;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const deleteAddressThunk = createAsyncThunk<void, string>(
+  "auth/deleteAddress",
+  async (addressId) => {
+    try {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        await authService.deleteAddress(currentUser.uid, addressId);
+        return;
+      }
+    } catch (error) {
+      console.error("Error deleting address:", error);
+      throw error;
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -104,6 +148,42 @@ const authSlice = createSlice({
       })
       .addCase(createUserThunk.rejected, (state) => {
         state.isAuthenticated = false;
+      })
+
+      .addCase(editAddressThunk.fulfilled, (state, action) => {
+        if (action.payload) {
+          const updatedAddressIndex = state.user?.addresses.findIndex(
+            (address: any) => address.id === action.payload.id
+          );
+          if (updatedAddressIndex !== undefined && updatedAddressIndex !== -1) {
+            state.user!.addresses[updatedAddressIndex] = {
+              ...state.user!.addresses[updatedAddressIndex],
+              ...action.payload,
+            };
+            state.user = { ...state.user };
+            toast.success("Aдресу успішно змінено!");
+          } else {
+            toast.error(
+              "Помилка у спробі змінити адресу. Спробуйте пізніше!"
+            );
+          }
+        } else {
+          toast.error("Помилка редагування адреси. Спробуйте пізніше!");
+        }
+      })
+
+      .addCase(deleteAddressThunk.fulfilled, (state, action) => {
+        if (state.user) {
+          state.user.addresses = state.user.addresses.filter(
+            (a: any) => a.id !== action.payload
+          );
+        }
+      })
+
+      .addCase(addAddressThunk.fulfilled, (state, action) => {
+        if (state.user) {
+          state.user = action.payload;
+        }
       });
   },
 });
@@ -116,4 +196,8 @@ export const authActions = {
   updateUserThunk,
   logOutThunk,
   createUserThunk,
+
+  addAddressThunk,
+  deleteAddressThunk,
+  editAddressThunk,
 };

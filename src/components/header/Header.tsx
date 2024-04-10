@@ -154,7 +154,7 @@ const Header = () => {
   const sum = totalSum === 0 ? 0 : totalSum;
 
   useEffect(() => {
-    console.log(sum);
+    // console.log(sum);
   }, [products]);
 
   return (

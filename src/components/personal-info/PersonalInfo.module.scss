@@ -87,27 +87,128 @@
       margin-bottom: 15px;
       display: flex;
       justify-content: flex-start;
-      align-items: center;
+      align-items: flex-start;
+      flex-direction: column;
 
-      .number {
-        width: 30px;
-        height: 30px;
-        background-color: #b5d8f7;
+      // .number {
+      //   width: 30px;
+      //   height: 30px;
+      //   background-color: #b5d8f7;
+      //   display: flex;
+      //   justify-content: center;
+      //   align-items: center;
+      //   font-weight: bold;
+      //   border-radius: 7px;
+      //   margin-right: 15px;
+      // }
+
+      // .title {
+      //   line-height: 28px;
+      //   vertical-align: middle;
+      //   display: inline-block;
+      //   font-style: 20px;
+      //   color: #252525;
+      // }
+
+      &Block{
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
-        font-weight: bold;
-        border-radius: 7px;
-        margin-right: 15px;
+        margin-bottom: 15px;
+        
+        &Number {
+          width: 30px;
+          height: 30px;
+          background-color: #b5d8f7;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: bold;
+          border-radius: 7px;
+          margin-right: 15px;
+        }
+  
+        &Title {
+          line-height: 28px;
+          vertical-align: middle;
+          display: inline-block;
+          font-style: 20px;
+          color: #252525;
+        }
       }
 
-      .title {
-        line-height: 28px;
+      &Item{
+        width: 80%;
+        // height: 75px;
+        height: auto;
+        border-top: 1px solid #dcdcdc;
+        border-bottom: none;
+        border-bottom: 1px solid #dcdcdc;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 25px 5px;
         vertical-align: middle;
-        display: inline-block;
-        font-style: 20px;
-        color: #252525;
+        color: #5a5a5a;
+
+        &Checkbox{
+          height: 100%;
+          width: 20%;
+          display: flex;
+
+          label{
+            display: flex;
+            align-items: center;
+
+            input{
+              display: inline-block;
+              cursor: pointer;
+              margin: 0;
+              padding: 0;
+              min-width: 30px;
+              min-height: 17px;
+            }
+  
+            p{
+              font-weight: 400;
+            }
+          }
+
+      
+        }
+
+        &Street{
+          height: 100%;
+          width: 50%;
+          display: flex;
+        }
+
+        &Edit{
+          height: 100%;
+          width: 23%;
+          display: flex;
+          img{
+            margin-right: 8px;
+            height: 20px;
+            width: 20px;
+          }
+        }
+
+        &Delete{
+          padding-right: 0;
+          text-align: right;
+          width: 3%;
+          img{
+            height: 20px;
+            width: 20px;
+          }
+        }
+
       }
+
+      // .Item:last-child {
+      //   border-bottom: 1px solid #dcdcdc;
+      // }
     }
   }
 
@@ -256,20 +357,27 @@
       }
 
       &Save {
-        background-color: #dcdcdc;
+        // background-color: #dcdcdc;
+        background-color: #b5d8f7;
         height: 40px;
 
-        :hover {
+        &:hover {
           background-color: white;
+          border: 2px solid #b5d8f7;
         }
       }
     }
 
     &Map {
       margin-top: 30px;
+      height: 290px;
+      width: 480px;
+      // border: 1px solid red;
     }
   }
 }
+
+
 
 @media (min-width: 769px) and (max-width: 990px) {
   .modal {
@@ -293,6 +401,11 @@
           height: 30px;
         }
       }
+
+      &Map{
+        width: 90%;
+        height: 300px;
+      }
     }
   }
 }
@@ -300,6 +413,7 @@
 @media (max-width: 768px) {
   .wrapper {
     width: 90%;
+
     .info {
       form {
         height: 150px;
@@ -313,6 +427,36 @@
         input {
           height: 35px;
           padding-left: 10px;
+        }
+      }
+    }
+
+    .address{
+      margin-left: 0px;
+
+      &Title{
+
+        &Item{
+          width: 100%;
+
+          &Checkbox{
+            width: 25%;
+          }
+
+          &Street{
+
+          }
+
+          &Edit{
+            width: 10%;
+            span{
+              display: none;
+            }
+          }
+
+          &Delete{
+            width: 5%;
+          }
         }
       }
     }
@@ -348,6 +492,11 @@
           height: 30px;
         }
       }
+
+      &Map{
+        width: 90%;
+        height: 300px;
+      }
     }
   }
 }
@@ -358,4 +507,13 @@
 
 .errorColor {
   color: red;
+}
+
+.disabledButton{
+  background-color: #dcdcdc;
+
+  &:hover{
+    background-color: #dcdcdc;
+    // border: none;
+  }
 }

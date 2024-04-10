@@ -7,6 +7,10 @@
   margin: 0 auto;
   padding: 0;
   background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
 
   &Logo {
     height: 100%;
@@ -315,6 +319,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
 
     &Logo {
       height: 100%;
@@ -546,6 +555,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
 
     &Logo {
       display: none;

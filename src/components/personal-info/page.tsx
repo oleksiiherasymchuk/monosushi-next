@@ -8,6 +8,9 @@ import PasswordModal from "../password/PasswordModal";
 import { useActions } from "@/hooks/useActions";
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { toast } from "react-toastify";
+import Image from "next/image";
+import edit from "../../../public/images/edit.svg";
+import deleteIcon from "../../../public/images/deleteIcon.png";
 
 type User = {
   name: string;
@@ -27,10 +30,13 @@ const PersonalInfo = () => {
     email: "",
   });
 
+  const [addressToEdit, setAddressToEdit] = useState<any>();
+
   const onCloseModal = () => setIsModalOpen(false);
   const onCloseDataSuccessModal = () => setIsDataSuccessModal(false);
 
-  const { getUserDataThunk, updateUserThunk } = useActions();
+  const { getUserDataThunk, updateUserThunk, deleteAddressThunk } =
+    useActions();
   const user = useTypedSelector((state) => state.auth.user);
 
   useEffect(() => {
@@ -79,9 +85,30 @@ const PersonalInfo = () => {
     }
   };
 
+  const editAddress = async (address: any) => {
+    setAddressToEdit(address);
+    setIsModalOpen(true);
+  };
+
+  const deleteAddress = async (addressId: string) => {
+    try {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        await deleteAddressThunk(addressId);
+        getUserDataThunk({ userId: currentUser.uid });
+      } else {
+        throw new Error("Current user not found");
+      }
+    } catch (error) {
+      console.error("Error deleting address:", error);
+      toast.error("Помилка видалення адреси:(");
+    }
+  };
+
   useEffect(() => {
     if (user) {
       setFormData(user);
+      // console.log(user);
     }
   }, [user]);
 
@@ -132,8 +159,50 @@ const PersonalInfo = () => {
 
       <div className={styles.address}>
         <div className={styles.addressTitle}>
-          <div className={styles.number}>2</div>
-          <div className={styles.title}>Адреси</div>
+          <div className={styles.addressTitleBlock}>
+            <div className={styles.addressTitleBlockNumber}>2</div>
+            <div className={styles.addressTitleBlockTitle}>Адреси</div>
+          </div>
+
+          {user?.addresses &&
+            user.addresses.map((u: any) => {
+              return (
+                <div className={styles.addressTitleItem} key={u.id}>
+                  <div className={styles.addressTitleItemCheckbox}>
+                    <label htmlFor="addressType">
+                      <input type="radio" name="addressType" id="addressType" />
+                      <p>{u.addressType}</p>
+                    </label>
+                  </div>
+                  <div className={styles.addressTitleItemStreet}>
+                    {u.deliveryAddress}, {u.houseNumber}, кв.{u.flatNumber}
+                  </div>
+                  <button
+                    className={styles.addressTitleItemEdit}
+                    onClick={() => editAddress(u)}
+                  >
+                    <Image
+                      src={edit}
+                      alt="editAddress"
+                      width={20}
+                      height={20}
+                    />
+                    <span>Редагувати</span>
+                  </button>
+                  <button
+                    className={styles.addressTitleItemDelete}
+                    onClick={() => deleteAddress(u.id)}
+                  >
+                    <Image
+                      src={deleteIcon}
+                      alt="deleteAddress"
+                      width={20}
+                      height={20}
+                    />
+                  </button>
+                </div>
+              );
+            })}
 
           <div className={styles.AddressModal}></div>
         </div>
@@ -141,7 +210,9 @@ const PersonalInfo = () => {
         <div className={styles.buttons}>
           <button
             className={styles.addAddress}
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              setAddressToEdit(null)
+              setIsModalOpen(true)}}
           >
             Додати адресу
           </button>
@@ -155,8 +226,12 @@ const PersonalInfo = () => {
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen}>
-        <AddressModal onClose={onCloseModal} />
+      <Modal isOpen={isModalOpen} onClose={onCloseModal}>
+        <AddressModal
+          onClose={onCloseModal}
+          address={addressToEdit}
+          isOpen={isModalOpen}
+        />
       </Modal>
 
       <Modal isOpen={isDataSuccessModal}>

@@ -15,9 +15,11 @@ import {
   getDocs,
   query,
   setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { v1 } from "uuid";
 
 interface IAuthService {
   createUser: (user: UserType) => Promise<User | null>;
@@ -25,6 +27,9 @@ interface IAuthService {
   signIn: (email: string, password: string) => Promise<UserCredential | null>;
   updateUser: (user: User) => Promise<DocumentData | null>;
   logOut: () => Promise<void>;
+  addAddress: (userId: string, newAddress: any) => Promise<void>;
+  deleteAddress: (userId: string, addressId: string) => Promise<void>;
+  editAddress: (data: any) => Promise<any | null>;
 }
 
 export const authService: IAuthService = {
@@ -94,6 +99,7 @@ export const authService: IAuthService = {
         surname: user.surname,
         phone: user.phone,
         role: "User",
+        addresses: {},
       };
 
       const userDocRef = doc(usersCollectionRef, authUser.uid);
@@ -112,11 +118,117 @@ export const authService: IAuthService = {
       const userDocRef = doc(database, "users", userId);
 
       await setDoc(userDocRef, user, { merge: true });
-      toast.success(`Дані користувача ${user.email} успішно оновлені!`);
+
       return user;
     } catch (error) {
+      console.log(error);
       toast.error("Помилка оновлення даних користувача:(");
       throw error;
+    }
+  },
+
+  addAddress: async (userId: string, newAddress: any): Promise<void> => {
+    try {
+      const userDocRef = doc(database, "users", userId);
+      const userDocSnapshot = await getDoc(userDocRef);
+
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        const existingAddresses = userData?.addresses || [];
+
+        const updatedAddresses = [
+          ...existingAddresses,
+          { ...newAddress, id: v1() },
+        ];
+
+        await updateDoc(userDocRef, { addresses: updatedAddresses });
+
+        toast.success("Адресу додано успішно!");
+      } else {
+        throw new Error("User not found");
+      }
+    } catch (error) {
+      console.error("Error adding address:", error);
+      toast.error("Помилка додавання адреси:(");
+    }
+  },
+
+  editAddress: async (data: any) => {
+    try {
+      const {
+        userId,
+        addressId,
+        addressType,
+        deliveryAddress,
+        houseNumber,
+        flatNumber,
+      } = data;
+
+      const userDocRef = doc(database, "users", userId);
+
+      const userDocSnapshot = await getDoc(userDocRef);
+
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+
+        const addressIndex = userData.addresses.findIndex(
+          (address: any) => address.id === addressId
+        );
+
+        if (addressIndex !== -1) {
+          const updatedAddress = {
+            addressType:
+              addressType || userData.addresses[addressIndex].addressType,
+            deliveryAddress:
+              deliveryAddress ||
+              userData.addresses[addressIndex].deliveryAddress,
+            houseNumber:
+              houseNumber || userData.addresses[addressIndex].houseNumber,
+            flatNumber:
+              flatNumber || userData.addresses[addressIndex].flatNumber,
+          };
+
+          userData.addresses[addressIndex] = {
+            ...userData.addresses[addressIndex],
+            ...updatedAddress,
+          };
+
+          await updateDoc(userDocRef, { addresses: userData.addresses });
+
+          return userData.addresses[addressIndex];
+        } 
+        // else {
+        //   toast.error("Адресу не знайдено:(");
+        // }
+      } else {
+        throw new Error("User document not found");
+      }
+    } catch (error) {
+      toast.error("Помилка редагування адреси. Спробуйте пізніше!");
+      return null;
+    }
+  },
+
+  deleteAddress: async (userId: string, addressId: string): Promise<void> => {
+    try {
+      const userDocRef = doc(database, "users", userId);
+      const userDocSnapshot = await getDoc(userDocRef);
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        if (!userData || !userData.addresses) {
+          throw new Error("User data or addresses not found");
+        }
+        const updatedAddresses = userData.addresses.filter(
+          (address: any) => address.id !== addressId
+        );
+        await updateDoc(userDocRef, { addresses: updatedAddresses });
+        toast.success("Адресу видалено успішно!");
+      } else {
+        throw new Error("User not found");
+      }
+    } catch (error) {
+      console.error("Error deleting address:", error);
+      toast.error("Помилка видалення адреси:(");
     }
   },
 };
