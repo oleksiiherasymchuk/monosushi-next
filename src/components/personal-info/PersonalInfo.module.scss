@@ -264,7 +264,7 @@
   border-radius: 7px;
   position: absolute;
   background-color: white;
-  top: 150px;
+  top: 0;
   right: 5px;
   left: 0;
   bottom: 0;
@@ -382,7 +382,7 @@
 @media (min-width: 769px) and (max-width: 990px) {
   .modal {
     width: 90vw;
-    top: 300px;
+    // top: 300px;
 
     &Form {
       input {
@@ -473,7 +473,7 @@
 
   .modal {
     width: 90vw;
-    top: 300px;
+    // top: 0;
 
     &Form {
       input {
